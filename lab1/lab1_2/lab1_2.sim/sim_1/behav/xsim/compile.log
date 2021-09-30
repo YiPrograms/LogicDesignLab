@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/yi/Workspace/Vivado/lab1/lab1_2/lab1_2.srcs/sources_1/imports/new/lab1_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lab1_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/yi/Workspace/Vivado/lab1/lab1_2/lab1_2.srcs/sources_1/new/lab1_2.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lab1_2
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/yi/Workspace/Vivado/lab1/lab1_2/lab1_2.srcs/sources_1/new/lab1_2_t.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lab1_2_t

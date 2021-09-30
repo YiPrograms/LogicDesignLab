@@ -1,0 +1,6 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+Starting the simulation
+2565 Terminating simulation...
+>>>> [PASS]  Congratulations!
+$finish called at time : 2565 ns : File "/home/yi/Workspace/Vivado/lab1/lab1_2/lab1_2.srcs/sources_1/new/lab1_2_t.v" Line 39
