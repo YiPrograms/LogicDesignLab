@@ -52,4 +52,28 @@ module lab2_2 (
         endcase
     end
 
+    always @* begin
+        lightA = 3'b000;
+        lightB = 3'b000;
+        case (state)
+            A1, A2: begin
+                lightA = 3'b001;
+                lightB = 3'b100;
+            end
+            AO: begin
+                lightA = 3'b010;
+                lightB = 3'b100;
+            end
+
+            B1, B2: begin
+                lightA = 3'b100;
+                lightB = 3'b001;
+            end
+            BO: begin
+                lightA = 3'b100;
+                lightB = 3'b010;
+            end
+        endcase
+    end
+
 endmodule
