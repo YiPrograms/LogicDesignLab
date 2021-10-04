@@ -1,3 +1,4 @@
+`timescale 1ns / 100ps
 
 module lab2_2 (
     input clk,
