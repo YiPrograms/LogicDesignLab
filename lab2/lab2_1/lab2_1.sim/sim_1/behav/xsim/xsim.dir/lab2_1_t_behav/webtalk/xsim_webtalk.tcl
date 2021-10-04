@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Mon Oct  4 21:49:13 2021" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Mon Oct  4 21:53:02 2021" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2020.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "3064766" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "LIN64" -context "software_version_and_target_device"
@@ -14,11 +14,11 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "2a4859cd-d38b-49da-9013-98976f723540" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "0ae936d51b0e4acdbc7e6228f7260658" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "55" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "61" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Arch" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "Arch Linux" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "11th Gen Intel(R) Core(TM) i5-11300H @ 3.10GHz" -context "user_environment"
-webtalk_add_data -client project -key cpu_speed -value "3999.997 MHz" -context "user_environment"
+webtalk_add_data -client project -key cpu_speed -value "4000.000 MHz" -context "user_environment"
 webtalk_add_data -client project -key total_processors -value "1" -context "user_environment"
 webtalk_add_data -client project -key system_ram -value "16.000 GB" -context "user_environment"
 webtalk_register_client -client xsim
@@ -38,5 +38,5 @@ webtalk_add_data -client xsim -key Total_Instances -value "3" -context "xsim\\us
 webtalk_add_data -client xsim -key Xilinx_HDL_Libraries_Used -value "secureip unimacro_ver unisims_ver " -context "xsim\\usage"
 webtalk_add_data -client xsim -key Compiler_Time -value "1.07_sec" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Compiler_Memory -value "271596_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 3488954242 -regid "" -xml /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_transmit -clientid 1299532237 -regid "" -xml /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/yi/Workspace/Vivado/lab2/lab2_1/lab2_1.sim/sim_1/behav/xsim/xsim.dir/lab2_1_t_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

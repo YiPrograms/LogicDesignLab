@@ -1,3 +1,4 @@
+`timescale 1ns / 100ps
 
 module lab2_1_t;
     
@@ -37,10 +38,10 @@ module lab2_1_t;
 
         // Test reset on clock edge
         #705 rst = 1;
-        #20 rst = 0;
+        #5 rst = 0;
 
         // Test reset between clock edges
-        #53 rst = 1;
+        #48 rst = 1;
         #13 rst = 0;
 
         #100
@@ -49,6 +50,8 @@ module lab2_1_t;
             $display(">>>> [PASS] Congratulations!");
         else
             $display(">>>> [ERROR] Try it again!");
+
+        $finish;
     end
 
     task test;
