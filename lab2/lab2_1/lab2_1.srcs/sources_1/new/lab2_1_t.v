@@ -30,6 +30,9 @@ module lab2_1_t;
         n = 0;
         ans = 0;
 
+        // Monitor signal
+        $monitor("Seq: %d", out);
+
         // Test reset
         rst = 1;
         #5 rst = 0;

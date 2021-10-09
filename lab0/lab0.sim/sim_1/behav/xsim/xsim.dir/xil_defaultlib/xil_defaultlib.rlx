@@ -1,0 +1,9 @@
+0.7
+2020.2
+Nov 18 2020
+09:20:35
+/home/yi/Workspace/Vivado/lab0/lab0.sim/sim_1/behav/xsim/glbl.v,1631780878,verilog,,,,glbl,,,,,,,,
+/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/fist_check.v,1473350996,verilog,,/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/judge.v,,fist_check,,,,,,,,
+/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/judge.v,1473350996,verilog,,/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/slow_fist.v,,judge,,,,,,,,
+/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/lab0.v,1473350996,verilog,,,,lab0,,,,,,,,
+/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/slow_fist.v,1473350996,verilog,,/home/yi/Workspace/Vivado/lab0/lab0.srcs/sources_1/imports/tutorial/lab0.v,,slow_fist,,,,,,,,
