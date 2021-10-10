@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Sun Oct 10 10:18:42 2021
+| Date         : Mon Oct 11 00:40:39 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_utilization -file lab3_2_utilization_synth.rpt -pb lab3_2_utilization_synth.pb
 | Design       : lab3_2
