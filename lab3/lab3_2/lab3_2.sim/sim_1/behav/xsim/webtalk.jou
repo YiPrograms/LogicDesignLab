@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Sun Oct 10 02:50:55 2021
+# Process ID: 1122003
+# Current directory: /home/yi/Workspace/Vivado/lab3/lab3_2/lab3_2.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/yi/Workspace/Vivado/lab3/lab3_2/lab3_2.sim/sim_1/behav/xsim/xsim.dir/lab3_2_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/yi/Workspace/Vivado/lab3/lab3_2/lab3_2.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/yi/Workspace/Vivado/lab3/lab3_2/lab3_2.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/yi/Workspace/Vivado/lab3/lab3_2/lab3_2.sim/sim_1/behav/xsim/xsim.dir/lab3_2_behav/webtalk/xsim_webtalk.tcl -notrace

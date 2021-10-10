@@ -5,7 +5,7 @@ module clock_divider #(parameter n = 25) (
     output clk_div
 );
     reg [n - 1:0] counter = 0;
-    reg div;
+    // reg div;
 
     always @(posedge clk) begin
         counter <= counter + 1;
