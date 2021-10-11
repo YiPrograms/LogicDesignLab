@@ -4,8 +4,11 @@ module clock_divider #(parameter n = 25) (
     input clk,
     output clk_div
 );
-    reg [n - 1:0] counter = 0;
+    reg [n - 1 : 0] counter = 0;
     // reg div;
+
+    wire [n - 1 : 0] next_cnt;
+    assign next_cnt = counter + 1;
 
     always @(posedge clk) begin
         counter <= counter + 1;
@@ -38,17 +41,20 @@ module lab3_1(
     wire cur_clk;
 
     reg led_on;
+    wire next_led;
 
     clock_divider #(24) clk24(.clk(clk), .clk_div(clk_24));
     clock_divider #(27) clk27(.clk(clk), .clk_div(clk_27));
 
     assign cur_clk = (speed == 1)? clk_27: clk_24;
-    
+
+    assign next_led = ~led_on;
+
     always @(posedge cur_clk, posedge rst) begin
         if (rst == 1)
-            led_on = 1;
+            led_on <= 1;
         else if (en)
-            led_on = ~led_on;
+            led_on <= next_led;
     end
 
     genvar i;
