@@ -6,8 +6,11 @@ module clock_divider #(parameter n = 25) (
 );
     reg [n - 1:0] counter = 0;
 
+    wire [n - 1 : 0] next_cnt;
+    assign next_cnt = counter + 1;
+
     always @(posedge clk) begin
-        counter <= counter + 1;
+        counter <= next_cnt;
     end
 
     assign clk_div = counter[n - 1];
@@ -116,8 +119,6 @@ module lab3_2(
         end
         
     end
-
-    
 
     always @(posedge clk_d, posedge rst) begin
         if (rst) begin

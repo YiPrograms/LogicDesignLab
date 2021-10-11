@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Mon Oct 11 00:41:09 2021
+| Date         : Tue Oct 12 03:49:15 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_control_sets -verbose -file lab3_2_control_sets_placed.rpt
 | Design       : lab3_2
@@ -62,7 +62,7 @@ Table of Contents
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |               9 |            5 |
+| Yes          | No                    | Yes                    |               9 |            4 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -74,7 +74,7 @@ Table of Contents
 |  Clock Signal  | Enable Signal | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+---------------+------------------+------------------+----------------+--------------+
 |  cd/out[0]     | state         | rst_IBUF         |                1 |              3 |         3.00 |
-|  cd/out[0]     | cnt           | rst_IBUF         |                4 |              6 |         1.50 |
+|  cd/out[0]     | cnt           | rst_IBUF         |                3 |              6 |         2.00 |
 |  clk_IBUF_BUFG |               |                  |                7 |             25 |         3.57 |
 +----------------+---------------+------------------+------------------+----------------+--------------+
 

@@ -11,7 +11,7 @@ module clock_divider #(parameter n = 25) (
     assign next_cnt = counter + 1;
 
     always @(posedge clk) begin
-        counter <= counter + 1;
+        counter <= next_cnt;
     end
 
     // always @(posedge counter[n], negedge clk) begin
