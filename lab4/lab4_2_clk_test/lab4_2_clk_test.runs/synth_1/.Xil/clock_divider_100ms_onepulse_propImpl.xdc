@@ -1,0 +1,5 @@
+set_property SRC_FILE_INFO {cfile:/home/yi/Workspace/Vivado/lab4/lab4_2_clk_test/lab4_2_clk_test.srcs/constrs_1/new/clock_test.xdc rfile:../../../lab4_2_clk_test.srcs/constrs_1/new/clock_test.xdc id:1} [current_design]
+set_property src_info {type:XDC file:1 line:8 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN W5 [get_ports clk]
+set_property src_info {type:XDC file:1 line:138 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN J1 [get_ports {clk_div}]

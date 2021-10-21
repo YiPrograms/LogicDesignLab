@@ -68,7 +68,7 @@ module lab4_2 (
     reg [3:0] targetBCD [3:0];
 
 
-    // State transaction
+    // State transition
     reg [1:0] next_state;
     always @* begin
         next_state = state;

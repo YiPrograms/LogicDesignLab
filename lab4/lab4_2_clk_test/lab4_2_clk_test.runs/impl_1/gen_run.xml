@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1634793569">
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <File Type="BITSTR-SYSDEF" Name="clock_divider_100ms_onepulse.sysdef"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="clock_divider_100ms_onepulse.ltx"/>
+  <File Type="BG-BGN" Name="clock_divider_100ms_onepulse.bgn"/>
+  <File Type="NPI_FILE" Name="clock_divider_100ms_onepulse.npi"/>
+  <File Type="BG-DRC" Name="clock_divider_100ms_onepulse.drc"/>
+  <File Type="RNPI_FILE" Name="clock_divider_100ms_onepulse.rnpi"/>
+  <File Type="CFI_FILE" Name="clock_divider_100ms_onepulse.cfi"/>
+  <File Type="RCFI_FILE" Name="clock_divider_100ms_onepulse.rcfi"/>
+  <File Type="PDI-FILE" Name="clock_divider_100ms_onepulse.pdi"/>
+  <File Type="BITSTR-MMI" Name="clock_divider_100ms_onepulse.mmi"/>
+  <File Type="BITSTR-BMM" Name="clock_divider_100ms_onepulse_bd.bmm"/>
+  <File Type="BITSTR-NKY" Name="clock_divider_100ms_onepulse.nky"/>
+  <File Type="BITSTR-RBT" Name="clock_divider_100ms_onepulse.rbt"/>
+  <File Type="BITSTR-MSK" Name="clock_divider_100ms_onepulse.msk"/>
+  <File Type="RBD_FILE" Name="clock_divider_100ms_onepulse.rbd"/>
+  <File Type="BG-BIN" Name="clock_divider_100ms_onepulse.bin"/>
+  <File Type="BG-BIT" Name="clock_divider_100ms_onepulse.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="clock_divider_100ms_onepulse_bus_skew_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="clock_divider_100ms_onepulse_bus_skew_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="clock_divider_100ms_onepulse_bus_skew_postroute_physopted.rpt"/>
+  <File Type="RDI-RDI" Name="clock_divider_100ms_onepulse.vdi"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="clock_divider_100ms_onepulse_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="clock_divider_100ms_onepulse_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="clock_divider_100ms_onepulse_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="clock_divider_100ms_onepulse_postroute_physopt.dcp"/>
+  <File Type="ROUTE-BUS-SKEW" Name="clock_divider_100ms_onepulse_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="clock_divider_100ms_onepulse_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-SIMILARITY" Name="clock_divider_100ms_onepulse_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-TIMING-RPX" Name="clock_divider_100ms_onepulse_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-TIMING-PB" Name="clock_divider_100ms_onepulse_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="clock_divider_100ms_onepulse_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="clock_divider_100ms_onepulse_route_status.pb"/>
+  <File Type="ROUTE-STATUS" Name="clock_divider_100ms_onepulse_route_status.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="clock_divider_100ms_onepulse_power_routed.rpx"/>
+  <File Type="ROUTE-PWR-SUM" Name="clock_divider_100ms_onepulse_power_summary_routed.pb"/>
+  <File Type="ROUTE-PWR" Name="clock_divider_100ms_onepulse_power_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="clock_divider_100ms_onepulse_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="clock_divider_100ms_onepulse_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="clock_divider_100ms_onepulse_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-RPX" Name="clock_divider_100ms_onepulse_drc_routed.rpx"/>
+  <File Type="ROUTE-DRC-PB" Name="clock_divider_100ms_onepulse_drc_routed.pb"/>
+  <File Type="ROUTE-DRC" Name="clock_divider_100ms_onepulse_drc_routed.rpt"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="clock_divider_100ms_onepulse_routed_bb.dcp"/>
+  <File Type="ROUTE-DCP" Name="clock_divider_100ms_onepulse_routed.dcp"/>
+  <File Type="ROUTE-ERROR-DCP" Name="clock_divider_100ms_onepulse_routed_error.dcp"/>
+  <File Type="PHYSOPT-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_physopted.rpt"/>
+  <File Type="PHYSOPT-DRC" Name="clock_divider_100ms_onepulse_drc_physopted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="clock_divider_100ms_onepulse_physopt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="clock_divider_100ms_onepulse_postplace_pwropt.dcp"/>
+  <File Type="PLACE-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="clock_divider_100ms_onepulse_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="clock_divider_100ms_onepulse_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-CTRL" Name="clock_divider_100ms_onepulse_control_sets_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="clock_divider_100ms_onepulse_utilization_placed.pb"/>
+  <File Type="PLACE-UTIL" Name="clock_divider_100ms_onepulse_utilization_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="clock_divider_100ms_onepulse_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-IO" Name="clock_divider_100ms_onepulse_io_placed.rpt"/>
+  <File Type="PLACE-DCP" Name="clock_divider_100ms_onepulse_placed.dcp"/>
+  <File Type="PWROPT-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_pwropted.rpt"/>
+  <File Type="PWROPT-DRC" Name="clock_divider_100ms_onepulse_drc_pwropted.rpt"/>
+  <File Type="PWROPT-DCP" Name="clock_divider_100ms_onepulse_pwropt.dcp"/>
+  <File Type="OPT-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="clock_divider_100ms_onepulse.hwdef"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="clock_divider_100ms_onepulse_methodology_drc_opted.rpt"/>
+  <File Type="OPT-DRC" Name="clock_divider_100ms_onepulse_drc_opted.rpt"/>
+  <File Type="OPT-DCP" Name="clock_divider_100ms_onepulse_opt.dcp"/>
+  <File Type="INIT-TIMING" Name="clock_divider_100ms_onepulse_timing_summary_init.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="clock_divider_100ms_onepulse_bus_skew_routed.rpx"/>
+  <File Type="REPORTS-TCL" Name="clock_divider_100ms_onepulse_reports.tcl"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="clock_divider_100ms_onepulse_bus_skew_routed.pb"/>
+  <File Type="PA-TCL" Name="clock_divider_100ms_onepulse.tcl"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/new/clock_divider.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="clock_divider_100ms_onepulse"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/new/clock_test.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+      <Desc>Default settings for Implementation.</Desc>
+    </StratHandle>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+</GenRun>

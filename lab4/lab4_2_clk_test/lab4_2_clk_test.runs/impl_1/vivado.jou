@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Oct 21 13:20:03 2021
+# Process ID: 154599
+# Current directory: /home/yi/Workspace/Vivado/lab4/lab4_2_clk_test/lab4_2_clk_test.runs/impl_1
+# Command line: vivado -log clock_divider_100ms_onepulse.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source clock_divider_100ms_onepulse.tcl -notrace
+# Log file: /home/yi/Workspace/Vivado/lab4/lab4_2_clk_test/lab4_2_clk_test.runs/impl_1/clock_divider_100ms_onepulse.vdi
+# Journal file: /home/yi/Workspace/Vivado/lab4/lab4_2_clk_test/lab4_2_clk_test.runs/impl_1/vivado.jou
+#-----------------------------------------------------------
+source clock_divider_100ms_onepulse.tcl -notrace

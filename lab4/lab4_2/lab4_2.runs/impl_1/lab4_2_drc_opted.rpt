@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Thu Oct 21 05:11:44 2021
+| Date         : Thu Oct 21 12:55:17 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_drc -file lab4_2_drc_opted.rpt -pb lab4_2_drc_opted.pb -rpx lab4_2_drc_opted.rpx
 | Design       : lab4_2
