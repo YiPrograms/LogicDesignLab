@@ -139,25 +139,14 @@ module lab4_2 (
             end
             S_Counting: begin
                 if (clk_div && en) begin
-                    if (cnt_down) begin
-                        // Add 1599 (Complement)
-                        for (i = 0; i < 4; i = i + 1) begin : for_digits
-                            localparam max_num = (i == 3? 1:
-                                                  i == 2? 5: 9);
-                            next_curBCD[i] = next_curBCD[i] + max_num;
-                            if (next_curBCD[i] > max_num) begin
-                                next_curBCD[i + 1] = next_curBCD[i + 1] + 1;
-                                next_curBCD[i] = next_curBCD[i] - (max_num + 1);
-                            end
-                        end
-                    end else begin
-                        // Add 1
-                        next_curBCD[0] = next_curBCD[0] + 1;
-                        for (i = 0; i < 3; i = i + 1) begin
-                            if (next_curBCD[i] > (i == 2? 5: 9)) begin
-                                next_curBCD[i + 1] = next_curBCD[i + 1] + 1;
-                                next_curBCD[i] = 0;
-                            end
+                    for (i = 0; i < 4; i = i + 1) begin : for_digits
+                        localparam max_num = (i == 3? 1:
+                                                i == 2? 5: 9);
+                        next_curBCD[i] = next_curBCD[i] + (cnt_down? max_num: // -1 => Add 1599 (Complement)
+                                                           i == 0? 1: 0); // Add 0001
+                        if (next_curBCD[i] > max_num) begin
+                            next_curBCD[i + 1] = next_curBCD[i + 1] + 1;
+                            next_curBCD[i] = next_curBCD[i] - (max_num + 1);
                         end
                     end
                 end
@@ -191,7 +180,7 @@ module lab4_2 (
     reg [3:0] value;
 
     wire clk_display;
-    clock_divider #(18) cd_display (.clk(clk), .clk_div(clk_display));
+    clock_divider #(13) cd_display (.clk(clk), .clk_div(clk_display));
     
     always @(posedge clk_display) begin
         case (DIGIT)
