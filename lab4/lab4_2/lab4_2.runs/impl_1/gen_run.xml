@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1634808138">
+<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1634813445">
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <File Type="BITSTR-SYSDEF" Name="lab4_2.sysdef"/>
   <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
@@ -127,8 +127,6 @@
     <Step Id="phys_opt_design"/>
     <Step Id="route_design"/>
     <Step Id="post_route_phys_opt_design"/>
-    <Step Id="write_bitstream">
-      <Option Id="BinFile">1</Option>
-    </Step>
+    <Step Id="write_bitstream"/>
   </Strategy>
 </GenRun>

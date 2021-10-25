@@ -306,7 +306,7 @@ OPTRACE "read constraints: write_bitstream" END { }
   catch { write_mem_info -force -no_partial_mmi lab4_2.mmi }
 OPTRACE "write_bitstream setup" END { }
 OPTRACE "write_bitstream" START { }
-  write_bitstream -force lab4_2.bit -bin_file
+  write_bitstream -force lab4_2.bit 
 OPTRACE "write_bitstream" END { }
 OPTRACE "write_bitstream misc" START { }
 OPTRACE "read constraints: write_bitstream_post" START { }

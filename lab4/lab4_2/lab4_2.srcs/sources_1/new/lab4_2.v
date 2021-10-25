@@ -57,7 +57,7 @@ module lab4_2 (
     parameter S_DirSetting = 2'b00;
     parameter S_NumSetting = 2'b01;
     parameter S_Counting = 2'b11;
-    parameter S_Finish = 2'b01;
+    parameter S_Finish = 2'b10;
 
     integer i;
 
@@ -107,6 +107,7 @@ module lab4_2 (
             next_curBCD[i] = curBCD[i];
             next_targetBCD[i] = targetBCD[i];
         end
+        next_curBCD[4] = 0;
 
         case (state)
             S_DirSetting: begin
@@ -154,7 +155,7 @@ module lab4_2 (
         endcase
     end
 
-    // Seqiential memory elements
+    // Sequential memory elements
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             state <= S_DirSetting;

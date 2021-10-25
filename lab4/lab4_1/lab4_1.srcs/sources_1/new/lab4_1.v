@@ -42,15 +42,16 @@ module lab4_1 (
     reg [1:0] speed;
     reg [3:0] BCD [1:0];
     reg is_pause;
+    reg cur_dir;
 
     wire [2:0] clk_div;
     clock_divider cd(.clk(clk), .clk_div(clk_div));
     assign count_clk = clk_div[speed];
     onepulse ccop(.pb_debounced(count_clk), .clk(clk), .pb_1pulse(cnt_clk_1p));
 
-
     assign next_is_pause = en_1p? ~is_pause: is_pause;
 
+    assign next_cir_dir = is_pause? cur_dir: dir_db;
 
     reg [1:0] next_speed;
     always @* begin
@@ -69,14 +70,14 @@ module lab4_1 (
         next_BCD[0] = BCD[0];
         next_BCD[1] = BCD[1];
         if (cnt_clk_1p && !is_pause) begin
-            if (!dir_db && !max) begin
+            if (!cur_dir && !max) begin
                 // Up
                 next_BCD[0] = BCD[0] + 1;
                 if (next_BCD[0] == 10) begin
                     next_BCD[0] = 0;
                     next_BCD[1] = BCD[1] + 1;
                 end
-            end else if (dir_db && !min) begin
+            end else if (cur_dir && !min) begin
                 // Down
                 if (BCD[0] == 0) begin
                     next_BCD[1] = BCD[1] - 1;
@@ -92,11 +93,13 @@ module lab4_1 (
         if (rst) begin
             speed <= 0;
             is_pause <= 1;
+            cur_dir <= 0;
             BCD[0] <= 0;
             BCD[1] <= 0;
         end else begin
             is_pause <= next_is_pause;
             speed <= next_speed;
+            cur_dir <= next_cir_dir;
             BCD[0] <= next_BCD[0];
             BCD[1] <= next_BCD[1];
         end
@@ -114,7 +117,7 @@ module lab4_1 (
                 DIGIT = 4'b1101;
             end
             4'b1101: begin
-                value = dir_db? 11: 10;
+                value = cur_dir? 11: 10;
                 DIGIT = 4'b1011;
             end
             4'b1011: begin
