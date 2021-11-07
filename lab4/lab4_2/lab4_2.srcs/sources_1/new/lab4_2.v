@@ -170,8 +170,8 @@ module lab4_2 (
             cnt_down <= next_cnt_down;
             cur_setting <= next_cur_setting;
             for (i = 0; i < 4; i = i + 1) begin
-                curBCD[i] = next_curBCD[i][3:0];
-                targetBCD[i] = next_targetBCD[i];
+                curBCD[i] <= next_curBCD[i][3:0];
+                targetBCD[i] <= next_targetBCD[i];
             end
         end
     end
