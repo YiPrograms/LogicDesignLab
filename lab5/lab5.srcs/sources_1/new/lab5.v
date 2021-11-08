@@ -15,22 +15,6 @@ module clock_divider #(parameter n = 13) (
     assign clk_div = counter[n-1];
 endmodule
 
-module clock_divider_1s_onepulse (
-    input clk,
-    output clk_div
-);
-    reg [28: 0] counter = 0;
-
-    wire [28: 0] next_cnt;
-    assign next_cnt = counter == 100000000? 0: counter + 1;
-
-    always @(posedge clk) begin
-        counter <= next_cnt;
-    end
-
-    assign clk_div = counter == 100000000;
-endmodule
-
 module lab5(
     input clk,
     input rst,
@@ -45,7 +29,6 @@ module lab5(
 );
 
     clock_divider #(14) cd13(.clk(clk), .clk_div(clk14));
-    clock_divider_1s_onepulse cd2000(.clk(clk), .clk_div(clk_1000));
 
     debounce dbok(.pb_debounced(ok_db), .pb(BTNU), .clk(clk14));
     debounce dbcanc(.pb_debounced(canc_db), .pb(BTND), .clk(clk14));
