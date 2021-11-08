@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Tue Nov  9 01:10:37 2021
+| Date             : Tue Nov  9 01:44:01 2021
 | Host             : YNB running 64-bit Arch Linux
 | Command          : report_power -file lab5_power_routed.rpt -pb lab5_power_summary_routed.pb -rpx lab5_power_routed.rpx
 | Design           : lab5
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.106        |
+| Total On-Chip Power (W)  | 0.114        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.034        |
+| Dynamic (W)              | 0.042        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
-| Max Ambient (C)          | 84.5         |
-| Junction Temperature (C) | 25.5         |
+| Max Ambient (C)          | 84.4         |
+| Junction Temperature (C) | 25.6         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -53,15 +53,15 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      311 |       --- |             --- |
+| Slice Logic    |    <0.001 |      318 |       --- |             --- |
 |   LUT as Logic |    <0.001 |      119 |     20800 |            0.57 |
-|   CARRY4       |    <0.001 |       13 |      8150 |            0.16 |
 |   Register     |    <0.001 |      114 |     41600 |            0.27 |
-|   Others       |     0.000 |       26 |       --- |             --- |
-| Signals        |    <0.001 |      243 |       --- |             --- |
-| I/O            |     0.032 |       34 |       106 |           32.08 |
+|   CARRY4       |    <0.001 |       13 |      8150 |            0.16 |
+|   Others       |     0.000 |       24 |       --- |             --- |
+| Signals        |    <0.001 |      252 |       --- |             --- |
+| I/O            |     0.040 |       34 |       106 |           32.08 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.106 |          |           |                 |
+| Total          |     0.114 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,7 +73,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Vccint    |       1.000 |     0.012 |       0.002 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.014 |       0.001 |      0.013 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.010 |       0.009 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.012 |       0.011 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -140,7 +140,7 @@ Table of Contents
 +------+-----------+
 | Name | Power (W) |
 +------+-----------+
-| lab5 |     0.034 |
+| lab5 |     0.042 |
 +------+-----------+
 
 

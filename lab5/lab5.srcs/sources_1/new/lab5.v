@@ -73,7 +73,8 @@ module lab5(
 
     reg [2:0] state;
     reg [3:0] BCD [3:0];
-    reg [3:0] counter;
+    reg [3:0] second;
+    reg [28:0] counter;
     reg [2:0] type;
     wire [5:0] price;
     reg [1:0] amount;
@@ -82,14 +83,18 @@ module lab5(
 
     // State transition logic
     reg [2:0] next_state;
-    reg [3:0] next_counter;
+    reg [3:0] next_second;
+    reg [28:0] next_counter;
     always @* begin
         next_state = state;
-        next_counter = counter;
+        next_second = second;
+        next_counter = counter + 1;
 
-        if (clk_1000)
-            next_counter = counter + 1;
-        
+        if (next_counter == 100000000) begin // 1 second
+            next_second = second + 1;
+            next_counter = 0;
+        end
+
         case (state)
             S_Idle: begin
                 if (l_op || m_op || r_op)
@@ -114,20 +119,23 @@ module lab5(
                     next_state = S_Release;
             end
             S_Release: begin
-                if (counter == 5)
+                if (second == 5)
                     next_state = S_Change;
             end
             S_Change: begin
-                if (money == 0 && counter == 1) // Needs to stay at 00 for 1 second
-                    next_state = S_Idle;
-                if (counter == 1) // One-pulse 1 second counter
-                    next_counter = 0;
+                if (second == 1) begin
+                    next_second = 0; // One-pulse 1 second counter
+                    if (money == 0) // Needs to stay at 00 for 1 second
+                        next_state = S_Idle;
+                end
             end
         endcase
 
         // Reset counter to 0 on state change
-        if (next_state != state)
+        if (next_state != state) begin
+            next_second = 0;
             next_counter = 0;
+        end
     end
 
     // Controls type
@@ -174,7 +182,7 @@ module lab5(
         case (state)
             S_Idle: begin
                 for (i = 0; i < 4; i = i + 1) begin
-                    next_BCD[i] = (!(counter & 1))? BCD_DASH: BCD_OFF;
+                    next_BCD[i] = (!(second & 1))? BCD_DASH: BCD_OFF;
                 end
             end
             S_Type: begin
@@ -217,7 +225,7 @@ module lab5(
             else if (money >= price)
                 next_money = money - price;
         end else if (state == S_Change) begin
-            if (counter == 1) begin
+            if (second == 1) begin
                 if (money >= 5)
                     next_money = money - 5;
                 else
@@ -231,7 +239,8 @@ module lab5(
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             state <= S_Idle;
-            counter <= 1;
+            second <= 1;
+            counter <= 100000000 - 1;
             type <= 0;
             amount <= 1;
             money <= 0;
@@ -239,6 +248,7 @@ module lab5(
                 BCD[i] <= BCD_OFF;
         end else begin
             state <= next_state;
+            second <= next_second;
             counter <= next_counter;
             type <= next_type;
             amount <= next_amount;
@@ -250,7 +260,7 @@ module lab5(
 
     always @* begin
         for (i = 0; i < 16; i = i + 1)
-            LED[i] = (state == S_Idle || state == S_Release) && !(counter & 1);
+            LED[i] = (state == S_Idle || state == S_Release) && !(second & 1);
     end
 
     reg [3:0] value;
