@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Mon Nov  8 01:54:29 2021
+| Date         : Tue Nov  9 01:10:28 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_control_sets -verbose -file lab5_control_sets_placed.rpt
 | Design       : lab5
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |     6 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    15 |
+| Unused register locations in slices containing registers |    22 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -58,11 +58,11 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              51 |           16 |
-| No           | No                    | Yes                    |              23 |           12 |
-| No           | Yes                   | No                     |              29 |            8 |
+| No           | No                    | No                     |              53 |           20 |
+| No           | No                    | Yes                    |              23 |           10 |
+| No           | Yes                   | No                     |              28 |            7 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |              10 |            8 |
+| Yes          | No                    | Yes                    |              10 |            7 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -70,15 +70,15 @@ Table of Contents
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+---------------+-------------------------+------------------+----------------+--------------+
-|  Clock Signal  | Enable Signal |     Set/Reset Signal    | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+---------------+-------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | opcanc/E[0]   | rst_IBUF                |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | opr/E[0]      | rst_IBUF                |                6 |              6 |         1.00 |
-|  clk_IBUF_BUFG |               |                         |                7 |             23 |         3.29 |
-|  clk_IBUF_BUFG |               | rst_IBUF                |               12 |             23 |         1.92 |
-|  cd13/out[0]   |               |                         |                9 |             28 |         3.11 |
-|  clk_IBUF_BUFG |               | cd2000/counter_reg[7]_0 |                8 |             29 |         3.62 |
-+----------------+---------------+-------------------------+------------------+----------------+--------------+
++----------------+---------------+----------------------------+------------------+----------------+--------------+
+|  Clock Signal  | Enable Signal |      Set/Reset Signal      | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+---------------+----------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | opcanc/E[0]   | rst_IBUF                   |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | opl/E[0]      | rst_IBUF                   |                5 |              6 |         1.20 |
+|  clk_IBUF_BUFG |               | rst_IBUF                   |               10 |             23 |         2.30 |
+|  clk_IBUF_BUFG |               |                            |                9 |             25 |         2.78 |
+|  clk_IBUF_BUFG |               | cd2000/counter[28]_i_1_n_0 |                7 |             28 |         4.00 |
+|  cd13/out[0]   |               |                            |               11 |             28 |         2.55 |
++----------------+---------------+----------------------------+------------------+----------------+--------------+
 
 

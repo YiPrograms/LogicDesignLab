@@ -44,14 +44,14 @@ module lab5(
     output reg [6:0] DISPLAY
 );
 
-    clock_divider #(13) cd13(.clk(clk), .clk_div(clk13));
+    clock_divider #(14) cd13(.clk(clk), .clk_div(clk14));
     clock_divider_1s_onepulse cd2000(.clk(clk), .clk_div(clk_1000));
 
-    debounce dbok(.pb_debounced(ok_db), .pb(BTNU), .clk(clk13));
-    debounce dbcanc(.pb_debounced(canc_db), .pb(BTND), .clk(clk13));
-    debounce dbl(.pb_debounced(l_db), .pb(BTNL), .clk(clk13));
-    debounce dbm(.pb_debounced(m_db), .pb(BTNC), .clk(clk13));
-    debounce dbr(.pb_debounced(r_db), .pb(BTNR), .clk(clk13));
+    debounce dbok(.pb_debounced(ok_db), .pb(BTNU), .clk(clk14));
+    debounce dbcanc(.pb_debounced(canc_db), .pb(BTND), .clk(clk14));
+    debounce dbl(.pb_debounced(l_db), .pb(BTNL), .clk(clk14));
+    debounce dbm(.pb_debounced(m_db), .pb(BTNC), .clk(clk14));
+    debounce dbr(.pb_debounced(r_db), .pb(BTNR), .clk(clk14));
 
     onepulse opok(.pb_debounced(ok_db), .clk(clk), .pb_1pulse(ok_op));
     onepulse opcanc(.pb_debounced(canc_db), .clk(clk), .pb_1pulse(canc_op));
@@ -68,6 +68,9 @@ module lab5(
     parameter S_Release = 3'd4;
     parameter S_Change = 3'd5;
 
+    parameter BCD_DASH = 4'd13;
+    parameter BCD_OFF = 4'd15;
+
     reg [2:0] state;
     reg [3:0] BCD [3:0];
     reg [3:0] counter;
@@ -77,6 +80,7 @@ module lab5(
     reg [5:0] money;
 
 
+    // State transition logic
     reg [2:0] next_state;
     reg [3:0] next_counter;
     always @* begin
@@ -114,17 +118,19 @@ module lab5(
                     next_state = S_Change;
             end
             S_Change: begin
-                if (money == 0 && counter == 1) // Needs to stay at 0 for 1 second
+                if (money == 0 && counter == 1) // Needs to stay at 00 for 1 second
                     next_state = S_Idle;
-                if (counter == 1)
+                if (counter == 1) // One-pulse 1 second counter
                     next_counter = 0;
             end
         endcase
 
+        // Reset counter to 0 on state change
         if (next_state != state)
             next_counter = 0;
     end
 
+    // Controls type
     reg [2:0] next_type;
     always @* begin
         next_type = type;
@@ -144,6 +150,7 @@ module lab5(
                     type == 1? 10: 5) * amount;
 
 
+    // Controls amount
     reg [1:0] next_amount;
     always @* begin
         next_amount = amount;
@@ -157,16 +164,17 @@ module lab5(
         end
     end
 
+    // Controls BCD
     reg [3:0] next_BCD [3:0];
     always @* begin
         for (i = 0; i < 4; i = i + 1) begin
-            next_BCD[i] = 15;
+            next_BCD[i] = BCD_OFF;
         end
 
         case (state)
             S_Idle: begin
                 for (i = 0; i < 4; i = i + 1) begin
-                    next_BCD[i] = ((counter & 1) == 0)? 13: 15;
+                    next_BCD[i] = (!(counter & 1))? BCD_DASH: BCD_OFF;
                 end
             end
             S_Type: begin
@@ -193,7 +201,7 @@ module lab5(
         endcase
     end
 
-
+    // Controls money & change
     reg [5:0] next_money;
     always @* begin
         next_money = money;
@@ -218,15 +226,17 @@ module lab5(
         end
     end
 
+
+    // Flip Flops
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             state <= S_Idle;
-            counter <= 0;
+            counter <= 1;
             type <= 0;
             amount <= 1;
             money <= 0;
             for (i = 0; i < 4; i = i + 1)
-                BCD[i] <= 13;
+                BCD[i] <= BCD_OFF;
         end else begin
             state <= next_state;
             counter <= next_counter;
@@ -240,12 +250,12 @@ module lab5(
 
     always @* begin
         for (i = 0; i < 16; i = i + 1)
-            LED[i] = (state == S_Idle || state == S_Release) && ((counter & 1) == 0);
+            LED[i] = (state == S_Idle || state == S_Release) && !(counter & 1);
     end
 
     reg [3:0] value;
 
-    always @(posedge clk13) begin
+    always @(posedge clk14) begin
         case (DIGIT)
             4'b1110: begin
                 value = BCD[1];
@@ -282,10 +292,10 @@ module lab5(
             4'd7: DISPLAY = 7'b111_1000;
             4'd8: DISPLAY = 7'b000_0000;
             4'd9: DISPLAY = 7'b001_0000;
-            4'd10: DISPLAY = 7'b000_1000;
-            4'd11: DISPLAY = 7'b001_0010;
-            4'd12: DISPLAY = 7'b100_0110;
-            4'd13: DISPLAY = 7'b011_1111;
+            4'd10: DISPLAY = 7'b000_1000; // A
+            4'd11: DISPLAY = 7'b001_0010; // S
+            4'd12: DISPLAY = 7'b100_0110; // C
+            4'd13: DISPLAY = 7'b011_1111; // -
             default: DISPLAY = 7'b111_1111;
         endcase
     end
