@@ -28,6 +28,8 @@ module lab6(
     clock_divider #(14) cd14(.clk(clk), .clk_div(clk14));
     clock_divider #(27) cd27(.clk(clk), .clk_div(clk27));
 
+    onepulse op(.pb_debounced(clk27), .clk(clk), .pb_1pulse(clk27_1p));
+
     parameter S_IdleB1 = 4'd0;
     parameter S_PickUpB1 = 4'd1;
     parameter S_RefuelG1 = 4'd2;
@@ -47,16 +49,21 @@ module lab6(
     parameter BCD_OFF = 4'd15;
 
     reg [3:0] state;
-    reg [2:0] passengers;
-    reg [2:0] B1;
-    reg [2:0] B2;
+    reg [1:0] passengers;
+    reg [1:0] B1;
+    reg [1:0] B2;
     reg [4:0] gas;
     reg [6:0] revenue;
     reg [2:0] pos;
 
 
+    reg B1_pressed;
+    reg B2_pressed;
+    onepulse b1op(.pb_debounced(B1_pressed), .clk(clk), .pb_1pulse(B1_pressed_1p));
+    onepulse b2op(.pb_debounced(B2_pressed), .clk(clk), .pb_1pulse(B2_pressed_1p));
+
     // State transition logic
-    reg [2:0] next_state;
+    reg [3:0] next_state;
     always @* begin
         next_state = state;
 
@@ -72,10 +79,10 @@ module lab6(
                 if (gas == 20 || revenue < 10)
                     next_state = state + 1;
             S_DriveB1G2:
-                if (pos == 3)
+                if (pos == 2)
                     next_state = S_RefuelB1B2;
             S_DriveG2B2:
-                if (pos == 6)
+                if (pos == 5)
                     next_state = S_GetOffB2;
             S_GetOffB2:
                 if (passengers == 0)
@@ -88,10 +95,10 @@ module lab6(
             S_PickUpB2:
                 next_state = S_RefuelG3;
             S_DriveB2G2:
-                if (pos == 3)
+                if (pos == 4)
                     next_state = S_RefuelB2B1;
             S_DriveG2B1:
-                if (pos == 0)
+                if (pos == 1)
                     next_state = S_GetOffB1;
             S_GetOffB1:
                 if (passengers == 0)
@@ -99,25 +106,38 @@ module lab6(
         endcase
     end
 
-    reg [2:0] next_B1;
-    reg [2:0] next_B2;
-    reg [2:0] next_passengers;
+    reg [1:0] next_B1;
+    reg [1:0] next_B2;
     always @* begin
         next_B1 = B1;
         next_B2 = B2;
-        next_passengers = passengers;
 
+        if (clk27_1p) begin
+            case (state)
+                S_PickUpB1:
+                    next_B1 = 0;
+                S_PickUpB2:
+                    next_B2 = 0;
+            endcase
+        end else begin
+            if (B1_pressed_1p && B1 != 2)
+                next_B1 = B1 + 1;
+            if (B2_pressed_1p && B2 != 2)
+                next_B2 = B2 + 1;
+        end
+    end
+
+    reg [1:0] next_passengers;
+    always @* begin
+        next_passengers = passengers;
         case (state)
-            S_PickUpB1: begin
+            S_PickUpB1:
                 next_passengers = B1;
-                next_B1 = 0;
-            end
-            S_PickUpB2: begin
+            S_PickUpB2:
                 next_passengers = B2;
-                next_B2 = 0;
-            end
             S_GetOffB2, S_GetOffB1:
-                next_passengers = passengers - 1;
+                if (passengers != 0)
+                    next_passengers = passengers - 1;
         endcase
     end
 
@@ -154,23 +174,23 @@ module lab6(
                     next_revenue = revenue - 10;
                 end
             S_DriveB1G2:
-                if (pos == 3)
+                if (pos == 2)
                     next_gas = gas - 5 * passengers;
             S_DriveG2B2:
-                if (pos == 6)
+                if (pos == 5)
                     next_gas = gas - 5 * passengers;
             S_DriveB2G2:
-                if (pos == 3)
+                if (pos == 4)
                     next_gas = gas - 5 * passengers;
             S_DriveG2B1:
-                if (pos == 0)
+                if (pos == 1)
                     next_gas = gas - 5 * passengers;
         endcase
     end
 
 
     // Flip Flops
-    always @(posedge clk27, posedge rst) begin
+    always @(posedge clk, posedge rst) begin
         if (rst) begin
             state = S_IdleB1;
             passengers = 0;
@@ -180,15 +200,38 @@ module lab6(
             revenue = 0;
             pos = 0;
         end else begin
-            state = next_state;
-            passengers = next_passengers;
+            if (clk27_1p) begin
+                state = next_state;
+                passengers = next_passengers;
+                gas = next_gas;
+                revenue = next_revenue;
+                pos = next_pos;
+            end
+
             B1 = next_B1;
             B2 = next_B2;
-            gas = next_gas;
-            revenue = next_revenue;
-            pos = next_pos;
         end
     end
+
+
+    // LED
+    integer i;
+    always @* begin
+        for (i = 0; i < 16; i = i + 1)
+            LED[i] = 0;
+
+        LED[pos] = 1;
+
+        LED[10] = passengers != 0;
+        LED[9] = passengers == 2;
+
+        LED[15] = B1 != 0;
+        LED[14] = B1 == 2;
+
+        LED[12] = B2 != 0;
+        LED[11] = B2 == 2;
+    end
+
 
     reg [3:0] value;
 
@@ -232,5 +275,34 @@ module lab6(
             default: DISPLAY = 7'b111_1111;
         endcase
     end
+	
+	wire shift_down;
+	wire [511:0] key_down;
+	wire [8:0] last_change;
+	wire been_ready;
+	
+	KeyboardDecoder key_de (
+		.key_down(key_down),
+		.last_change(last_change),
+		.key_valid(been_ready),
+		.PS2_DATA(PS2_DATA),
+		.PS2_CLK(PS2_CLK),
+		.rst(rst),
+		.clk(clk)
+	);
+
+	always @(posedge clk, posedge rst) begin
+		if (rst) begin
+			B1_pressed = 0;
+            B2_pressed = 0;
+		end else begin
+			if (been_ready) begin
+				if (last_change == 9'b0_0110_1001)
+                    B1_pressed = key_down[last_change];
+                else if (last_change == 9'b0_0111_0010)
+                    B2_pressed = key_down[last_change];
+			end
+		end
+	end
 
 endmodule
