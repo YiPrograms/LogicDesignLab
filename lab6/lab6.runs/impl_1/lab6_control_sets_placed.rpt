@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Sun Nov 21 02:11:56 2021
+| Date         : Sun Nov 21 02:34:28 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_control_sets -verbose -file lab6_control_sets_placed.rpt
 | Design       : lab6
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |    11 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    35 |
+| Unused register locations in slices containing registers |    27 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -42,8 +42,8 @@ Table of Contents
 | Total control sets |    11 |
 | >= 0 to < 4        |     0 |
 | >= 4 to < 6        |     3 |
-| >= 6 to < 8        |     1 |
-| >= 8 to < 10       |     3 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     4 |
 | >= 10 to < 12      |     2 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
@@ -58,11 +58,11 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              57 |           17 |
-| No           | No                    | Yes                    |              75 |           29 |
+| No           | No                    | No                     |              56 |           17 |
+| No           | No                    | Yes                    |              75 |           26 |
 | No           | Yes                   | No                     |               0 |            0 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |              57 |           22 |
+| Yes          | No                    | Yes                    |              58 |           18 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -74,16 +74,16 @@ Table of Contents
 |  Clock Signal  |                   Enable Signal                   | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
 |  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/bits_count        | rst_IBUF         |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | op/E[0]                                           | rst_IBUF         |                3 |              4 |         1.33 |
-|  clk_IBUF_BUFG | op/state_reg[1][0]                                | rst_IBUF         |                3 |              5 |         1.67 |
-|  clk_IBUF_BUFG | op/state_reg[0]_0[0]                              | rst_IBUF         |                3 |              7 |         2.33 |
-|  cd14/CLK      |                                                   |                  |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF         |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF         |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | key_de/key                                        | rst_IBUF         |                3 |             10 |         3.33 |
+|  clk_IBUF_BUFG | op/E[0]                                           | rst_IBUF         |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | op/pb_1pulse_reg_4[0]                             | rst_IBUF         |                2 |              5 |         2.50 |
+|  cd14/CLK      |                                                   |                  |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF         |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF         |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | op/pb_1pulse_reg_5[0]                             | rst_IBUF         |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | key_de/key                                        | rst_IBUF         |                2 |             10 |         5.00 |
 |  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/frame[10]_i_1_n_0 | rst_IBUF         |                2 |             11 |         5.50 |
-|  clk_IBUF_BUFG |                                                   |                  |               14 |             49 |         3.50 |
-|  clk_IBUF_BUFG |                                                   | rst_IBUF         |               29 |             75 |         2.59 |
+|  clk_IBUF_BUFG |                                                   |                  |               13 |             48 |         3.69 |
+|  clk_IBUF_BUFG |                                                   | rst_IBUF         |               26 |             75 |         2.88 |
 +----------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
 
 

@@ -26,9 +26,9 @@ module lab6(
 );
 
     clock_divider #(14) cd14(.clk(clk), .clk_div(clk14));
-    clock_divider #(27) cd27(.clk(clk), .clk_div(clk27));
+    clock_divider #(26) cd26(.clk(clk), .clk_div(clk26));
 
-    onepulse op(.pb_debounced(clk27), .clk(clk), .pb_1pulse(clk27_1p));
+    onepulse op(.pb_debounced(clk26), .clk(clk), .pb_1pulse(clk26_1p));
 
     parameter S_IdleB1 = 4'd0;
     parameter S_PickUpB1 = 4'd1;
@@ -53,7 +53,7 @@ module lab6(
     reg [1:0] B1;
     reg [1:0] B2;
     reg [4:0] gas;
-    reg [6:0] revenue;
+    reg [7:0] revenue;
     reg [2:0] pos;
 
 
@@ -79,8 +79,12 @@ module lab6(
                 if (gas == 20 || revenue < 10)
                     next_state = state + 1;
             S_DriveB1G2:
-                if (pos == 2)
-                    next_state = S_RefuelB1B2;
+                if (pos == 2) begin
+                    if (passengers != 0)
+                        next_state = S_RefuelB1B2;
+                    else
+                        next_state = S_DriveG2B2;
+                end
             S_DriveG2B2:
                 if (pos == 5)
                     next_state = S_GetOffB2;
@@ -95,8 +99,12 @@ module lab6(
             S_PickUpB2:
                 next_state = S_RefuelG3;
             S_DriveB2G2:
-                if (pos == 4)
-                    next_state = S_RefuelB2B1;
+                if (pos == 4) begin
+                    if (passengers != 0)
+                        next_state = S_RefuelB2B1;
+                    else
+                        next_state = S_DriveG2B1;
+                end
             S_DriveG2B1:
                 if (pos == 1)
                     next_state = S_GetOffB1;
@@ -112,7 +120,7 @@ module lab6(
         next_B1 = B1;
         next_B2 = B2;
 
-        if (clk27_1p) begin
+        if (clk26_1p) begin
             case (state)
                 S_PickUpB1:
                     next_B1 = 0;
@@ -155,16 +163,22 @@ module lab6(
 
     
     reg [4:0] next_gas;
-    reg [6:0] next_revenue;
+    reg [7:0] next_revenue;
     always @* begin
         next_gas = gas;
         next_revenue = revenue;
 
         case (state)
-            S_PickUpB1:
+            S_PickUpB1: begin
                 next_revenue = revenue + 30 * B1;
-            S_PickUpB2:
+                if (next_revenue > 90)
+                    next_revenue = 90;
+            end
+            S_PickUpB2: begin
                 next_revenue = revenue + 20 * B2;
+                if (next_revenue > 90)
+                    next_revenue = 90;
+            end
             S_RefuelG1, S_RefuelB1B2, S_RefuelG3, S_RefuelB2B1:
                 if (gas < 20 && revenue >= 10) begin
                     next_gas = gas + 10;
@@ -192,24 +206,24 @@ module lab6(
     // Flip Flops
     always @(posedge clk, posedge rst) begin
         if (rst) begin
-            state = S_IdleB1;
-            passengers = 0;
-            B1 = 0;
-            B2 = 0;
-            gas = 0;
-            revenue = 0;
-            pos = 0;
+            state <= S_IdleB1;
+            passengers <= 0;
+            B1 <= 0;
+            B2 <= 0;
+            gas <= 0;
+            revenue <= 0;
+            pos <= 0;
         end else begin
-            if (clk27_1p) begin
-                state = next_state;
-                passengers = next_passengers;
-                gas = next_gas;
-                revenue = next_revenue;
-                pos = next_pos;
+            if (clk26_1p) begin
+                state <= next_state;
+                passengers <= next_passengers;
+                gas <= next_gas;
+                revenue <= next_revenue;
+                pos <= next_pos;
             end
 
-            B1 = next_B1;
-            B2 = next_B2;
+            B1 <= next_B1;
+            B2 <= next_B2;
         end
     end
 
