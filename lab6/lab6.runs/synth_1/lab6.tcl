@@ -92,7 +92,7 @@ OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   /home/yi/Workspace/Vivado/lab6/lab6.srcs/sources_1/new/KeyboardDecoder.v
-  /home/yi/Workspace/Vivado/lab6/lab6.srcs/sources_1/new/debounce.v
+  /home/yi/Workspace/Vivado/lab6/lab6.srcs/sources_1/new/OnePulse.v
   /home/yi/Workspace/Vivado/lab6/lab6.srcs/sources_1/new/lab6.v
 }
 read_ip -quiet /home/yi/Workspace/Vivado/lab6/lab6.srcs/sources_1/ip/KeyboardCtrl_0/KeyboardCtrl_0.xci

@@ -28,22 +28,24 @@ module lab6(
     clock_divider #(14) cd14(.clk(clk), .clk_div(clk14));
     clock_divider #(26) cd26(.clk(clk), .clk_div(clk26));
 
-    onepulse op(.pb_debounced(clk26), .clk(clk), .pb_1pulse(clk26_1p));
+    OnePulse op(.signal(clk26), .clock(clk), .signal_single_pulse(clk26_1p));
 
     parameter S_IdleB1 = 4'd0;
     parameter S_PickUpB1 = 4'd1;
-    parameter S_RefuelG1 = 4'd2;
-    parameter S_DriveB1G2 = 4'd3;
-    parameter S_RefuelB1B2 = 4'd4;
-    parameter S_DriveG2B2 = 4'd5;
-    parameter S_GetOffB2 = 4'd6;
-    parameter S_IdleB2 = 4'd7;
-    parameter S_PickUpB2 = 4'd8;
-    parameter S_RefuelG3 = 4'd9;
-    parameter S_DriveB2G2 = 4'd10;
-    parameter S_RefuelB2B1 = 4'd11;
-    parameter S_DriveG2B1 = 4'd12;
-    parameter S_GetOffB1 = 4'd13;
+    parameter S_DepositB1 = 4'd2;
+    parameter S_RefuelG1 = 4'd3;
+    parameter S_DriveB1G2 = 4'd4;
+    parameter S_RefuelB1B2 = 4'd5;
+    parameter S_DriveG2B2 = 4'd6;
+    parameter S_GetOffB2 = 4'd7;
+    parameter S_IdleB2 = 4'd8;
+    parameter S_PickUpB2 = 4'd9;
+    parameter S_DepositB2 = 4'd10;
+    parameter S_RefuelG3 = 4'd11;
+    parameter S_DriveB2G2 = 4'd12;
+    parameter S_RefuelB2B1 = 4'd13;
+    parameter S_DriveG2B1 = 4'd14;
+    parameter S_GetOffB1 = 4'd15;
 
     parameter BCD_DASH = 4'd13;
     parameter BCD_OFF = 4'd15;
@@ -59,8 +61,8 @@ module lab6(
 
     reg B1_pressed;
     reg B2_pressed;
-    onepulse b1op(.pb_debounced(B1_pressed), .clk(clk), .pb_1pulse(B1_pressed_1p));
-    onepulse b2op(.pb_debounced(B2_pressed), .clk(clk), .pb_1pulse(B2_pressed_1p));
+    OnePulse b1op(.signal(B1_pressed), .clock(clk), .signal_single_pulse(B1_pressed_1p));
+    OnePulse b2op(.signal(B2_pressed), .clock(clk), .signal_single_pulse(B2_pressed_1p));
 
     // State transition logic
     reg [3:0] next_state;
@@ -74,6 +76,8 @@ module lab6(
                 else if (B2 != 0)
                     next_state = S_DriveB1G2;
             S_PickUpB1:
+                next_state = S_DepositB1;
+            S_DepositB1:
                 next_state = S_RefuelG1;
             S_RefuelG1, S_RefuelB1B2, S_RefuelG3, S_RefuelB2B1:
                 if (gas == 20 || revenue < 10)
@@ -97,6 +101,8 @@ module lab6(
                 else if (B1 != 0)
                     next_state = S_DriveB2G2;
             S_PickUpB2:
+                next_state = S_DepositB2;
+            S_DepositB2:
                 next_state = S_RefuelG3;
             S_DriveB2G2:
                 if (pos == 4) begin
@@ -169,13 +175,8 @@ module lab6(
         next_revenue = revenue;
 
         case (state)
-            S_PickUpB1: begin
-                next_revenue = revenue + 30 * B1;
-                if (next_revenue > 90)
-                    next_revenue = 90;
-            end
-            S_PickUpB2: begin
-                next_revenue = revenue + 20 * B2;
+            S_DepositB1, S_DepositB2: begin
+                next_revenue = revenue + 30 * passengers;
                 if (next_revenue > 90)
                     next_revenue = 90;
             end

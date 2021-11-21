@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Sun Nov 21 02:34:28 2021
+| Date         : Sun Nov 21 20:19:41 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_control_sets -verbose -file lab6_control_sets_placed.rpt
 | Design       : lab6
@@ -58,11 +58,11 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              56 |           17 |
-| No           | No                    | Yes                    |              75 |           26 |
+| No           | No                    | No                     |              56 |           16 |
+| No           | No                    | Yes                    |              75 |           27 |
 | No           | Yes                   | No                     |               0 |            0 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |              58 |           18 |
+| Yes          | No                    | Yes                    |              58 |           19 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -70,20 +70,20 @@ Table of Contents
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
-|  Clock Signal  |                   Enable Signal                   | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/bits_count        | rst_IBUF         |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | op/E[0]                                           | rst_IBUF         |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | op/pb_1pulse_reg_4[0]                             | rst_IBUF         |                2 |              5 |         2.50 |
-|  cd14/CLK      |                                                   |                  |                4 |              8 |         2.00 |
-|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF         |                2 |              8 |         4.00 |
-|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF         |                2 |              8 |         4.00 |
-|  clk_IBUF_BUFG | op/pb_1pulse_reg_5[0]                             | rst_IBUF         |                4 |              8 |         2.00 |
-|  clk_IBUF_BUFG | key_de/key                                        | rst_IBUF         |                2 |             10 |         5.00 |
-|  clk_IBUF_BUFG | key_de/inst/inst/Ps2Interface_i/frame[10]_i_1_n_0 | rst_IBUF         |                2 |             11 |         5.50 |
-|  clk_IBUF_BUFG |                                                   |                  |               13 |             48 |         3.69 |
-|  clk_IBUF_BUFG |                                                   | rst_IBUF         |               26 |             75 |         2.88 |
-+----------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
++-------------------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
+|       Clock Signal      |                   Enable Signal                   | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++-------------------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG          | key_de/inst/inst/Ps2Interface_i/bits_count        | rst_IBUF         |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG          | op/E[0]                                           | rst_IBUF         |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG          | op/signal_single_pulse_reg_4[0]                   | rst_IBUF         |                3 |              5 |         1.67 |
+|  cd14/counter_reg[13]_0 |                                                   |                  |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG          | key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF         |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG          | key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF         |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG          | op/state_reg[2][0]                                | rst_IBUF         |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG          | key_de/key                                        | rst_IBUF         |                2 |             10 |         5.00 |
+|  clk_IBUF_BUFG          | key_de/inst/inst/Ps2Interface_i/frame[10]_i_1_n_0 | rst_IBUF         |                2 |             11 |         5.50 |
+|  clk_IBUF_BUFG          |                                                   |                  |               12 |             48 |         4.00 |
+|  clk_IBUF_BUFG          |                                                   | rst_IBUF         |               27 |             75 |         2.78 |
++-------------------------+---------------------------------------------------+------------------+------------------+----------------+--------------+
 
 
