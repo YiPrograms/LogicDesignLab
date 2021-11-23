@@ -15,7 +15,7 @@ module clock_divider #(parameter n = 13) (
     assign clk_div = counter[n-1];
 endmodule
 
-module lab6(
+module lab06(
     input clk,
     input rst,
     inout PS2_CLK,
