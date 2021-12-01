@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Dec  2 00:29:10 2021
+# Process ID: 44925
+# Current directory: /home/yi/Workspace/Vivado/lab7/lab7_2/lab7_2.runs/KeyboardCtrl_0_synth_1
+# Command line: vivado -log KeyboardCtrl_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source KeyboardCtrl_0.tcl
+# Log file: /home/yi/Workspace/Vivado/lab7/lab7_2/lab7_2.runs/KeyboardCtrl_0_synth_1/KeyboardCtrl_0.vds
+# Journal file: /home/yi/Workspace/Vivado/lab7/lab7_2/lab7_2.runs/KeyboardCtrl_0_synth_1/vivado.jou
+#-----------------------------------------------------------
+source KeyboardCtrl_0.tcl -notrace
