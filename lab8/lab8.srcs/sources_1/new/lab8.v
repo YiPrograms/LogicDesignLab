@@ -71,24 +71,34 @@ module player_control (
 	parameter LEN = 512;
     reg [11:0] next_ibeat;
     reg slow_flag, next_slow_flag;
+    reg cur_music, next_cur_music;
 
 	always @(posedge clk, posedge reset) begin
 		if (reset) begin
 			ibeat <= 0;
             slow_flag <= 0;
+            cur_music <= 0;
 		end else if (_play && _mode == 1) begin
             ibeat <= next_ibeat;
             slow_flag <= next_slow_flag;
+            cur_music <= next_cur_music;
 		end
 	end
 
     always @* begin
-        if (_slow && !slow_flag) begin
-            next_ibeat = ibeat;
-            next_slow_flag = 1;
-        end else begin
-            next_ibeat = (ibeat + 1 != LEN) ? (ibeat + 1) : 0;
+        if (_music != cur_music) begin
+            next_ibeat = 0;
             next_slow_flag = 0;
+            next_cur_music <= _music;
+        end else begin
+            next_cur_music <= cur_music;
+            if (_slow && !slow_flag) begin
+                next_ibeat = ibeat;
+                next_slow_flag = 1;
+            end else begin
+                next_ibeat = (ibeat + 1 != LEN) ? (ibeat + 1) : 0;
+                next_slow_flag = 0;
+            end
         end
     end
 
@@ -833,19 +843,19 @@ module play_mode_controller (
 
     always @* begin
         if (key_pressed[0])
-            play_tone = `c4;
+            play_tone = `C4;
         else if (key_pressed[1])
-            play_tone = `d4;
+            play_tone = `D4;
         else if (key_pressed[2])
-            play_tone = `e4;
+            play_tone = `E4;
         else if (key_pressed[3])
-            play_tone = `f4;
+            play_tone = `F4;
         else if (key_pressed[4])
-            play_tone = `g4;
+            play_tone = `G4;
         else if (key_pressed[5])
-            play_tone = `a4;
+            play_tone = `A4;
         else if (key_pressed[6])
-            play_tone = `b4;
+            play_tone = `B4;
         else
             play_tone = `sil;
     end
@@ -877,20 +887,24 @@ module seven_seg_controller (
         notation = nothing;
         note = nothing;
         case (tone)
-            `c4:
+            `C5, `C3, `C4, `C2:
                 note = c;
-            `d4:
+            `D5, `D3, `D4:
                 note = d;
-            `e4:
+            `Ef3, `E4, `Ef5, `Ef4:
                 note = e;
-            `f4:
+            `F3, `F4, `F2, `F5:
                 note = f;
-            `g4:
+            `G3, `G5, `G4, `G2:
                 note = g;
-            `a4:
+            `A4, `Af2, `A2, `Af4, `Af3:
                 note = a;
-            `b4:
+            `Bf4, `B4, `B2, `Bf2, `Bf3:
                 note = b;
+        endcase
+        case (tone)
+            `Ef4, `Ef5, `Bf2, `Af4, `Af2, `Ef3, `Bf3, `Bf4, `Af3:
+                notation = flat;
         endcase
     end
 
