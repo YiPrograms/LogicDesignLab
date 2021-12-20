@@ -386,6 +386,20 @@ module play_mode_controller (
 
 endmodule
 
+module volume_octave_control (
+    input clk,
+    input rst,
+    input _volUP,     // BTNU: Vol up
+    input _volDOWN,   // BTND: Vol down
+    input _higherOCT, // BTNR: Oct higher
+    input _lowerOCT,  // BTNL: Oct lower
+    output reg [2:0] volume,
+    output reg [1:0] octave
+);
+    
+
+endmodule
+
 module lab8(
     clk,        // clock from crystal
     rst,        // BTNC: active high reset
@@ -416,7 +430,7 @@ module lab8(
     input _volUP, _volDOWN, _higherOCT, _lowerOCT; 
     inout PS2_DATA; 
 	inout PS2_CLK; 
-    output [15:0] _led; 
+    output reg [15:0] _led; 
     output audio_mclk; 
     output audio_lrck; 
     output audio_sck; 
@@ -425,7 +439,7 @@ module lab8(
     output [3:0] DIGIT; 
     
     // Modify these
-    assign _led = 16'b1110_0000_0001_1111;
+    // assign _led = 16'b1110_0000_0001_1111;
     assign DIGIT = 4'b0000;
     assign DISPLAY = 7'b0111111;
 
@@ -433,17 +447,30 @@ module lab8(
     wire [15:0] audio_in_left, audio_in_right;
 
     wire [11:0] ibeatNum;               // Beat counter
-    wire [31:0] freqL, freqR;           // Raw frequency, produced by music module
+    wire [31:0] demo_freqL, demo_freqR;           // Raw frequency, produced by music module
     wire [21:0] freq_outL, freq_outR;    // Processed frequency, adapted to the clock rate of Basys3
 
     wire [6:0] key_pressed;
     wire [31:0] play_tone;
 
 
+    wire [31:0] prefreqL, prefreqR;
+    wire [31:0] freqL, freqR;
+
+
+    // Flip flops
+    reg [2:0] volume;
+    reg [1:0] octave;
+
 
     // clkDiv22
     wire clkDiv22;
     clock_divider #(.n(22)) clock_22(.clk(clk), .clk_div(clkDiv22));    // for keyboard and audio
+
+    // clkDiv13
+    wire clkDiv13;
+    clock_divider #(.n(13)) clock_13(.clk(clk), .clk_div(clkDiv13));    // for debounce and 7segment
+
 
     // Player Control
     // [in]  reset, clock, _play, _slow, _music, and _mode
@@ -482,13 +509,55 @@ module lab8(
     );
 
 
+    // Volume & Octave control
+    debounce dpU(.pb_debounced(U_db), .pb(_volUP), .clk(clkDiv13));
+    debounce dpD(.pb_debounced(D_db), .pb(_volDOWN), .clk(clkDiv13));
+    debounce dpH(.pb_debounced(H_db), .pb(_higherOCT), .clk(clkDiv13));
+    debounce dpL(.pb_debounced(L_db), .pb(_lowerOCT), .clk(clkDiv13));
+    onepulse opU(.signal(U_db), .clk(clk), .op(U_op));
+    onepulse opD(.signal(D_db), .clk(clk), .op(D_op));
+    onepulse opH(.signal(H_db), .clk(clk), .op(H_op));
+    onepulse opL(.signal(L_db), .clk(clk), .op(L_op));
+
+    always @(posedge clk, posedge rst) begin
+        if (rst) begin
+            volume <= 3;
+            octave <= 2;
+        end else begin
+            if (U_op && volume != 5)
+                volume <= volume + 1;
+            if (D_op && volume != 1)
+                volume <= volume - 1;
+            if (H_op && octave != 3)
+                octave <= octave + 1;
+            if (L_op && octave != 1)
+                octave <= octave - 1;  
+        end
+    end
+
+    always @* begin
+        _led = 0;
+        if (!_mute) begin
+            _led[0] = 1;
+            _led[1] = volume != 1;
+            _led[2] = volume != 1 && volume != 2;
+            _led[3] = volume == 4 || volume == 5;
+            _led[4] = volume == 5;
+        end
+
+        _led[16-octave] = 1;
+    end
+
+    // tone selector & octave
+    assign prefreqL = (_mode == 0)? play_tone: demo_freqL;
+    assign prefreqR = (_mode == 0)? play_tone: demo_freqR;
+    assign freqL = (octave == 1)? (prefreqL / 2): (octave == 3)? (prefreqL * 2): prefreqL;
+    assign freqr = (octave == 1)? (prefreqR / 2): (octave == 3)? (prefreqR * 2): prefreqR;
 
     // freq_outL, freq_outR
     // Note gen makes no sound, if freq_out = 50000000 / `silence = 1
-    // assign freq_outL = 50000000 / freqL;
-    // assign freq_outR = 50000000 / freqR;
-    assign freq_outL = 50000000 / play_tone;
-    assign freq_outR = 50000000 / play_tone;
+    assign freq_outL = 50000000 / freqL;
+    assign freq_outR = 50000000 / freqR;
 
     // Note generation
     // [in]  processed frequency
