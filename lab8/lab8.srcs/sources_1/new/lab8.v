@@ -28,17 +28,7 @@
 `define C2 32'd65
 `define F5 32'd698
 
-
 `define S   32'd50000000 // slience
-
-`define c4   32'd262
-`define d4   32'd294
-`define e4   32'd330
-`define f4   32'd349
-`define g4   32'd392
-`define a4   32'd440
-`define b4   32'd494
-
 `define sil   32'd50000000 // slience
 
 module clock_divider(clk, clk_div);   
