@@ -129,10 +129,14 @@ module note_gen(
 
     // Assign the amplitude of the note
     // Volume is controlled here
+
+    wire [15:0] high = 16'h0008 << (volume * 2);
+    wire [15:0] low = ~high + 1;
+
     assign audio_left = (note_div_left == 22'd1) ? 16'h0000 : 
-                                (b_clk == 1'b0) ? 16'hE000 : 16'h2000;
+                                (b_clk == 1'b0) ? low : high;
     assign audio_right = (note_div_right == 22'd1) ? 16'h0000 : 
-                                (c_clk == 1'b0) ? 16'hE000 : 16'h2000;
+                                (c_clk == 1'b0) ? low : high;
 endmodule
 
 module keypress_controller (
@@ -386,17 +390,89 @@ module play_mode_controller (
 
 endmodule
 
-module volume_octave_control (
-    input clk,
-    input rst,
-    input _volUP,     // BTNU: Vol up
-    input _volDOWN,   // BTND: Vol down
-    input _higherOCT, // BTNR: Oct higher
-    input _lowerOCT,  // BTNL: Oct lower
-    output reg [2:0] volume,
-    output reg [1:0] octave
+module seven_seg_controller (
+    input clk_display,
+    input [31:0] tone,
+    output reg [3:0] DIGIT,
+    output reg [6:0] DISPLAY
 );
     
+    reg [3:0] note;
+    reg [3:0] notation;
+
+    parameter sharp = 7;
+    parameter flat = 8;
+    parameter c = 0;
+    parameter d = 1;
+    parameter e = 2;
+    parameter f = 3;
+    parameter g = 4;
+    parameter a = 5;
+    parameter b = 6;
+    parameter nothing = 10;
+
+    always @* begin
+        notation = nothing;
+        note = nothing;
+        case (tone)
+            `c4:
+                note = c;
+            `d4:
+                note = d;
+            `e4:
+                note = e;
+            `f4:
+                note = f;
+            `g4:
+                note = g;
+            `a4:
+                note = a;
+            `b4:
+                note = b;
+        endcase
+    end
+
+    reg [3:0] value;
+
+    always @(posedge clk_display) begin
+        case (DIGIT)
+            4'b1110: begin
+                value = notation;
+                DIGIT = 4'b1101;
+            end
+            4'b1101: begin
+                value = nothing;
+                DIGIT = 4'b1011;
+            end
+            4'b1011: begin
+                value = nothing;
+                DIGIT = 4'b0111;
+            end
+            4'b0111: begin
+                value = note;
+                DIGIT = 4'b1110;
+            end
+            default: begin
+                value = note;
+                DIGIT = 4'b1110;
+            end
+        endcase
+    end
+
+    always @* begin
+        case (value)
+            4'd0: DISPLAY = 7'b0100111; // c
+            4'd1: DISPLAY = 7'b0100001; // d
+            4'd2: DISPLAY = 7'b0000110; // E
+            4'd3: DISPLAY = 7'b0001110; // F
+            4'd4: DISPLAY = 7'b1000010; // G
+            4'd5: DISPLAY = 7'b0100000; // a
+            4'd6: DISPLAY = 7'b0000011; // b
+            4'd7: DISPLAY = 7'b0011100; // #
+            4'd8: DISPLAY = 7'b0000011; // b
+            default: DISPLAY = 7'b0111111; // -
+        endcase
+    end
 
 endmodule
 
@@ -438,11 +514,6 @@ module lab8(
     output [6:0] DISPLAY; 
     output [3:0] DIGIT; 
     
-    // Modify these
-    // assign _led = 16'b1110_0000_0001_1111;
-    assign DIGIT = 4'b0000;
-    assign DISPLAY = 7'b0111111;
-
     // Internal Signal
     wire [15:0] audio_in_left, audio_in_right;
 
@@ -490,8 +561,8 @@ module lab8(
     music_example music_00 (
         .ibeatNum(ibeatNum),
         .en(1'b1),
-        .toneL(freqL),
-        .toneR(freqR)
+        .toneL(demo_freqL),
+        .toneR(demo_freqR)
     );
 
 
@@ -551,8 +622,8 @@ module lab8(
     // tone selector & octave
     assign prefreqL = (_mode == 0)? play_tone: demo_freqL;
     assign prefreqR = (_mode == 0)? play_tone: demo_freqR;
-    assign freqL = (octave == 1)? (prefreqL / 2): (octave == 3)? (prefreqL * 2): prefreqL;
-    assign freqr = (octave == 1)? (prefreqR / 2): (octave == 3)? (prefreqR * 2): prefreqR;
+    assign freqL = (_mute || prefreqL == `sil)? `sil: (octave == 1)? (prefreqL / 2): (octave == 3)? (prefreqL * 2): prefreqL;
+    assign freqR = (_mute || prefreqL == `sil)? `sil: (octave == 1)? (prefreqR / 2): (octave == 3)? (prefreqR * 2): prefreqR;
 
     // freq_outL, freq_outR
     // Note gen makes no sound, if freq_out = 50000000 / `silence = 1
@@ -565,7 +636,7 @@ module lab8(
     note_gen noteGen_00(
         .clk(clk), 
         .rst(rst), 
-        .volume(3'b000),
+        .volume(volume),
         .note_div_left(freq_outL), 
         .note_div_right(freq_outR), 
         .audio_left(audio_in_left),     // left sound audio
@@ -582,6 +653,13 @@ module lab8(
         .audio_lrck(audio_lrck),            // left-right clock
         .audio_sck(audio_sck),              // serial clock
         .audio_sdin(audio_sdin)             // serial audio data input
+    );
+
+    seven_seg_controller ssc(
+        .clk_display(clkDiv13),
+        .tone(prefreqR),
+        .DIGIT(DIGIT),
+        .DISPLAY(DISPLAY)
     );
 
 endmodule
