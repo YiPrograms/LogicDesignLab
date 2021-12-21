@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Tue Dec 21 04:10:58 2021
+| Date         : Tue Dec 21 16:05:56 2021
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_timing_summary -max_paths 10 -file lab8_timing_summary_routed.rpt -pb lab8_timing_summary_routed.pb -rpx lab8_timing_summary_routed.rpx -warn_on_violation
 | Design       : lab8
@@ -39,10 +39,10 @@ check_timing report
 
 Table of Contents
 -----------------
-1. checking no_clock (326)
+1. checking no_clock (324)
 2. checking constant_clock (0)
 3. checking pulse_width_clock (0)
-4. checking unconstrained_internal_endpoints (632)
+4. checking unconstrained_internal_endpoints (628)
 5. checking no_input_delay (12)
 6. checking no_output_delay (23)
 7. checking multiple_clock (0)
@@ -52,11 +52,11 @@ Table of Contents
 11. checking partial_output_delay (0)
 12. checking latch_loops (0)
 
-1. checking no_clock (326)
+1. checking no_clock (324)
 --------------------------
  There are 231 register/latch pins with no clock driven by root clock pin: clk (HIGH)
 
- There are 61 register/latch pins with no clock driven by root clock pin: clock_13/num_reg[12]/Q (HIGH)
+ There are 59 register/latch pins with no clock driven by root clock pin: clock_13/num_reg[12]/Q (HIGH)
 
  There are 14 register/latch pins with no clock driven by root clock pin: clock_22/num_reg[21]/Q (HIGH)
 
@@ -73,9 +73,9 @@ Table of Contents
  There are 0 register/latch pins which need pulse_width check
 
 
-4. checking unconstrained_internal_endpoints (632)
+4. checking unconstrained_internal_endpoints (628)
 --------------------------------------------------
- There are 632 pins that are not constrained for maximum delay. (HIGH)
+ There are 628 pins that are not constrained for maximum delay. (HIGH)
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 

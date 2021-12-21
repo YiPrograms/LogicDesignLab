@@ -34,10 +34,11 @@ def gen_score(f):
     times = []
     for i, (dur, tone) in enumerate(score):
         times += [tone] * (dur-1)
-        if i != len(score) - 1 and tone == score[i+1][1]:
-            times += ["S"]
-        else:
-            times += [tone]
+        times += ["S"]
+        # if i != len(score) - 1 and tone == score[i+1][1]:
+        #     times += ["S"]
+        # else:
+        #     times += [tone]
 
 
     lines = []
@@ -47,7 +48,7 @@ def gen_score(f):
         else:
             lines.append(f"12'd{i}: toneL = `{times[i]}; 12'd{i+1}: toneL = `{times[i+1]}; 12'd{i+2}: toneL = `{times[i+2]}; 12'd{i+3}: toneL = `{times[i+3]};")
 
-    open(f + ".out.v", "w").write("\t\t\t\t" + "\n\t\t\t\t".join(lines) + "\n")
+    open(f + ".out.v", "w").write("\t\t\t\t\t" + "\n\t\t\t\t\t".join(lines) + "\n")
     return used_notes
 
 
