@@ -14,3 +14,4 @@ Nov 18 2020
 /home/yi/Workspace/Vivado/lab8/lab8.srcs/sources_1/new/lab8.v,1640678688,systemVerilog,,,,clock_divider;keypress_controller;lab8;music_example;note_gen;play_mode_controller;player_control;seven_seg_controller,,,,,,,,
 /home/yi/Workspace/Vivado/lab8/scores/tones.v,1640530033,systemVerilog,,,,,,,,,,,,
 /home/yi/Workspace/Vivado/lab8_template/keyboard_decoder.v,1633874188,systemVerilog,,,,KeyboardDecoder,,,,,,,,
+/home/yi/Workspace/Vivado/lab9/lab9.srcs/sources_1/new/lab9.v,1640679746,systemVerilog,,,,Lab9;PWM_gen;PosCounter;TrigSignal;div;motor;motor_pwm;sonic_top;tracker_sensor,,,,,,,,
