@@ -1,3 +1,8 @@
+parameter FORWARD = 0;
+parameter TURN_LEFT = 1;
+parameter TURN_RIGHT = 2;
+parameter STOP = 3;
+
 // This module take "mode" input and control two motors accordingly.
 // clk should be 100MHz for PWM_gen module to work correctly.
 // You can modify / add more inputs and outputs by yourself.
@@ -6,8 +11,8 @@ module motor(
     input rst,
     input [1:0]mode,
     output  [1:0]pwm,
-    output [1:0]r_IN,
-    output [1:0]l_IN
+    output reg [1:0]r_IN,
+    output reg [1:0]l_IN
 );
 
     reg [9:0]next_left_motor, next_right_motor;
@@ -21,6 +26,14 @@ module motor(
 
     // TODO: trace the rest of motor.v and control the speed and direction of the two motors
     
+    always @(posedge clk, posedge rst) begin
+        if (rst) begin
+            next_left_motor <= 0;
+            next_right_motor <= 0;
+        end else begin
+            
+        end
+    end
 
     
 endmodule
@@ -149,7 +162,8 @@ module PosCounter(clk, rst, echo, distance_count);
     assign finish = ~echo_reg1 & echo_reg2;
 
     // TODO: trace the code and calculate the distance, output it to <distance_count>
-    
+    assign distance_count = distance_register / 10000 * 340;
+
 endmodule
 
 // send trigger signal to sensor
@@ -206,6 +220,8 @@ module div(clk ,out_clk);
     end
 endmodule
 
+
+
 module tracker_sensor(clk, reset, left_track, right_track, mid_track, state);
     input clk;
     input reset;
@@ -214,6 +230,33 @@ module tracker_sensor(clk, reset, left_track, right_track, mid_track, state);
 
     // TODO: Receive three tracks and make your own policy.
     // Hint: You can use output state to change your action.
+
+    reg [1:0] last_turn;
+
+    always @(posedge clk, posedge reset) begin
+        if (reset) begin
+            state <= FORWARD;
+            last_turn <= FORWARD;
+        end else begin
+            case ({left_track, mid_track, right_track})
+                3'b000, 3'b111: begin
+                    state <= last_turn;
+                end
+                3'b010: begin
+                    state <= FORWARD;
+                    last_turn <= FORWARD;
+                end
+                3'b110, 3'b100: begin
+                    state <= TURN_LEFT;
+                    last_turn <= TURN_LEFT;
+                end
+                3'b011, 3'b001: begin
+                    state <= TURN_RIGHT;
+                    last_turn <= TURN_RIGHT;
+                end
+            endcase
+        end
+    end
 
 endmodule
 
