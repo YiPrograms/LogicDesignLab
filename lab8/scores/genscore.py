@@ -13,7 +13,7 @@ def gen_score(f):
     for part in xml_data.parts:
         for note in part.recurse().notesAndRests:
             duration = int(note.quarterLength * 16)
-            name = "S" if note.isRest else note.nameWithOctave.replace("-", "f")
+            name = "S" if note.isRest else note.nameWithOctave.replace("-", "f").replace("#", "s")
 
             if note.tie is not None:
                 if note.tie.type == "start":
@@ -26,7 +26,7 @@ def gen_score(f):
 
             if not note.isRest:
                 freq = round(m21.pitch.Pitch(note.nameWithOctave).freq440)
-                used_notes.add((note.nameWithOctave.replace("-", "f"), freq))
+                used_notes.add((note.nameWithOctave.replace("-", "f").replace("#", "s"), freq))
 
     print(score)
     print(used_notes)
