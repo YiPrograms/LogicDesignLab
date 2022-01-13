@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Tue Jan  4 02:00:06 2022
+# Process ID: 496752
+# Current directory: /home/yi/Workspace/Vivado/lab9/lab9.runs/impl_1
+# Command line: vivado -log Lab9.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source Lab9.tcl -notrace
+# Log file: /home/yi/Workspace/Vivado/lab9/lab9.runs/impl_1/Lab9.vdi
+# Journal file: /home/yi/Workspace/Vivado/lab9/lab9.runs/impl_1/vivado.jou
+#-----------------------------------------------------------
+source Lab9.tcl -notrace

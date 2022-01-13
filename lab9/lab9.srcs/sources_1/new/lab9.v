@@ -1,7 +1,8 @@
-parameter FORWARD = 0;
-parameter TURN_LEFT = 1;
-parameter TURN_RIGHT = 2;
-parameter STOP = 3;
+`define FORWARD 2'd0
+`define TURN_LEFT 2'd1
+`define TURN_RIGHT 2'd2
+`define STOP 2'd3
+
 
 // This module take "mode" input and control two motors accordingly.
 // clk should be 100MHz for PWM_gen module to work correctly.
@@ -15,7 +16,7 @@ module motor(
     output reg [1:0]l_IN
 );
 
-    reg [9:0]next_left_motor, next_right_motor;
+    // reg [9:0]next_left_motor, next_right_motor;
     reg [9:0]left_motor, right_motor;
     wire left_pwm, right_pwm;
 
@@ -26,12 +27,46 @@ module motor(
 
     // TODO: trace the rest of motor.v and control the speed and direction of the two motors
     
+    parameter OFF = 2'b00;
+    parameter FOR = 2'b10;
+    parameter BACK = 2'b01;
+
+    parameter RIGHT_MAGNITUDE = 735;
+    parameter LEFT_MAGNITUDE = 745;
+
     always @(posedge clk, posedge rst) begin
         if (rst) begin
-            next_left_motor <= 0;
-            next_right_motor <= 0;
+            left_motor <= 0;
+            right_motor <= 0;
+            l_IN <= OFF;
+            r_IN <= OFF;
         end else begin
-            
+            case (mode)
+                `FORWARD: begin
+                    l_IN <= FOR;
+                    r_IN <= FOR;
+                    left_motor <= LEFT_MAGNITUDE;
+                    right_motor <= RIGHT_MAGNITUDE;
+                end
+                `TURN_RIGHT: begin
+                    l_IN <= FOR;
+                    r_IN <= BACK;
+                    left_motor <= LEFT_MAGNITUDE;
+                    right_motor <= RIGHT_MAGNITUDE;
+                end
+                `TURN_LEFT: begin
+                    l_IN <= BACK;
+                    r_IN <= FOR;
+                    left_motor <= LEFT_MAGNITUDE;
+                    right_motor <= RIGHT_MAGNITUDE;
+                end
+                `STOP: begin
+                    l_IN <= OFF;
+                    r_IN <= OFF;
+                    left_motor <= 0;
+                    right_motor <= 0;
+                end
+            endcase
         end
     end
 
@@ -162,7 +197,7 @@ module PosCounter(clk, rst, echo, distance_count);
     assign finish = ~echo_reg1 & echo_reg2;
 
     // TODO: trace the code and calculate the distance, output it to <distance_count>
-    assign distance_count = distance_register / 10000 * 340;
+    assign distance_count = distance_register * 340 / 10000 / 2;
 
 endmodule
 
@@ -228,36 +263,40 @@ module tracker_sensor(clk, reset, left_track, right_track, mid_track, state);
     input left_track, right_track, mid_track;
     output reg [1:0] state;
 
-    // TODO: Receive three tracks and make your own policy.
-    // Hint: You can use output state to change your action.
+    reg [1:0] next_state;
 
     reg [1:0] last_turn;
+    reg [1:0] next_last_turn;
 
     always @(posedge clk, posedge reset) begin
         if (reset) begin
-            state <= FORWARD;
-            last_turn <= FORWARD;
+            state <= `FORWARD;
+            last_turn <= `FORWARD;
         end else begin
-            case ({left_track, mid_track, right_track})
-                3'b000, 3'b111: begin
-                    state <= last_turn;
-                end
-                3'b010: begin
-                    state <= FORWARD;
-                    last_turn <= FORWARD;
-                end
-                3'b110, 3'b100: begin
-                    state <= TURN_LEFT;
-                    last_turn <= TURN_LEFT;
-                end
-                3'b011, 3'b001: begin
-                    state <= TURN_RIGHT;
-                    last_turn <= TURN_RIGHT;
-                end
-            endcase
+            state <= next_state;
+            last_turn <= next_last_turn;
         end
     end
 
+    always @* begin
+        next_last_turn <= last_turn;
+        case ({left_track, mid_track, right_track})
+            3'b000, 3'b111, 3'b101: begin
+                next_state <= last_turn;
+            end
+            3'b010: begin
+                next_state <= `FORWARD;
+            end
+            3'b110, 3'b100: begin
+                next_state <= `TURN_LEFT;
+                next_last_turn <= `TURN_LEFT;
+            end
+            3'b011, 3'b001: begin
+                next_state <= `TURN_RIGHT;
+                next_last_turn <= `TURN_RIGHT;
+            end
+        endcase
+    end
 endmodule
 
 
@@ -275,16 +314,29 @@ module Lab9(
     output IN3, 
     output IN4,
     output left_pwm,
-    output right_pwm
+    output right_pwm,
+    output stop_led,
+    output mode_forward_led,
+    output mode_left_led,
+    output mode_right_led,
+    output mode_stop_led
     // You may modify or add more input/ouput yourself.
 );
     // We have connected the motor, tracker_sensor and sonic_top modules in the template file for you.
     // TODO: control the motors with the information you get from ultrasonic sensor and 3-way track sensor.
 
-    reg [1:0] mode;
     wire [19:0] distance;
     wire [1:0] tracker_state;
+    wire [1:0] mode = (distance < 30)? `STOP: tracker_state;
+
+    assign stop_led = mode == `STOP;
+
+    assign mode_forward_led = tracker_state == `FORWARD;
+    assign mode_left_led = tracker_state == `TURN_LEFT;
+    assign mode_right_led = tracker_state == `TURN_RIGHT;
+    assign mode_stop_led = tracker_state == `STOP;
     
+
     motor A(
         .clk(clk),
         .rst(rst),
@@ -302,8 +354,9 @@ module Lab9(
         .distance(distance)
     );
 
+    div clk1(clk ,clk1M);
     tracker_sensor C(
-        .clk(clk), 
+        .clk(clk1M), 
         .reset(rst), 
         .left_track(~left_track), 
         .right_track(~right_track),

@@ -45,8 +45,8 @@ create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_
 
 
 # LEDs
-# set_property PACKAGE_PIN U16 [get_ports {r_led}]
-# set_property IOSTANDARD LVCMOS33 [get_ports {r_led}]
+set_property PACKAGE_PIN U16 [get_ports {stop_led}]
+set_property IOSTANDARD LVCMOS33 [get_ports {stop_led}]
 # set_property PACKAGE_PIN E19 [get_ports {m_led}]
 # set_property IOSTANDARD LVCMOS33 [get_ports {m_led}]
 # set_property PACKAGE_PIN U19 [get_ports {l_led}]
@@ -69,14 +69,14 @@ create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_
 #set_property IOSTANDARD LVCMOS33 [get_ports {led[10]}]
 #set_property PACKAGE_PIN U3 [get_ports {led[11]}]
 #set_property IOSTANDARD LVCMOS33 [get_ports {led[11]}]
-#set_property PACKAGE_PIN P3 [get_ports {led[12]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {led[12]}]
-#set_property PACKAGE_PIN N3 [get_ports {led[13]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {led[13]}]
-#set_property PACKAGE_PIN P1 [get_ports {led[14]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {led[14]}]
-#set_property PACKAGE_PIN L1 [get_ports {led[15]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {led[15]}]
+set_property PACKAGE_PIN P3 [get_ports {mode_forward_led}]
+set_property IOSTANDARD LVCMOS33 [get_ports {mode_forward_led}]
+set_property PACKAGE_PIN N3 [get_ports {mode_left_led}]
+set_property IOSTANDARD LVCMOS33 [get_ports {mode_left_led}]
+set_property PACKAGE_PIN P1 [get_ports {mode_right_led}]
+set_property IOSTANDARD LVCMOS33 [get_ports {mode_right_led}]
+set_property PACKAGE_PIN L1 [get_ports {mode_stop_led}]
+set_property IOSTANDARD LVCMOS33 [get_ports {mode_stop_led}]
 
 # 7 segment display
 #  set_property PACKAGE_PIN W7 [get_ports {DISPLAY[0]}]
