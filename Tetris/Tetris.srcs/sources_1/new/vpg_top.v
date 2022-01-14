@@ -3,6 +3,7 @@ module vga_top(
     input clk_25MHz,
     input clk_fps,
     input rst,
+    input [879:0] block_states,
     output [3:0] vgaRed,
     output [3:0] vgaGreen,
     output [3:0] vgaBlue,
@@ -22,6 +23,7 @@ module vga_top(
         .rst(rst),
         .px(h_cnt),
         .py(v_cnt),
+        .block_states(block_states),
         .pixel(pixel)
     );
 

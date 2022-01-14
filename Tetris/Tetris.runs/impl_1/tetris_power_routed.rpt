@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Thu Jan 13 16:15:01 2022
+| Date             : Fri Jan 14 02:18:24 2022
 | Host             : YNB running 64-bit Arch Linux
 | Command          : report_power -file tetris_power_routed.rpt -pb tetris_power_summary_routed.pb -rpx tetris_power_routed.rpx
 | Design           : tetris
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.073        |
+| Total On-Chip Power (W)  | 0.074        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.001        |
+| Dynamic (W)              | 0.002        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.6         |
@@ -53,15 +53,16 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |       94 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       50 |     20800 |            0.24 |
+| Slice Logic    |    <0.001 |      315 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      223 |     20800 |            1.07 |
+|   CARRY4       |    <0.001 |       17 |      8150 |            0.21 |
 |   Register     |    <0.001 |       24 |     41600 |            0.06 |
-|   CARRY4       |    <0.001 |        1 |      8150 |            0.01 |
-|   Others       |     0.000 |        3 |       --- |             --- |
-| Signals        |    <0.001 |       69 |       --- |             --- |
+|   F7/F8 Muxes  |    <0.001 |        1 |     32600 |           <0.01 |
+|   Others       |     0.000 |        5 |       --- |             --- |
+| Signals        |    <0.001 |      242 |       --- |             --- |
 | I/O            |    <0.001 |       16 |       106 |           15.09 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.073 |          |           |                 |
+| Total          |     0.074 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -71,7 +72,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.010 |       0.001 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.011 |       0.002 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -137,10 +138,11 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+--------+-----------+
-| Name   | Power (W) |
-+--------+-----------+
-| tetris |     0.001 |
-+--------+-----------+
++----------------+-----------+
+| Name           | Power (W) |
++----------------+-----------+
+| tetris         |     0.002 |
+|   vga_top_inst |     0.001 |
++----------------+-----------+
 
 
