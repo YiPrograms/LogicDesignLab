@@ -41,8 +41,8 @@ module tetris(
 );
     wire [26:0] div;
 
-    wire [879:0] block_states;
-    wire [14:0] active_block;
+    wire [799:0] block_states;
+    wire [28:0] active_block;
 
     wire [6:0] keys;
     wire [6:0] key_press;
@@ -71,7 +71,7 @@ module tetris(
 
     tetris_controller tetris_controller_inst(
         .clk(clk),
-        // .clk_fall(div[25]),
+        .clk_fall(div[25]),
         .rst(rst),
         .keys(keys),
         .block_states(block_states),
