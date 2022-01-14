@@ -1,4 +1,22 @@
 
+function collision(
+    input [4:0] bx,
+    input [3:0] by,
+    input [15:0] block,
+    input [799:0] board
+);
+    integer i, j;
+
+    for (i = 0; i < 4; i = i + 1) begin
+        for (j = 0; j < 4; j = j + 1) begin
+            if (block[4*i+j] &&
+                (bx+i <= 1 || by+j <= 1 || by+j >= 12 ||
+                    board[(bx+i-2)*40 + (by+i-2)*4 +: 4]))
+                collision = 1;
+        end
+    end
+endfunction
+
 module tetris_controller(
     input clk,
     input clk_fall,
@@ -67,10 +85,10 @@ module tetris_controller(
             if (clk_fall_1p) begin
                 next_active_x = active_x - 1;
             end else if (keys[0]) begin
-                if (active_y != 0)
+                if (!collision(active_x, active_y - 1, rotated_block, block_states))
                     next_active_y = active_y - 1;
             end else if (keys[1]) begin
-                if (active_y != 9)
+                if (!collision(active_x, active_y + 1, rotated_block, block_states))
                     next_active_y = active_y + 1;
             end else if (keys[4]) begin
                 next_active_x = active_x - 1;
@@ -84,7 +102,6 @@ module tetris_controller(
 
     always @(posedge clk, posedge rst) begin
         if (rst) begin
-            state <= 
             block_states <= 0;
             active_type <= 0;
             active_x <= 0;
@@ -157,10 +174,3 @@ module rotation_translation(
     end
 
 endmodule
-
-// function check_colision(
-//     input [4:0] bx,
-//     input [3:0] by,
-//     input [15:0] block,
-//     input [799:0] table
-// )
