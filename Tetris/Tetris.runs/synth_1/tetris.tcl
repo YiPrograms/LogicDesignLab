@@ -71,27 +71,35 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 2
-set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
+set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
 set_property webtalk.parent_dir /home/yi/Workspace/Vivado/Tetris/Tetris.cache/wt [current_project]
 set_property parent.project_path /home/yi/Workspace/Vivado/Tetris/Tetris.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
+set_property ip_repo_paths /home/yi/Workspace/Vivado/KeyboardSampleCode/ip [current_project]
+update_ip_catalog
 set_property ip_output_repo /home/yi/Workspace/Vivado/Tetris/Tetris.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/graphics.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/onepulse.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v
   /home/yi/Workspace/Vivado/VGASampleCode/demo2/vga.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/vpg_top.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/top.v
 }
+read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/KeyboardCtrl_0/KeyboardCtrl_0.xci
+
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the

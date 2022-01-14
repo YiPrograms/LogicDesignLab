@@ -19,16 +19,32 @@ endmodule
 module tetris(
     input clk,
     input rst,
+
     output [3:0] vgaRed,
     output [3:0] vgaGreen,
     output [3:0] vgaBlue,
     output hsync,
-    output vsync
+    output vsync,
+
+    inout PS2_DATA,
+	inout PS2_CLK,
+
+    output audio_mclk,
+    output audio_lrck, 
+    output audio_sck,
+    output audio_sdin,
+
+    output [6:0] DISPLAY,
+    output [3:0] DIGIT,
+
+    output [15:0] led
 );
     wire [23:0] div;
 
     wire [879:0] block_states;
-    assign block_states = { {{21 {{10 {4'd0}}} }} , 4'd1, 4'd2, 4'd3, 4'd4, 4'd5, 4'd6, 4'd7, 4'd8, 4'd0, 4'd1};
+    // assign block_states = { {{21 {{10 {4'd0}}} }} , 4'd1, 4'd2, 4'd3, 4'd4, 4'd5, 4'd6, 4'd7, 4'd8, 4'd0, 4'd1};
+
+    wire [6:0] keys;
 
     clock_divider divs(
         .clk(clk),
@@ -57,5 +73,14 @@ module tetris(
         .block_states(block_states)
     );
 
+    keypress_controller keypress_controller_inst(
+        .clk(clk),
+        .rst(rst),
+        .PS2_DATA(PS2_DATA),
+        .PS2_CLK(PS2_CLK),
+        .keys(keys)
+    );
+
+    assign led[15 -: 7] = keys;
 
 endmodule

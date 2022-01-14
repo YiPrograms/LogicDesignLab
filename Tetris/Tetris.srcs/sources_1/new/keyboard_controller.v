@@ -24,18 +24,18 @@ module hold_pulses(
         next_counter = counter + 1;
         if (key) begin
             if (state == S_Idle) begin
-                next_state <= S_Holding;
-                next_counter <= 0;
-                next_pulse <= 1;
+                next_state = S_Holding;
+                next_counter = 0;
+                next_pulse = 1;
             end else if (state == S_Holding) begin
                 if (counter == hold_time) begin
-                    next_state <= S_Triggered;
-                    next_counter <= 0;
+                    next_state = S_Triggered;
+                    next_counter = 0;
                 end
             end else begin // S_Triggered
                 if (counter == trigger_interval) begin
-                    next_pulse <= 1;
-                    next_counter <= 0;
+                    next_pulse = 1;
+                    next_counter = 0;
                 end
             end
         end else begin

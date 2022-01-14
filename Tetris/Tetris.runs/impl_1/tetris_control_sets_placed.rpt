@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Fri Jan 14 02:18:15 2022
+| Date         : Fri Jan 14 11:37:44 2022
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_control_sets -verbose -file tetris_control_sets_placed.rpt
 | Design       : tetris
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |     4 |
-|    Minimum number of control sets                        |     4 |
+| Total control sets                                       |    11 |
+|    Minimum number of control sets                        |    11 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    24 |
+| Unused register locations in slices containing registers |    45 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |     4 |
+| Total control sets |    11 |
 | >= 0 to < 4        |     2 |
-| >= 4 to < 6        |     0 |
-| >= 6 to < 8        |     0 |
-| >= 8 to < 10       |     0 |
-| >= 10 to < 12      |     2 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     4 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     0 |
+| >= 16              |     1 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,25 +58,32 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               0 |            0 |
-| No           | No                    | Yes                    |               2 |            1 |
-| No           | Yes                   | No                     |              12 |            6 |
+| No           | No                    | No                     |               2 |            1 |
+| No           | No                    | Yes                    |              75 |           23 |
+| No           | Yes                   | No                     |              12 |            7 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              10 |            5 |
+| Yes          | No                    | Yes                    |              48 |           13 |
+| Yes          | Yes                   | No                     |              10 |            3 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+-------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
-|  Clock Signal  |               Enable Signal               |              Set/Reset Signal              | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+-------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG |                                           | rst_IBUF                                   |                1 |              2 |         2.00 |
-|  divs/out[0]   |                                           | rst_IBUF                                   |                2 |              2 |         1.00 |
-|  divs/out[0]   |                                           | vga_top_inst/vga_inst/pixel_cnt[9]_i_1_n_0 |                4 |             10 |         2.50 |
-|  divs/out[0]   | vga_top_inst/vga_inst/line_cnt[9]_i_2_n_0 | vga_top_inst/vga_inst/line_cnt[9]_i_1_n_0  |                5 |             10 |         2.00 |
-+----------------+-------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
++----------------+----------------------------------------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                                Enable Signal                               |              Set/Reset Signal              | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+----------------------------------------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
+|  divs/out[0]   |                                                                            | rst_IBUF                                   |                2 |              2 |         1.00 |
+|  clk_IBUF_BUFG |                                                                            |                                            |                1 |              2 |         2.00 |
+|  clk_IBUF_BUFG | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/bits_count        | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | keypress_controller_inst/key_de/op/E[0]                                    | rst_IBUF                                   |                4 |              7 |         1.75 |
+|  clk_IBUF_BUFG | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF                                   |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF                                   |                2 |              8 |         4.00 |
+|  divs/out[0]   |                                                                            | vga_top_inst/vga_inst/pixel_cnt[9]_i_1_n_0 |                5 |             10 |         2.00 |
+|  divs/out[0]   | vga_top_inst/vga_inst/line_cnt                                             | vga_top_inst/vga_inst/line_cnt[9]_i_1_n_0  |                3 |             10 |         3.33 |
+|  clk_IBUF_BUFG | keypress_controller_inst/key_de/key                                        | rst_IBUF                                   |                2 |             10 |         5.00 |
+|  clk_IBUF_BUFG | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/frame[10]_i_1_n_0 | rst_IBUF                                   |                2 |             11 |         5.50 |
+|  clk_IBUF_BUFG |                                                                            | rst_IBUF                                   |               23 |             75 |         3.26 |
++----------------+----------------------------------------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
 
 
