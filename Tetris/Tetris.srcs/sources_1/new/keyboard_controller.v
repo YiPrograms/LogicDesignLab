@@ -62,9 +62,7 @@ module keypress_controller (
     input rst,
     inout PS2_DATA,
     inout PS2_CLK,
-    output [6:0] keys,
-    output reg [6:0] key_press,
-    output reg [8:0] lc
+    output [7:0] keys
 );
 
 	wire [511:0] key_down;
@@ -81,7 +79,7 @@ module keypress_controller (
 		.clk(clk)
 	);
 
-    // reg [6:0] key_press;
+    reg [7:0] key_press;
 
     hold_pulses l_hold(
         .clk(clk),
@@ -108,20 +106,20 @@ module keypress_controller (
     assign keys[3] = key_press[3];
     assign keys[5] = key_press[5];
     assign keys[6] = key_press[6];
+    assign keys[7] = key_press[7];
 
 	always @(posedge clk, posedge rst) begin
 		if (rst) begin
             key_press = 0;
-            lc <= 0;
 		end else begin
             // One-pulses
             key_press[2] = 0;
             key_press[3] = 0;
             key_press[5] = 0;
             key_press[6] = 0;
+            key_press[7] = 0;
 
 			if (been_ready) begin
-                lc <= last_change;
 				case (last_change)
                     {1'b0, 8'h6b}: // Move Left: Left
                         key_press[0] = key_down[last_change];
@@ -137,6 +135,8 @@ module keypress_controller (
                         key_press[5] = key_down[last_change];
                     {1'b0, 8'h21}: // Hold: C
                         key_press[6] = key_down[last_change];
+                    {1'b0, 8'h5a}: // Enter
+                        key_press[7] = key_down[last_change];
                 endcase
 			end
 

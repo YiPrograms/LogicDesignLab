@@ -16,8 +16,6 @@
 `define GRAY_BLOCK_COLOR 12'hbbb
 
 module pixel_gen(
-   input clk,
-   input rst,
    input [9:0] px,
    input [9:0] py,
    input [799:0] block_states,
@@ -79,9 +77,9 @@ module pixel_gen(
         begin // Draw active tile
             if (py < 440 && px > 220 && px < 420) begin
                 if (active_type != 0 &&
-                    tile_x >= active_x-2 && tile_x < active_x-2 + 4 && 
-                    tile_y >= active_y-2 && tile_y < active_y-2 + 4) begin
-                    if (rotated_block[4*(tile_x - (active_x-2))+(tile_y - (active_y-2))])
+                    tile_x+2 >= active_x && tile_x+2 < active_x + 4 && 
+                    tile_y+2 >= active_y && tile_y+2 < active_y + 4) begin
+                    if (rotated_block[4*(tile_x+2 - (active_x))+(tile_y+2 - (active_y))])
                         pixel = tile_colors[active_type];
                 end
             end

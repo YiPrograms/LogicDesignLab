@@ -1,7 +1,6 @@
 
 module vga_top(
     input clk_25MHz,
-    input clk_fps,
     input rst,
     input [799:0] block_states,
     input [28:0] active_block,
@@ -20,8 +19,6 @@ module vga_top(
     assign {vgaRed, vgaGreen, vgaBlue} = (valid==1'b0) ? 12'h0: pixel;
 
     pixel_gen pixel_gen_inst(
-        .clk(clk_fps),
-        .rst(rst),
         .px(h_cnt),
         .py(v_cnt),
         .block_states(block_states),

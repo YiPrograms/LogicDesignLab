@@ -44,9 +44,8 @@ module tetris(
     wire [799:0] block_states;
     wire [28:0] active_block;
 
-    wire [6:0] keys;
-    wire [6:0] key_press;
-    wire [8:0] lc;
+    wire [7:0] keys;
+    wire [3:0] state;
 
     clock_divider divs(
         .clk(clk),
@@ -56,7 +55,6 @@ module tetris(
 
     vga_top vga_top_inst(
         .clk_25MHz(div[1]),
-        .clk_fps(div[21]),
         .rst(rst),
 
         .block_states(block_states),
@@ -75,7 +73,8 @@ module tetris(
         .rst(rst),
         .keys(keys),
         .block_states(block_states),
-        .active_block(active_block)
+        .active_block(active_block),
+        .state(state)
     );
 
     keypress_controller keypress_controller_inst(
@@ -83,13 +82,11 @@ module tetris(
         .rst(rst),
         .PS2_DATA(PS2_DATA),
         .PS2_CLK(PS2_CLK),
-        .key_press(key_press),
-        .keys(keys),
-        .lc(lc)
+        .keys(keys)
     );
 
-    // wire [15:0] bcds = {4'b0, active_block[9+:4], active_block[4+:4], active_block[0+:4]};
-    wire [15:0] bcds = {4'b0, lc[8], lc[4+:4], lc[0+:4]};
+    wire [15:0] bcds = {state, active_block[9+:4], active_block[4+:4], active_block[0+:4]};
+    // wire [15:0] bcds = {4'b0, lc[8], lc[4+:4], lc[0+:4]};
     seven_seg_controller seven_seg_controller_inst(
         .clk_display(div[12]),
         .bcds(bcds),
@@ -97,6 +94,6 @@ module tetris(
         .DISPLAY(DISPLAY)
     );
 
-    assign led[15 -: 7] = key_press;
+    // assign led[15 -: 7] = key_press;
 
 endmodule
