@@ -71,6 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 2
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -92,7 +93,9 @@ read_verilog -library xil_defaultlib {
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/graphics.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/lfsr.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/onepulse.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v
   /home/yi/Workspace/Vivado/VGASampleCode/demo2/vga.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/vpg_top.v

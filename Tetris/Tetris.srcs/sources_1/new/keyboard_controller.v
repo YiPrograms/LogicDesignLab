@@ -5,10 +5,10 @@ module hold_pulses(
     input key,
     output reg pulse
 );
-    parameter hold_time = 40000000; // 0.4s
-    parameter trigger_interval = 10000000; // 0.1s
-    reg [25:0] counter;
-    reg [25:0] next_counter;
+    parameter hold_time = 35000000; // 0.35s
+    parameter trigger_interval = 8500000; // 0.085s
+    reg [27:0] counter;
+    reg [27:0] next_counter;
 
     parameter S_Idle = 0;
     parameter S_Holding = 1;
@@ -52,7 +52,7 @@ module hold_pulses(
         end else begin
             pulse <= next_pulse;
             counter <= next_counter;
-            counter <= next_state;
+            state <= next_state;
         end
     end
 endmodule
@@ -62,7 +62,9 @@ module keypress_controller (
     input rst,
     inout PS2_DATA,
     inout PS2_CLK,
-    output [6:0] keys
+    output [6:0] keys,
+    output reg [6:0] key_press,
+    output reg [8:0] lc
 );
 
 	wire [511:0] key_down;
@@ -79,7 +81,7 @@ module keypress_controller (
 		.clk(clk)
 	);
 
-    reg [6:0] key_press;
+    // reg [6:0] key_press;
 
     hold_pulses l_hold(
         .clk(clk),
@@ -110,6 +112,7 @@ module keypress_controller (
 	always @(posedge clk, posedge rst) begin
 		if (rst) begin
             key_press = 0;
+            lc <= 0;
 		end else begin
             // One-pulses
             key_press[2] = 0;
@@ -118,20 +121,21 @@ module keypress_controller (
             key_press[6] = 0;
 
 			if (been_ready) begin
+                lc <= last_change;
 				case (last_change)
-                    {1'b0, 8'h1c}: // Move Left: Left
+                    {1'b0, 8'h6b}: // Move Left: Left
                         key_press[0] = key_down[last_change];
-                    {1'b0, 8'h1b}: // Move Right: Right
+                    {1'b1, 8'h74}: // Move Right: Right
                         key_press[1] = key_down[last_change];
-                    {1'b0, 8'h23}: // Rotate CW: Up, X
+                    {1'b0, 8'h75}, {1'b0, 8'h22}: // Rotate CW: Up, X
                         key_press[2] = key_down[last_change];
-                    {1'b0, 8'h2b}: // Rotate CCW: Z
+                    {1'b0, 8'h1a}: // Rotate CCW: Z
                         key_press[3] = key_down[last_change];
-                    {1'b0, 8'h34}: // Soft Drop: Down
+                    {1'b0, 8'h72}: // Soft Drop: Down
                         key_press[4] = key_down[last_change];
-                    {1'b0, 8'h33}: // Hard Drop: Space
+                    {1'b0, 8'h29}: // Hard Drop: Space
                         key_press[5] = key_down[last_change];
-                    {1'b0, 8'h3b}: // Hold: C
+                    {1'b0, 8'h21}: // Hold: C
                         key_press[6] = key_down[last_change];
                 endcase
 			end

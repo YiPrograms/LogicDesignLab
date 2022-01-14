@@ -21,6 +21,7 @@ module pixel_gen(
    input [9:0] px,
    input [9:0] py,
    input [879:0] block_states,
+   input [14:0] active_block,
    output reg [11:0] pixel
 );
     
@@ -32,6 +33,27 @@ module pixel_gen(
     localparam [11:0] tile_colors [0:8] = {
         `WHITE, `I_BLOCK_COLOR, `J_BLOCK_COLOR, `L_BLOCK_COLOR, `O_BLOCK_COLOR,
         `T_BLOCK_COLOR, `Z_BLOCK_COLOR, `S_BLOCK_COLOR, `GRAY_BLOCK_COLOR
+    };
+
+    wire [3:0] active_type;
+    wire [4:0] active_x;
+    wire [3:0] active_y;
+    wire [1:0] active_rot;
+    assign {active_rot, active_y, active_x, active_type} = active_block;
+
+    wire [1:0] ax = tile_x - active_x; // Active tile inner x
+    wire [1:0] ay = tile_y - active_y; // Active tile inner y
+
+    integer block_dims [0:7] = {0, 4, 3, 3, 2, 3, 3, 3};
+    parameter [15:0] block_tiles [0:7] = {
+        16'b0000000000000000,
+        16'b0000111100000000,
+        16'b0000000101110000,
+        16'b0000010001110000,
+        16'b0000000000110011,
+        16'b0000001001110000,
+        16'b0000001101100000,
+        16'b0000011000110000
     };
 
     always @* begin
@@ -67,6 +89,40 @@ module pixel_gen(
             if (py > 40 && py < 440 && px > 220 && px < 420)
                 if(block_states[tile_offset +: 4])
                     pixel = tile_colors[block_states[tile_offset +: 4]];
+        end
+
+        begin // Draw active tile
+            if (py > 40 && py < 440 && px > 220 && px < 420) begin
+                if (active_type != 0 &&
+                    tile_x >= active_x && tile_x < active_x + block_dims[active_type] && 
+                    tile_y >= active_y && tile_y < active_y + block_dims[active_type]) begin
+                    
+                    if (block_dims[active_type] == 2)
+                        pixel = tile_colors[active_type];
+                    else if (block_dims[active_type] == 3)
+                        case (active_rot)
+                            0: if (block_tiles[active_type][4*ax + ay])
+                                pixel = tile_colors[active_type];
+                            1: if (block_tiles[active_type][4*ay + (3-ax - 1)])
+                                pixel = tile_colors[active_type];
+                            2: if (block_tiles[active_type][4*(3-ax - 1) + (3-ay - 1)])
+                                pixel = tile_colors[active_type];
+                            3: if (block_tiles[active_type][4*(3-ay - 1) + ax])
+                                pixel = tile_colors[active_type];
+                        endcase
+                    else // 4
+                        case (active_rot)
+                            0: if (block_tiles[active_type][4*ax + ay])
+                                pixel = tile_colors[active_type];
+                            1: if (block_tiles[active_type][4*ay + (3-ax)])
+                                pixel = tile_colors[active_type];
+                            2: if (block_tiles[active_type][4*(3-ax) + (3-ay)])
+                                pixel = tile_colors[active_type];
+                            3: if (block_tiles[active_type][4*(3-ay) + ax])
+                                pixel = tile_colors[active_type];
+                        endcase
+                end
+            end
         end
 
     end
