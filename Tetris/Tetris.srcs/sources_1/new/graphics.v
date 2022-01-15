@@ -79,6 +79,7 @@ module pixel_gen(
                 if (active_type != 0 &&
                     tile_x+3 >= active_x && tile_x+3 < active_x + 4 && 
                     tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin
+                    // pixel = `GRAY_BLOCK_COLOR;
                     if (rotated_block[4*(tile_x+3 - (active_x))+(tile_y+3 - (active_y))])
                         pixel = tile_colors[active_type];
                 end

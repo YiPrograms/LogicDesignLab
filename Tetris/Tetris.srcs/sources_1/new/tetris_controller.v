@@ -187,14 +187,19 @@ module tetris_controller(
                 //     for (j = 0; j < 4; j = j + 1)
                 //         if (rotated_block[4*i + j] && active_x + i >= 2 && active_y + j >= 2)
                 //             next_block_states[(40*(active_x + i - 2) + 4*(active_y + j - 2)) +: 4] = active_type;
-                if (rotated_block[4*i + j] && active_x + i >= 3 && active_y + j >= 3) begin
-                    addra = 10*(active_x + i - 3) + (active_y + j - 3);
+                if (rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3) begin
+                    addra = 10*(active_x + op_x - 3) + (active_y + op_y - 3);
                     dina = active_type;
                     wea = 1;
                 end
+                // if (active_x + op_x >= 3 && active_y + op_y >= 3) begin
+                //     addra = 10*(active_x + op_x - 3) + (active_y + op_y - 3);
+                //     dina = active_type;
+                //     wea = 1;
+                // end
 
                 next_op_y = op_y + 1;
-                next_op_x = op_y == 1? op_x + 1: op_x;
+                next_op_x = op_y == 3? op_x + 1: op_x;
                 
                 if (op_x == 3 && op_y == 3) begin
                     next_active_type = 0;
@@ -333,7 +338,7 @@ module block_reader(
     always @* begin
         next_block_states = block_states;
         next_block_states[4*addrb +: 4] = doutb;
-        next_addrb = addrb == 799? 0: addrb + 1;
+        next_addrb = addrb == 199? 0: addrb + 1;
     end
 
     always @(posedge clk, posedge rst) begin
