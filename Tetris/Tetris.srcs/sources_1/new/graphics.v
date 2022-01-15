@@ -77,9 +77,9 @@ module pixel_gen(
         begin // Draw active tile
             if (py < 440 && px > 220 && px < 420) begin
                 if (active_type != 0 &&
-                    tile_x+2 >= active_x && tile_x+2 < active_x + 4 && 
-                    tile_y+2 >= active_y && tile_y+2 < active_y + 4) begin
-                    if (rotated_block[4*(tile_x+2 - (active_x))+(tile_y+2 - (active_y))])
+                    tile_x+3 >= active_x && tile_x+3 < active_x + 4 && 
+                    tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin
+                    if (rotated_block[4*(tile_x+3 - (active_x))+(tile_y+3 - (active_y))])
                         pixel = tile_colors[active_type];
                 end
             end

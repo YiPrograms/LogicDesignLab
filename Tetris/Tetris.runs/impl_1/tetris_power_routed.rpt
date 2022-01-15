@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Sat Jan 15 04:12:02 2022
+| Date             : Sat Jan 15 13:20:20 2022
 | Host             : YNB running 64-bit Arch Linux
 | Command          : report_power -file tetris_power_routed.rpt -pb tetris_power_summary_routed.pb -rpx tetris_power_routed.rpx
 | Design           : tetris
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.098        |
+| Total On-Chip Power (W)  | 0.097        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.027        |
+| Dynamic (W)              | 0.025        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.5         |
@@ -54,14 +54,14 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.002 |        3 |       --- |             --- |
 | Slice Logic    |     0.002 |     1092 |       --- |             --- |
-|   LUT as Logic |     0.002 |      554 |     20800 |            2.66 |
+|   LUT as Logic |     0.002 |      563 |     20800 |            2.71 |
 |   CARRY4       |    <0.001 |       48 |      8150 |            0.59 |
 |   Register     |    <0.001 |      291 |     41600 |            0.70 |
 |   Others       |     0.000 |       26 |       --- |             --- |
-| Signals        |     0.002 |      888 |       --- |             --- |
-| I/O            |     0.021 |       49 |       106 |           46.23 |
+| Signals        |     0.002 |      894 |       --- |             --- |
+| I/O            |     0.020 |       49 |       106 |           46.23 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.098 |          |           |                 |
+| Total          |     0.097 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -140,9 +140,10 @@ Table of Contents
 +----------------------------+-----------+
 | Name                       | Power (W) |
 +----------------------------+-----------+
-| tetris                     |     0.027 |
-|   keypress_controller_inst |     0.002 |
+| tetris                     |     0.025 |
+|   keypress_controller_inst |     0.003 |
 |     key_de                 |     0.001 |
+|       inst                 |     0.001 |
 |   vga_top_inst             |     0.001 |
 +----------------------------+-----------+
 

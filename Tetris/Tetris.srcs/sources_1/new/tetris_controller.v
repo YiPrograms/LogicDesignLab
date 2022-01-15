@@ -27,23 +27,20 @@ module tetris_controller(
         .random(random)
     );
 
-    function collision(
-        input [4:0] bx,
-        input [3:0] by,
-        input [15:0] block,
-        input [799:0] board
+    reg [7:0] addra;
+    reg [3:0] dina;
+    reg wea;
+    wire [7:0] addrb;
+    wire [3:0] doutb;
+    blk_mem_gen_0 block_bram(
+        .addra(addra),
+        .clka(clk),
+        .dina(dina),
+        .wea(wea),
+        .addrb(addrb),
+        .clkb(clk),
+        .doutb(doutb)
     );
-        integer i, j;
-
-        for (i = 0; i < 4; i = i + 1) begin
-            for (j = 0; j < 4; j = j + 1) begin
-                if (block[4*i+j] &&
-                    (bx+i <= 1 || by+j <= 1 || by+j >= 12 ||
-                        board[(bx+i-2)*40 + (by+i-2)*4 +: 4]))
-                    collision = 1;
-            end
-        end
-    endfunction
 
     parameter S_Menu = 4'd0;
     parameter S_GenBlock = 4'd1;
@@ -60,6 +57,8 @@ module tetris_controller(
     reg [3:0] active_y;
     reg [1:0] active_rot;
     reg [27:0] fall_counter;
+    reg [1:0] op_x;
+    reg [1:0] op_y;
 
     reg [799:0] next_block_states;
 
@@ -69,6 +68,8 @@ module tetris_controller(
     reg [3:0] next_active_y;
     reg [1:0] next_active_rot;
     reg [27:0] next_fall_counter;
+    reg [1:0] next_op_x;
+    reg [1:0] next_op_y;
 
     wire [15:0] rotated_block;
     rotation_translation rot(
@@ -93,6 +94,26 @@ module tetris_controller(
         .rotated_block(rotated_block_ccw)
     );
 
+    reg [4:0] check_x;
+    reg [3:0] check_y;
+
+    collision_check cc_check(
+        .bx(check_x),
+        .by(check_y),
+        .block(rotated_block),
+        .board(block_states),
+        .collision(col_check)
+    );
+
+    wire [4:0] check_down_bx = check_x - 1;
+    collision_check cc_check_down(
+        .bx(check_down_bx),
+        .by(check_y),
+        .block(rotated_block),
+        .board(block_states),
+        .collision(col_check_down)
+    );
+
     always @* begin
         next_state = state;
         next_block_states = block_states;
@@ -100,6 +121,15 @@ module tetris_controller(
         next_active_x = active_x;
         next_active_y = active_y;
         next_active_rot = active_rot;
+        next_op_x = 0;
+        next_op_y = 0;
+
+        check_x = active_x;
+        check_y = active_y;
+
+        addra = 0;
+        dina = 0;
+        wea = 0;
 
         case (state)
             S_Menu: begin
@@ -122,19 +152,22 @@ module tetris_controller(
                         next_state = S_Landed;
                     end else begin // Fall
                         next_active_x = active_x - 1;
-                        if (collision(active_x - 2, active_y, rotated_block, block_states))
+                        check_x = active_x - 1;
+                        if (col_check_down)
                             next_state = S_Landing;
                     end
                 end else if (keys[0]) begin // Left
-                    if (!collision(active_x, active_y - 1, rotated_block, block_states)) begin
+                    check_y = active_y - 1;
+                    if (!col_check) begin
                         next_active_y = active_y - 1;
-                        if (state == S_Landing && !collision(active_x - 1, active_y - 1, rotated_block, block_states))
+                        if (state == S_Landing && !col_check_down)
                             next_state = S_Falling;
                     end
                 end else if (keys[1]) begin // Right
-                    if (!collision(active_x, active_y + 1, rotated_block, block_states)) begin
+                    check_y = active_y + 1;
+                    if (!col_check) begin
                         next_active_y = active_y + 1;
-                        if (state == S_Landing && !collision(active_x - 1, active_y + 1, rotated_block, block_states))
+                        if (state == S_Landing && !col_check_down)
                             next_state = S_Falling;
                     end
                 end else if (keys[2]) begin // TODO: SRS cw
@@ -144,35 +177,24 @@ module tetris_controller(
                 end
             end
             S_Landed: begin
-                // if (rotated_block[4*i + j] && active_x + i >= 2 && active_y + j >= 2)
-                //     next_block_states[40*(active_x - 2) + 4*(active_y - 2)] = active_type;
-                // next_block_states[40*(active_x - 2) + 4*(active_y+1 - 2)] = rotated_block[1]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x - 2) + 4*(active_y+2 - 2)] = rotated_block[2]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x - 2) + 4*(active_y+3 - 2)] = rotated_block[3]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+1 - 2) + 4*(active_y+j - 2)] = rotated_block[4]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+1 - 2) + 4*(active_y+j - 2)] = rotated_block[5]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+1 - 2) + 4*(active_y+j - 2)] = rotated_block[6]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+1 - 2) + 4*(active_y+j - 2)] = rotated_block[7]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+2 - 2) + 4*(active_y+j - 2)] = rotated_block[8]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+2 - 2) + 4*(active_y+j - 2)] = rotated_block[9]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+2 - 2) + 4*(active_y+j - 2)] = rotated_block[10]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+2 - 2) + 4*(active_y+j - 2)] = rotated_block[11]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+3 - 2) + 4*(active_y+j - 2)] = rotated_block[12]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+3 - 2) + 4*(active_y+j - 2)] = rotated_block[13]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+3 - 2) + 4*(active_y+j - 2)] = rotated_block[14]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                // next_block_states[40*(active_x+3 - 2) + 4*(active_y+j - 2)] = rotated_block[15]? active_type: block_states[40*(active_x+i - 2) + 4*(active_y+j - 2)];
-                
                 // for (i = 0; i < 4; i = i + 1)
                 //     for (j = 0; j < 4; j = j + 1)
                 //         if (rotated_block[4*i + j] && active_x + i >= 2 && active_y + j >= 2)
                 //             next_block_states[(40*(active_x + i - 2) + 4*(active_y + j - 2)) +: 4] = active_type;
+                if (rotated_block[4*i + j] && active_x + i >= 3 && active_y + j >= 3) begin
+                    addra = 10*(active_x + i - 3) + (active_y + j - 3);
+                    dina = active_type;
+                    wea = 1;
+                end
+                
+                if (op_x == 3 && op_y == 3) begin
+                    next_active_type = 0;
+                    next_active_x = 0;
+                    next_active_y = 0;
+                    next_active_rot = 0;
 
-                next_active_type = 0;
-                next_active_x = 0;
-                next_active_y = 0;
-                next_active_rot = 0;
-
-                next_state = S_ClearLines;
+                    next_state = S_ClearLines;
+                end
             end
             S_ClearLines: begin
                 next_state = S_Waiting;
@@ -194,6 +216,8 @@ module tetris_controller(
             active_x <= 0;
             active_y <= 0;
             active_rot <= 0;
+            op_x <= 0;
+            op_y <= 0;
         end else begin
             state <= next_state;
             block_states <= next_block_states;
@@ -201,6 +225,8 @@ module tetris_controller(
             active_x <= next_active_x;
             active_y <= next_active_y;
             active_rot <= next_active_rot;
+            op_x <= next_op_x;
+            op_y <= next_op_y;
         end
     end
     
@@ -263,3 +289,42 @@ module rotation_translation(
     end
 
 endmodule
+
+module collision_check(
+    input [4:0] bx,
+    input [3:0] by,
+    input [15:0] block,
+    input [799:0] board,
+    output reg collision
+);
+    integer i, j;
+
+    always @* begin
+        collision = 0;
+        for (i = 0; i < 4; i = i + 1) begin
+            for (j = 0; j < 4; j = j + 1) begin
+                if (block[4*i+j] &&
+                    (bx+i <= 2 || by+j <= 2 || by+j >= 13 ||
+                        board[(bx+i-3)*40 + (by+i-3)*4 +: 4]))
+                    collision = 1;
+            end
+        end
+    end
+endmodule
+
+module block_reader(
+    input clk,
+    input rst,
+    output [7:0] addrb,
+    input [3:0] doutb,
+    output reg [799:0] block_states
+);
+
+    always @(posedge clk, posedge rst) begin
+        if (rst)
+            block_states <= 0;
+        else
+            block_states <= next_block_states;
+    end
+
+endmodule;
