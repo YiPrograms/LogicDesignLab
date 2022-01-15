@@ -123,15 +123,6 @@ module tetris_controller(
         .collision(col_check)
     );
 
-    wire [4:0] check_down_bx = check_x - 1;
-    collision_check cc_check_down(
-        .bx(check_down_bx),
-        .by(check_y),
-        .block(rotated_block),
-        .board(block_states),
-        .collision(col_check_down)
-    );
-
     always @* begin
         next_state = state;
         next_active_type = active_type;
@@ -163,7 +154,7 @@ module tetris_controller(
                     next_state = S_Falling;
                 end
             end
-            S_Falling, S_Landing: begin
+            S_Falling: begin
                 if (clk_fall_1p || keys[4]) begin // Fall
                     check_x = active_x - 1;
                     if (!col_check) begin
@@ -182,6 +173,7 @@ module tetris_controller(
                         next_active_y = active_y + 1;
                     end
                 end else if (keys[2]) begin // TODO: SRS cw
+                    //吳聲宏到此一遊
                     next_active_rot = active_rot + 1;
                 end else if (keys[3]) begin // TODO: SRS ccw
                     next_active_rot = active_rot - 1;
