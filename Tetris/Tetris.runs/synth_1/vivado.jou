@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Sat Jan 15 13:19:09 2022
-# Process ID: 480341
+# Start of session at: Sat Jan 15 15:18:14 2022
+# Process ID: 560447
 # Current directory: /home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1
 # Command line: vivado -log tetris.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source tetris.tcl
 # Log file: /home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/tetris.vds

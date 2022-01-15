@@ -5,7 +5,7 @@ module tetris_controller(
     input clk_fall,
     input rst,
     input [7:0] keys,
-    output reg [799:0] block_states,
+    output [799:0] block_states,
     output [28:0] active_block,
     output reg [3:0] state
 );
@@ -42,6 +42,14 @@ module tetris_controller(
         .doutb(doutb)
     );
 
+    block_reader br(
+        .clk(clk),
+        .rst(rst),
+        .addrb(addrb),
+        .doutb(doutb),
+        .block_states(block_states)
+    );
+
     parameter S_Menu = 4'd0;
     parameter S_GenBlock = 4'd1;
     parameter S_Falling = 4'd2;
@@ -60,7 +68,6 @@ module tetris_controller(
     reg [1:0] op_x;
     reg [1:0] op_y;
 
-    reg [799:0] next_block_states;
 
     reg [3:0] next_state;
     reg [3:0] next_active_type;
@@ -116,7 +123,6 @@ module tetris_controller(
 
     always @* begin
         next_state = state;
-        next_block_states = block_states;
         next_active_type = active_type;
         next_active_x = active_x;
         next_active_y = active_y;
@@ -186,6 +192,9 @@ module tetris_controller(
                     dina = active_type;
                     wea = 1;
                 end
+
+                next_op_y = op_y + 1;
+                next_op_x = op_y == 1? op_x + 1: op_x;
                 
                 if (op_x == 3 && op_y == 3) begin
                     next_active_type = 0;
@@ -211,7 +220,6 @@ module tetris_controller(
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             state <= S_Menu;
-            block_states <= 0;
             active_type <= 0;
             active_x <= 0;
             active_y <= 0;
@@ -220,7 +228,6 @@ module tetris_controller(
             op_y <= 0;
         end else begin
             state <= next_state;
-            block_states <= next_block_states;
             active_type <= next_active_type;
             active_x <= next_active_x;
             active_y <= next_active_y;
@@ -315,16 +322,27 @@ endmodule
 module block_reader(
     input clk,
     input rst,
-    output [7:0] addrb,
+    output reg [7:0] addrb,
     input [3:0] doutb,
     output reg [799:0] block_states
 );
 
-    always @(posedge clk, posedge rst) begin
-        if (rst)
-            block_states <= 0;
-        else
-            block_states <= next_block_states;
+    reg [799:0] next_block_states;
+    reg [7:0] next_addrb;
+
+    always @* begin
+        next_block_states = block_states;
+        next_block_states[4*addrb +: 4] = doutb;
+        next_addrb = addrb == 799? 0: addrb + 1;
     end
 
-endmodule;
+    always @(posedge clk, posedge rst) begin
+        if (rst) begin
+            block_states <= 0;
+            addrb <= 0;
+        end else begin
+            block_states <= next_block_states;
+            addrb <= next_addrb;
+        end
+    end
+endmodule

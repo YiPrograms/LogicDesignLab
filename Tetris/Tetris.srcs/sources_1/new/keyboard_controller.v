@@ -5,8 +5,8 @@ module hold_pulses(
     input key,
     output reg pulse
 );
-    parameter hold_time = 35000000; // 0.35s
-    parameter trigger_interval = 8500000; // 0.085s
+    parameter hold_time = 35000000/2; // 0.35s
+    parameter trigger_interval = 8500000/2; // 0.085s
     reg [27:0] counter;
     reg [27:0] next_counter;
 
@@ -59,6 +59,7 @@ endmodule
 
 module keypress_controller (
     input clk,
+    input clk_op,
     input rst,
     inout PS2_DATA,
     inout PS2_CLK,
@@ -82,43 +83,60 @@ module keypress_controller (
     reg [7:0] key_press;
 
     hold_pulses l_hold(
-        .clk(clk),
+        .clk(clk_op),
         .rst(rst),
         .key(key_press[0]),
         .pulse(keys[0])
     );
 
     hold_pulses r_hold(
-        .clk(clk),
+        .clk(clk_op),
         .rst(rst),
         .key(key_press[1]),
         .pulse(keys[1])
     );
 
     hold_pulses #(.hold_time(0)) down_hold(
-        .clk(clk),
+        .clk(clk_op),
         .rst(rst),
         .key(key_press[4]),
         .pulse(keys[4])
     );
 
-    assign keys[2] = key_press[2];
-    assign keys[3] = key_press[3];
-    assign keys[5] = key_press[5];
-    assign keys[6] = key_press[6];
-    assign keys[7] = key_press[7];
+    onepulse cw_op(
+        .signal(key_press[2]),
+        .clk(clk_op),
+        .op(keys[2])
+    );
+
+    onepulse ccw_op(
+        .signal(key_press[3]),
+        .clk(clk_op),
+        .op(keys[3])
+    );
+
+    onepulse space_op(
+        .signal(key_press[5]),
+        .clk(clk_op),
+        .op(keys[5])
+    );
+
+    onepulse hold_op(
+        .signal(key_press[6]),
+        .clk(clk_op),
+        .op(keys[6])
+    );
+
+    onepulse enter_op(
+        .signal(key_press[7]),
+        .clk(clk_op),
+        .op(keys[7])
+    );
 
 	always @(posedge clk, posedge rst) begin
 		if (rst) begin
             key_press = 0;
 		end else begin
-            // One-pulses
-            key_press[2] = 0;
-            key_press[3] = 0;
-            key_press[5] = 0;
-            key_press[6] = 0;
-            key_press[7] = 0;
-
 			if (been_ready) begin
 				case (last_change)
                     {1'b0, 8'h6b}: // Move Left: Left
