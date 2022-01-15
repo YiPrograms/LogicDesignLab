@@ -66,9 +66,10 @@ module tetris_controller(
     parameter S_Dropping = 4'd4;
     parameter S_Landed = 4'd5;
     parameter S_WaitUpdate = 4'd6;
-    parameter S_ClearLines = 4'd7;
-    parameter S_Waiting = 4'd8;
-    parameter S_GameOver = 4'd9;
+    parameter S_ClearLineAni = 4'd7;
+    parameter S_ClearLines = 4'd8;
+    parameter S_Waiting = 4'd9;
+    parameter S_GameOver = 4'd10;
 
     // reg [3:0] state;
     reg [3:0] active_type;
@@ -79,7 +80,7 @@ module tetris_controller(
     reg [1:0] op_x;
     reg [1:0] op_y;
     reg [4:0] clearing_x;
-
+    reg [3:0] clearing_y;
 
     
 
@@ -93,6 +94,7 @@ module tetris_controller(
     reg [1:0] next_op_x;
     reg [1:0] next_op_y;
     reg [4:0] next_clearing_x;
+    reg [3:0] next_clearing_y;
 
 
     wire [15:0] rotated_block;
@@ -171,6 +173,7 @@ module tetris_controller(
         next_op_y = 0;
         next_counter = 0;
         next_clearing_x = 20;
+        next_clearing_y = 0;
 
         check_x = active_x;
         check_y = active_y;
@@ -247,8 +250,13 @@ module tetris_controller(
                     if (col_check)
                         next_state = S_GameOver;
                     else
-                        next_state = S_WaitUpdate;
+                        next_state = S_ClearLineAni;
                 end
+            end
+            S_ClearLineAni: begin
+                next_counter = counter + 1;
+                if (counter == 300)
+                    next_state = S_ClearLines;
             end
             S_WaitUpdate: begin
                 next_counter = counter + 1;
@@ -264,13 +272,16 @@ module tetris_controller(
                 else begin
                     next_clearing_x = clearing_x;
 
-                    addra = 10*clearing_x + op_y;
-                    dina = clearing_x == 19? 0: block_states[40*(clearing_x + 1) + 4*op_y +: 4];
+                    addra = 10*clearing_x + clearing_y;
+                    dina = clearing_x == 19? 0: block_states[40*(clearing_x + 1) + 4*clearing_y +: 4];
                     wea = 1;
 
-                    next_op_y = op_y + 1;
-                    if (op_y == 9)
-                        next_state = S_WaitUpdate;
+                    next_clearing_y = clearing_y + 1;
+                    if (clearing_y == 9) begin
+                        next_clearing_x = clearing_x + 1;
+                        if (clearing_x == 19)
+                            next_state = S_WaitUpdate;
+                    end
                 end
             end
             S_Waiting: begin
@@ -292,6 +303,7 @@ module tetris_controller(
             op_x <= 0;
             op_y <= 0;
             clearing_x <= 20;
+            clearing_y <= 0;
             counter <= 0;
         end else begin
             state <= next_state;
@@ -302,6 +314,7 @@ module tetris_controller(
             op_x <= next_op_x;
             op_y <= next_op_y;
             clearing_x <= next_clearing_x;
+            clearing_y <= next_clearing_y;
             counter <= next_counter;
         end
     end

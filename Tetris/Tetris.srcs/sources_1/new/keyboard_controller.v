@@ -7,6 +7,8 @@ module hold_pulses(
 );
     parameter hold_time = 35000000/2000; // 0.35s
     parameter trigger_interval = 8500000/2000; // 0.085s
+    // parameter hold_time = 35000000/8388608; // 0.35s
+    // parameter trigger_interval = 8500000/8388608; // 0.085s
     reg [27:0] counter;
     reg [27:0] next_counter;
 
