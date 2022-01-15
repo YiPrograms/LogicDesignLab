@@ -119,33 +119,33 @@ module tetris_controller(
     collision_check cc_check(
         .bx(check_x),
         .by(check_y),
-        .block(rotated_block),
+        .block(check_block),
         .board(block_states),
         .collision(col_check)
     );
 
 
-    // wire [1:0] srs_offset_x;
-    // wire srs_x_neg;
-    // wire [1:0] srs_offset_y;
-    // wire srs_y_neg;
-    // wire srs_fail;
-    // reg [15:0] srs_rotated_block;
+    wire [1:0] srs_offset_x;
+    wire srs_x_neg;
+    wire [1:0] srs_offset_y;
+    wire srs_y_neg;
+    wire srs_fail;
+    reg [15:0] srs_rotated_block;
     // reg srs_is_ccw;
-    // super_rotating_system SRS(
-    //     .rotation(active_rotation),
-    //     // .ccw(srs_is_ccw),
-    //     .i_block(active_type == 1),
-    //     .rotated_block(srs_rotated_block),
-    //     .board(block_states),
-    //     .ax(active_x),
-    //     .ay(active_y),
-    //     .ox(srs_offset_x),
-    //     .oy(srs_offset_y),
-    //     .ox_neg(srs_x_neg),
-    //     .oy_neg(srs_y_neg),
-    //     .fail(srs_fail)
-    // );
+    super_rotating_system SRS(
+        .rotation(active_rotation),
+        // .ccw(srs_is_ccw),
+        .i_block(active_type == 1),
+        .rotated_block(srs_rotated_block),
+        .board(block_states),
+        .ax(active_x),
+        .ay(active_y),
+        .ox(srs_offset_x),
+        .oy(srs_offset_y),
+        .ox_neg(srs_x_neg),
+        .oy_neg(srs_y_neg),
+        .fail(srs_fail)
+    );
 
     always @* begin
         next_state = state;
@@ -158,6 +158,7 @@ module tetris_controller(
 
         check_x = active_x;
         check_y = active_y;
+        check_block = rotated_block;
 
         addra = 0;
         dina = 0;
@@ -200,6 +201,29 @@ module tetris_controller(
                         next_active_y = active_y + 1;
                     end
                 end else if (keys[2]) begin // SRS cw
+                    // check_block = rotated_block_cw;
+                    // if (!col_check) begin
+                    //     next_active_rot = active_rot + 1;
+                    // end else begin
+                    //     check_y = active_y - 1;
+                    //     if (!col_check) begin
+                    //         next_active_rot = active_rot + 1;
+                    //     end else begin
+                    //         check_y = active_y - 2;
+                    //         if (!col_check) begin
+                    //             next_active_rot = active_rot + 1;
+                    //         end else begin
+                    //             check_y = active_y + 1;
+                    //             if (!col_check) begin
+                    //                 next_active_rot = active_rot + 1;
+                    //             end else begin
+                    //                 check_y = active_y + 2;
+                    //                 if (!col_check)
+                    //                     next_active_rot = active_rot + 1;
+                    //             end
+                    //         end
+                    //     end
+                    // end
                     srs_rotated_block = rotated_block_cw;
                     // srs_is_ccw = 0;
                     if (!srs_fail) begin
@@ -207,6 +231,9 @@ module tetris_controller(
                         next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
                         next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
                     end
+                    // check_block = rotated_block_cw;
+                    // if (!col_check)
+                    //     next_active_rot = active_rot + 1;
                 end
                 // end else if (keys[3]) begin // TODO: SRS ccw
                 //     srs_rotated_block = rotated_block_ccw;
