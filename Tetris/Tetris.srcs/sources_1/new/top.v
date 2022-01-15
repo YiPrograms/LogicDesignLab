@@ -73,7 +73,7 @@ module tetris(
 
 
     tetris_controller tetris_controller_inst(
-        .clk(div[25]),
+        .clk(div[10]),
         .clk_fall(div[25]),
         .rst(rst),
         .keys(keys),
@@ -87,7 +87,7 @@ module tetris(
 
     keypress_controller keypress_controller_inst(
         .clk(clk),
-        .clk_op(div[25]),
+        .clk_op(div[10]),
         .rst(rst),
         .PS2_DATA(PS2_DATA),
         .PS2_CLK(PS2_CLK),
