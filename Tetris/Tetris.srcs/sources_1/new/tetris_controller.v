@@ -16,6 +16,17 @@ module tetris_controller(
     integer i, j;
 
     integer block_dims [0:7] = {0, 4, 3, 3, 2, 3, 3, 3};
+    parameter [15:0] block_tiles [0:8] = {
+        16'b0000000000000000,
+        16'b0000111100000000,
+        16'b0000000101110000,
+        16'b0000010001110000,
+        16'b0000000000110011,
+        16'b0000001001110000,
+        16'b0000001101100000,
+        16'b0000011000110000,
+        16'b0000000000000000
+    };
 
     onepulse clk_fall_op(
         .signal(clk_fall),
@@ -58,18 +69,18 @@ module tetris_controller(
         // .yy(yy)
     );
 
-
-    parameter S_Menu = 4'd0;
-    parameter S_GenBlock = 4'd1;
-    parameter S_Falling = 4'd2;
-    parameter S_Landing = 4'd3;
-    parameter S_Dropping = 4'd4;
-    parameter S_Landed = 4'd5;
-    parameter S_WaitUpdate = 4'd6;
-    parameter S_ClearLineAni = 4'd7;
-    parameter S_ClearLines = 4'd8;
-    parameter S_Waiting = 4'd9;
-    parameter S_GameOver = 4'd10;
+    parameter S_Reset = 4'd0;
+    parameter S_Menu = 4'd1;
+    parameter S_GenBlock = 4'd2;
+    parameter S_Falling = 4'd3;
+    parameter S_Landing = 4'd4;
+    parameter S_Dropping = 4'd5;
+    parameter S_Landed = 4'd6;
+    parameter S_WaitUpdate = 4'd7;
+    parameter S_ClearLineAni = 4'd8;
+    parameter S_ClearLines = 4'd9;
+    parameter S_Waiting = 4'd10;
+    parameter S_GameOver = 4'd11;
 
     // reg [3:0] state;
     reg [3:0] active_type;
@@ -81,6 +92,9 @@ module tetris_controller(
     reg [1:0] op_y;
     reg [4:0] clearing_x;
     reg [3:0] clearing_y;
+    reg gameover;
+    reg [1:0] spawn_offset;
+    reg [3:0] spawn_type;
 
     
 
@@ -95,6 +109,10 @@ module tetris_controller(
     reg [1:0] next_op_y;
     reg [4:0] next_clearing_x;
     reg [3:0] next_clearing_y;
+    reg next_gameover;
+    reg [1:0] next_spawn_offset;
+    reg [3:0] next_spawn_type;
+
 
 
     wire [15:0] rotated_block;
@@ -114,13 +132,13 @@ module tetris_controller(
         .rotated_block(rotated_block_cw)
     );
 
-    wire [1:0] active_rot_ccw = active_rot - 1;
-    wire [15:0] rotated_block_ccw;
-    rotation_translation rot_ccw(
-        .block_type(active_type),
-        .rotation(active_rot_ccw),
-        .rotated_block(rotated_block_ccw)
-    );
+    // wire [1:0] active_rot_ccw = active_rot - 1;
+    // wire [15:0] rotated_block_ccw;
+    // rotation_translation rot_ccw(
+    //     .block_type(active_type),
+    //     .rotation(active_rot_ccw),
+    //     .rotated_block(rotated_block_ccw)
+    // );
 
     reg [4:0] check_x;
     reg [3:0] check_y;
@@ -174,6 +192,10 @@ module tetris_controller(
         next_counter = 0;
         next_clearing_x = 20;
         next_clearing_y = 0;
+        next_gameover = 0;
+        next_spawn_offset = 0;
+        next_spawn_type = 0;
+
 
         check_x = active_x;
         check_y = active_y;
@@ -187,18 +209,45 @@ module tetris_controller(
         // srs_is_ccw = 0;
 
         case (state)
+            S_Reset: begin
+                addra = 10*clearing_x + clearing_y;
+                dina = 0;
+                wea = 1;
+
+                next_clearing_x = clearing_x;
+                next_clearing_y = clearing_y + 1;
+                if (clearing_y == 9) begin
+                    next_clearing_x = clearing_x - 1;
+                    next_clearing_y = 0;
+                    if (clearing_x == 0)
+                        next_state = S_Menu;
+                end
+            end
             S_Menu: begin
                 if (keys[7]) // Enter
                     next_state = S_GenBlock;
             end
             S_GenBlock: begin
-                if (random <= 7 && random != 0) begin // Random OK
-                    next_active_type = random;
-                    next_active_x = 22 - block_dims[next_active_type];
-                    next_active_y = next_active_type == 4? 6: 5;
-                    next_active_rot = 0;
+                next_spawn_type = spawn_type;
+                next_spawn_offset = spawn_offset;
+                if (spawn_type == 0) begin
+                    if (random <= 7 && random != 0) begin // Random OK
+                        next_spawn_type = random;
+                    end
+                end else begin
+                    check_y = spawn_type == 4? 7: 6;
+                    check_x = 23 + spawn_offset - block_dims[spawn_type];
+                    check_block = block_tiles[spawn_type];
 
-                    next_state = S_Falling;
+                    if (!col_check) begin
+                        next_state = S_Falling;
+                        next_active_type = spawn_type;
+                        next_active_x = 23 + spawn_offset - block_dims[spawn_type];
+                        next_active_y = spawn_type == 4? 7: 6;
+                        next_active_rot = 0;
+                    end else begin
+                        next_spawn_offset = spawn_offset + 1;
+                    end
                 end
             end
             S_Falling, S_Dropping: begin
@@ -240,6 +289,7 @@ module tetris_controller(
                 end
                 next_op_y = op_y + 1;
                 next_op_x = op_y == 3? op_x + 1: op_x;
+                next_gameover = (op_x == 0 && op_y == 0)? col_check: gameover;
                 
                 if (op_x == 3 && op_y == 3) begin
                     next_active_type = 0;
@@ -247,7 +297,7 @@ module tetris_controller(
                     next_active_y = 0;
                     next_active_rot = 0;
 
-                    if (col_check)
+                    if (gameover)
                         next_state = S_GameOver;
                     else
                         next_state = S_ClearLineAni;
@@ -295,7 +345,7 @@ module tetris_controller(
 
     always @(posedge clk, posedge rst) begin
         if (rst) begin
-            state <= S_Menu;
+            state <= S_Reset;
             active_type <= 0;
             active_x <= 0;
             active_y <= 0;
@@ -305,6 +355,10 @@ module tetris_controller(
             clearing_x <= 20;
             clearing_y <= 0;
             counter <= 0;
+            gameover <= 0;
+            spawn_offset <= 0;
+            spawn_type <= 0;
+            
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -316,6 +370,9 @@ module tetris_controller(
             clearing_x <= next_clearing_x;
             clearing_y <= next_clearing_y;
             counter <= next_counter;
+            gameover <= next_gameover;
+            spawn_offset <= next_spawn_offset;
+            spawn_type <= next_spawn_type;
         end
     end
     
