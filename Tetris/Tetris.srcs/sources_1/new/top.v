@@ -67,26 +67,35 @@ module tetris(
         .vsync(vsync)
     );
 
+    wire [4:0] xx;
+    wire [3:0] yy;
+    wire [3:0] dat;
+
+
     tetris_controller tetris_controller_inst(
-        .clk(div[18]),
+        .clk(div[25]),
         .clk_fall(div[25]),
         .rst(rst),
         .keys(keys),
         .block_states(block_states),
         .active_block(active_block),
-        .state(state)
+        .state(state),
+        .xx(xx),
+        .yy(yy),
+        .dat(dat)
     );
 
     keypress_controller keypress_controller_inst(
         .clk(clk),
-        .clk_op(div[18]),
+        .clk_op(div[25]),
         .rst(rst),
         .PS2_DATA(PS2_DATA),
         .PS2_CLK(PS2_CLK),
         .keys(keys)
     );
 
-    wire [15:0] bcds = {state, active_block[9+:4], active_block[4+:4], active_block[0+:4]};
+    // wire [15:0] bcds = {state, active_block[9+:4], active_block[4+:4], active_block[0+:4]};
+    wire [15:0] bcds = {state, dat, xx[3:0], yy};
     // wire [15:0] bcds = {4'b0, lc[8], lc[4+:4], lc[0+:4]};
     seven_seg_controller seven_seg_controller_inst(
         .clk_display(div[12]),

@@ -7,7 +7,10 @@ module tetris_controller(
     input [7:0] keys,
     output [799:0] block_states,
     output [28:0] active_block,
-    output reg [3:0] state
+    output reg [3:0] state,
+    output [4:0] xx,
+    output [3:0] yy,
+    output [3:0] dat
 );
 
     integer i, j;
@@ -47,8 +50,11 @@ module tetris_controller(
         .rst(rst),
         .addrb(addrb),
         .doutb(doutb),
-        .block_states(block_states)
+        .block_states(block_states),
+        .xx(xx),
+        .yy(yy)
     );
+
 
     parameter S_Menu = 4'd0;
     parameter S_GenBlock = 4'd1;
@@ -68,6 +74,9 @@ module tetris_controller(
     reg [1:0] op_x;
     reg [1:0] op_y;
 
+    // assign xx = active_x + op_x - 3;
+    // assign yy = active_y + op_y - 3;
+
 
     reg [3:0] next_state;
     reg [3:0] next_active_type;
@@ -84,6 +93,8 @@ module tetris_controller(
         .rotation(active_rot),
         .rotated_block(rotated_block)
     );
+    // assign dat = rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3? active_type: 0;
+    assign dat = doutb;
 
     wire [1:0] active_rot_cw = active_rot + 1;
     wire [15:0] rotated_block_cw;
@@ -327,27 +338,49 @@ endmodule
 module block_reader(
     input clk,
     input rst,
-    output reg [7:0] addrb,
+    output [7:0] addrb,
     input [3:0] doutb,
-    output reg [799:0] block_states
+    output reg [799:0] block_states,
+    output [4:0] xx,
+    output [3:0] yy
 );
 
     reg [799:0] next_block_states;
-    reg [7:0] next_addrb;
+    // reg [7:0] next_addrb;
+
+    reg [4:0] bx;
+    reg [3:0] by;
+
+    reg [4:0] next_bx;
+    reg [3:0] next_by;
+    assign xx = bx;
+    assign yy = by;
+
+    assign addrb = 10*bx + by;
 
     always @* begin
         next_block_states = block_states;
-        next_block_states[4*addrb +: 4] = doutb;
-        next_addrb = addrb == 199? 0: addrb + 1;
+        next_block_states[bx*40 + by*4 +: 4] = doutb;
+
+        next_by = by == 9? 0: by + 1;
+        next_bx = by == 9? bx + 1: bx;
+        // if (bx == 19 && by == 9) begin
+        if (bx == 5 && by == 9) begin
+            next_bx = 0;
+            next_by = 0;
+        end
+        // next_addrb = addrb == 199? 0: addrb + 1;
     end
 
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             block_states <= 0;
-            addrb <= 0;
+            bx <= 0;
+            by <= 0;
         end else begin
             block_states <= next_block_states;
-            addrb <= next_addrb;
+            bx <= next_bx;
+            by <= next_by;
         end
     end
 endmodule
