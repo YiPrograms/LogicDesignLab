@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Sat Jan 15 19:08:06 2022
-# Process ID: 825990
+# Start of session at: Sat Jan 15 23:01:33 2022
+# Process ID: 897132
 # Current directory: /home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1
 # Command line: vivado -log tetris.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source tetris.tcl
 # Log file: /home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/tetris.vds
@@ -20,9 +20,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 826008
+INFO: [Synth 8-7075] Helper process launched with PID 897185
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2332.039 ; gain = 0.000 ; free physical = 695 ; free virtual = 27960
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2333.035 ; gain = 0.000 ; free physical = 541 ; free virtual = 25785
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'tetris' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/top.v:19]
 INFO: [Synth 8-6157] synthesizing module 'clock_divider' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/top.v:2]
@@ -60,19 +60,71 @@ INFO: [Synth 8-6157] synthesizing module 'onepulse' [/home/yi/Workspace/Vivado/T
 INFO: [Synth 8-6155] done synthesizing module 'onepulse' (5#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/onepulse.v:1]
 INFO: [Synth 8-6157] synthesizing module 'LFSR' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/lfsr.v:2]
 INFO: [Synth 8-6155] done synthesizing module 'LFSR' (6#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/lfsr.v:2]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-825990-YNB/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (7#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-825990-YNB/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'block_reader' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:339]
-INFO: [Synth 8-6155] done synthesizing module 'block_reader' (8#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:339]
-INFO: [Synth 8-6157] synthesizing module 'rotation_translation' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:260]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-897132-YNB/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (7#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-897132-YNB/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'block_reader' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:363]
+INFO: [Synth 8-6155] done synthesizing module 'block_reader' (8#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:363]
+INFO: [Synth 8-6157] synthesizing module 'rotation_translation' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:284]
 	Parameter block_tiles bound to: 144'b000000000000000000001111000000000000000101110000000001000111000000000000001100110000001001110000000000110110000000000110001100000000000000000000 
-INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:283]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:298]
-INFO: [Synth 8-6155] done synthesizing module 'rotation_translation' (9#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:260]
-INFO: [Synth 8-6157] synthesizing module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:316]
-INFO: [Synth 8-6155] done synthesizing module 'collision_check' (10#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:316]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:151]
-INFO: [Synth 8-6155] done synthesizing module 'tetris_controller' (11#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:3]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:307]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:322]
+INFO: [Synth 8-6155] done synthesizing module 'rotation_translation' (9#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:284]
+INFO: [Synth 8-6157] synthesizing module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:340]
+INFO: [Synth 8-6155] done synthesizing module 'collision_check' (10#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:340]
+INFO: [Synth 8-6157] synthesizing module 'super_rotating_system' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:2]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:18]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:18]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:19]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:19]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:20]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:20]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:21]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:21]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:22]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:22]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:23]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:23]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:24]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:24]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:25]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:25]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:26]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:26]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:27]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:27]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:28]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:28]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:29]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:29]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:30]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:30]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:31]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:31]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:32]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:32]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:33]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:33]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:34]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:34]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:35]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:35]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:36]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:36]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:37]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:37]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:38]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:38]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:39]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:39]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:40]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:40]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:41]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:41]
+WARNING: [Synth 8-689] width (32) of port connection 'bx' does not match port width (5) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:42]
+WARNING: [Synth 8-689] width (32) of port connection 'by' does not match port width (4) of module 'collision_check' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:42]
+INFO: [Synth 8-6155] done synthesizing module 'super_rotating_system' (11#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v:2]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:168]
+INFO: [Synth 8-6155] done synthesizing module 'tetris_controller' (12#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/tetris_controller.v:3]
 INFO: [Synth 8-6157] synthesizing module 'keypress_controller' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:60]
 INFO: [Synth 8-6157] synthesizing module 'KeyboardDecoder' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v:1]
 	Parameter INIT bound to: 2'b00 
@@ -82,43 +134,43 @@ INFO: [Synth 8-6157] synthesizing module 'KeyboardDecoder' [/home/yi/Workspace/V
 	Parameter IS_INIT bound to: 8'b10101010 
 	Parameter IS_EXTEND bound to: 8'b11100000 
 	Parameter IS_BREAK bound to: 8'b11110000 
-INFO: [Synth 8-6157] synthesizing module 'KeyboardCtrl_0' [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-825990-YNB/realtime/KeyboardCtrl_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'KeyboardCtrl_0' (12#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-825990-YNB/realtime/KeyboardCtrl_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'KeyboardCtrl_0' [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-897132-YNB/realtime/KeyboardCtrl_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'KeyboardCtrl_0' (13#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/.Xil/Vivado-897132-YNB/realtime/KeyboardCtrl_0_stub.v:6]
 INFO: [Synth 8-226] default block is never used [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v:64]
-INFO: [Synth 8-6155] done synthesizing module 'KeyboardDecoder' (13#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'KeyboardDecoder' (14#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v:1]
 INFO: [Synth 8-6157] synthesizing module 'hold_pulses' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:2]
 	Parameter hold_time bound to: 17500 - type: integer 
 	Parameter trigger_interval bound to: 4250 - type: integer 
 	Parameter S_Idle bound to: 0 - type: integer 
 	Parameter S_Holding bound to: 1 - type: integer 
 	Parameter S_Triggered bound to: 2 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'hold_pulses' (14#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'hold_pulses' (15#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:2]
 INFO: [Synth 8-6157] synthesizing module 'hold_pulses__parameterized0' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:2]
 	Parameter hold_time bound to: 0 - type: integer 
 	Parameter trigger_interval bound to: 4250 - type: integer 
 	Parameter S_Idle bound to: 0 - type: integer 
 	Parameter S_Holding bound to: 1 - type: integer 
 	Parameter S_Triggered bound to: 2 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'hold_pulses__parameterized0' (14#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'hold_pulses__parameterized0' (15#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:2]
 INFO: [Synth 8-155] case statement is not full and has no default [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:141]
-INFO: [Synth 8-6155] done synthesizing module 'keypress_controller' (15#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:60]
+INFO: [Synth 8-6155] done synthesizing module 'keypress_controller' (16#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v:60]
 INFO: [Synth 8-6157] synthesizing module 'seven_seg_controller' [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v:2]
 INFO: [Synth 8-226] default block is never used [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v:37]
-INFO: [Synth 8-6155] done synthesizing module 'seven_seg_controller' (16#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v:2]
-INFO: [Synth 8-6155] done synthesizing module 'tetris' (17#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/top.v:19]
+INFO: [Synth 8-6155] done synthesizing module 'seven_seg_controller' (17#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'tetris' (18#1) [/home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/top.v:19]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2332.039 ; gain = 0.000 ; free physical = 451 ; free virtual = 27715
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2333.035 ; gain = 0.000 ; free physical = 327 ; free virtual = 25571
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2332.039 ; gain = 0.000 ; free physical = 1142 ; free virtual = 28406
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2333.035 ; gain = 0.000 ; free physical = 1019 ; free virtual = 26254
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2332.039 ; gain = 0.000 ; free physical = 1157 ; free virtual = 28422
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2333.035 ; gain = 0.000 ; free physical = 1019 ; free virtual = 26254
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.04 . Memory (MB): peak = 2332.039 ; gain = 0.000 ; free physical = 1147 ; free virtual = 28412
+Netlist sorting complete. Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.17 . Memory (MB): peak = 2333.035 ; gain = 0.000 ; free physical = 1048 ; free virtual = 26283
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -135,20 +187,20 @@ Parsing XDC File [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/dont_touc
 Finished Parsing XDC File [/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2395.844 ; gain = 0.000 ; free physical = 1076 ; free virtual = 28340
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2396.840 ; gain = 0.000 ; free physical = 881 ; free virtual = 26123
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2395.844 ; gain = 0.000 ; free physical = 1075 ; free virtual = 28340
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2396.840 ; gain = 0.000 ; free physical = 881 ; free virtual = 26123
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2395.844 ; gain = 63.805 ; free physical = 1138 ; free virtual = 28403
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 2396.840 ; gain = 63.805 ; free physical = 1004 ; free virtual = 26277
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2395.844 ; gain = 63.805 ; free physical = 1138 ; free virtual = 28403
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 2396.840 ; gain = 63.805 ; free physical = 1004 ; free virtual = 26277
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -160,7 +212,7 @@ Applied set_property CLOCK_BUFFER_TYPE = NONE for PS2_DATA. (constraint file  /h
 Applied set_property KEEP_HIERARCHY = SOFT for tetris_controller_inst/block_bram. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for keypress_controller_inst/key_de/inst. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2395.844 ; gain = 63.805 ; free physical = 1139 ; free virtual = 28403
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 2396.840 ; gain = 63.805 ; free physical = 1004 ; free virtual = 26278
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'KeyboardDecoder'
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'hold_pulses'
@@ -194,22 +246,23 @@ INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'hold_pulses__parameterized0'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2395.844 ; gain = 63.805 ; free physical = 1106 ; free virtual = 28371
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2396.840 ; gain = 63.805 ; free physical = 957 ; free virtual = 26230
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
+	   2 Input   32 Bit       Adders := 10    
 	   2 Input   28 Bit       Adders := 3     
 	   2 Input   10 Bit       Adders := 2     
 	   2 Input    8 Bit       Adders := 1     
-	   2 Input    6 Bit       Adders := 7     
-	   2 Input    5 Bit       Adders := 13    
-	   3 Input    5 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 57    
+	   2 Input    5 Bit       Adders := 86    
+	   3 Input    5 Bit       Adders := 2     
+	   3 Input    4 Bit       Adders := 3     
 	   2 Input    4 Bit       Adders := 3     
-	   3 Input    4 Bit       Adders := 2     
-	   2 Input    2 Bit       Adders := 5     
+	   2 Input    2 Bit       Adders := 4     
 +---XORs : 
 	   2 Input      1 Bit         XORs := 1     
 +---Registers : 
@@ -228,6 +281,9 @@ Detailed RTL Component Info :
 	   2 Input   28 Bit        Muxes := 9     
 	   4 Input   16 Bit        Muxes := 6     
 	   3 Input   16 Bit        Muxes := 3     
+	   2 Input   16 Bit        Muxes := 1     
+	   8 Input   16 Bit        Muxes := 1     
+	   5 Input   16 Bit        Muxes := 1     
 	   9 Input   12 Bit        Muxes := 3     
 	   2 Input   12 Bit        Muxes := 12    
 	  10 Input   12 Bit        Muxes := 3     
@@ -237,22 +293,22 @@ Detailed RTL Component Info :
 	   2 Input    8 Bit        Muxes := 3     
 	   8 Input    8 Bit        Muxes := 1     
 	  10 Input    8 Bit        Muxes := 1     
-	   2 Input    5 Bit        Muxes := 2     
+	   2 Input    5 Bit        Muxes := 5     
 	   8 Input    5 Bit        Muxes := 2     
-	   4 Input    4 Bit        Muxes := 33    
-	   2 Input    4 Bit        Muxes := 9     
+	   4 Input    4 Bit        Muxes := 417   
+	   2 Input    4 Bit        Muxes := 11    
 	   8 Input    4 Bit        Muxes := 5     
 	   5 Input    4 Bit        Muxes := 2     
-	   3 Input    3 Bit        Muxes := 1     
 	   2 Input    3 Bit        Muxes := 1     
-	   3 Input    2 Bit        Muxes := 7     
-	   2 Input    2 Bit        Muxes := 7     
-	   8 Input    2 Bit        Muxes := 3     
-	   4 Input    2 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 85    
+	   2 Input    2 Bit        Muxes := 36    
+	   4 Input    2 Bit        Muxes := 2     
+	   5 Input    2 Bit        Muxes := 2     
+	   8 Input    2 Bit        Muxes := 5     
+	   3 Input    2 Bit        Muxes := 6     
+	   2 Input    1 Bit        Muxes := 820   
+	   4 Input    1 Bit        Muxes := 14    
 	   9 Input    1 Bit        Muxes := 1     
 	   8 Input    1 Bit        Muxes := 5     
-	   4 Input    1 Bit        Muxes := 7     
 	   3 Input    1 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -318,7 +374,7 @@ DSP Report: operator collision4 is absorbed into DSP collision4.
 DSP Report: operator collision5 is absorbed into DSP collision4.
 DSP Report: operator collision6 is absorbed into DSP collision4.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:44 ; elapsed = 00:00:46 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 1045 ; free virtual = 28326
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:49 ; elapsed = 00:00:50 . Memory (MB): peak = 2413.621 ; gain = 80.586 ; free physical = 948 ; free virtual = 26219
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -350,19 +406,19 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 923 ; free virtual = 28204
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:54 ; elapsed = 00:00:54 . Memory (MB): peak = 2413.621 ; gain = 80.586 ; free physical = 782 ; free virtual = 26099
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:54 ; elapsed = 00:00:56 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 891 ; free virtual = 28174
+Finished Timing Optimization : Time (s): cpu = 00:01:00 ; elapsed = 00:01:01 . Memory (MB): peak = 2413.621 ; gain = 80.586 ; free physical = 745 ; free virtual = 26065
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:57 ; elapsed = 00:00:59 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28177
+Finished Technology Mapping : Time (s): cpu = 00:01:08 ; elapsed = 00:01:09 . Memory (MB): peak = 2413.621 ; gain = 80.586 ; free physical = 672 ; free virtual = 25993
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -380,37 +436,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:59 ; elapsed = 00:01:01 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished IO Insertion : Time (s): cpu = 00:01:13 ; elapsed = 00:01:14 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 662 ; free virtual = 25985
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:59 ; elapsed = 00:01:01 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:13 ; elapsed = 00:01:14 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 662 ; free virtual = 25985
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:00 ; elapsed = 00:01:01 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:16 ; elapsed = 00:01:17 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 656 ; free virtual = 25974
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:00 ; elapsed = 00:01:01 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:16 ; elapsed = 00:01:17 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 656 ; free virtual = 25974
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:16 ; elapsed = 00:01:18 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 650 ; free virtual = 25973
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:17 ; elapsed = 00:01:18 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 642 ; free virtual = 25965
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -431,45 +487,46 @@ Report Cell Usage:
 |1     |KeyboardCtrl |     1|
 |2     |blk_mem_gen  |     1|
 |3     |BUFG         |     2|
-|4     |CARRY4       |    56|
-|5     |DSP48E1      |    22|
-|6     |LUT1         |    13|
-|7     |LUT2         |   165|
-|8     |LUT3         |   167|
-|9     |LUT4         |   389|
-|10    |LUT5         |   818|
-|11    |LUT6         |  7449|
-|12    |MUXF7        |  2408|
-|13    |MUXF8        |   962|
-|14    |FDCE         |  1249|
+|4     |CARRY4       |   124|
+|5     |DSP48E1      |   119|
+|6     |LUT1         |    95|
+|7     |LUT2         |   230|
+|8     |LUT3         |   647|
+|9     |LUT4         |   498|
+|10    |LUT5         |  3638|
+|11    |LUT6         | 40722|
+|12    |MUXF7        | 14142|
+|13    |MUXF8        |  5733|
+|14    |FDCE         |  1265|
 |15    |FDPE         |     2|
-|16    |FDRE         |    38|
+|16    |FDRE         |    36|
 |17    |FDSE         |     2|
 |18    |IBUF         |     2|
 |19    |OBUF         |    25|
 |20    |OBUFT        |    20|
 +------+-------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 2405.828 ; gain = 73.789 ; free physical = 896 ; free virtual = 28176
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:17 ; elapsed = 00:01:18 . Memory (MB): peak = 2428.941 ; gain = 95.906 ; free physical = 626 ; free virtual = 25949
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 2405.828 ; gain = 9.984 ; free physical = 967 ; free virtual = 28248
-Synthesis Optimization Complete : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 2405.836 ; gain = 73.789 ; free physical = 967 ; free virtual = 28248
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:13 ; elapsed = 00:01:15 . Memory (MB): peak = 2428.941 ; gain = 32.102 ; free physical = 692 ; free virtual = 26016
+Synthesis Optimization Complete : Time (s): cpu = 00:01:17 ; elapsed = 00:01:18 . Memory (MB): peak = 2428.949 ; gain = 95.906 ; free physical = 692 ; free virtual = 26016
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.07 . Memory (MB): peak = 2405.836 ; gain = 0.000 ; free physical = 1059 ; free virtual = 28340
-INFO: [Netlist 29-17] Analyzing 3448 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00.45 ; elapsed = 00:00:00.45 . Memory (MB): peak = 2442.816 ; gain = 0.000 ; free physical = 767 ; free virtual = 26079
+INFO: [Netlist 29-17] Analyzing 20118 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 WARNING: [Netlist 29-101] Netlist 'tetris' is not ideal for floorplanning, since the cellview 'block_reader' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2437.844 ; gain = 0.000 ; free physical = 1014 ; free virtual = 28295
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2490.676 ; gain = 0.000 ; free physical = 714 ; free virtual = 26025
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-67 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+69 Infos, 51 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:07 ; elapsed = 00:01:06 . Memory (MB): peak = 2437.844 ; gain = 106.031 ; free physical = 1170 ; free virtual = 28451
+synth_design: Time (s): cpu = 00:01:30 ; elapsed = 00:01:28 . Memory (MB): peak = 2490.676 ; gain = 157.867 ; free physical = 928 ; free virtual = 26239
 INFO: [Common 17-1381] The checkpoint '/home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/tetris.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2522.691 ; gain = 32.016 ; free physical = 952 ; free virtual = 26271
 INFO: [runtcl-4] Executing : report_utilization -file tetris_utilization_synth.rpt -pb tetris_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Jan 15 19:09:19 2022...
+INFO: [Common 17-206] Exiting Vivado at Sat Jan 15 23:03:13 2022...
