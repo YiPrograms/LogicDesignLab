@@ -59,7 +59,7 @@ module tetris_controller(
     parameter S_Menu = 4'd0;
     parameter S_GenBlock = 4'd1;
     parameter S_Falling = 4'd2;
-    parameter S_Landing = 4'd3;
+    parameter S_Dropping = 4'd3;
     parameter S_Landed = 4'd4;
     parameter S_ClearLines = 4'd5;
     parameter S_Waiting = 4'd6;
@@ -182,85 +182,43 @@ module tetris_controller(
                     next_state = S_Falling;
                 end
             end
-            S_Falling: begin
-                if (clk_fall_1p || keys[4]) begin // Fall
+            S_Falling, S_Dropping: begin
+                if (state == S_Dropping || clk_fall_1p || keys[4]) begin // Fall
                     check_x = active_x - 1;
                     if (!col_check) begin
                         next_active_x = active_x - 1;
                     end else begin
                         next_state = S_Landed;
                     end
-                end else if (keys[0]) begin // Left
-                    check_y = active_y - 1;
-                    if (!col_check) begin
-                        next_active_y = active_y - 1;
+                end else if (state == S_Falling) begin
+                    if (keys[0]) begin // Left
+                        check_y = active_y - 1;
+                        if (!col_check) begin
+                            next_active_y = active_y - 1;
+                        end
+                    end else if (keys[1]) begin // Right
+                        check_y = active_y + 1;
+                        if (!col_check) begin
+                            next_active_y = active_y + 1;
+                        end
+                    end else if (keys[2]) begin // SRS cw
+                        srs_rotated_block = rotated_block_cw;
+                        if (!srs_fail) begin
+                            next_active_rot = active_rot + 1;
+                            next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
+                            next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
+                        end
+                    end else if (keys[5]) begin // Space: Hard drop
+                        next_state = S_Dropping;
                     end
-                end else if (keys[1]) begin // Right
-                    check_y = active_y + 1;
-                    if (!col_check) begin
-                        next_active_y = active_y + 1;
-                    end
-                end else if (keys[2]) begin // SRS cw
-                    // check_block = rotated_block_cw;
-                    // if (!col_check) begin
-                    //     next_active_rot = active_rot + 1;
-                    // end else begin
-                    //     check_y = active_y - 1;
-                    //     if (!col_check) begin
-                    //         next_active_rot = active_rot + 1;
-                    //     end else begin
-                    //         check_y = active_y - 2;
-                    //         if (!col_check) begin
-                    //             next_active_rot = active_rot + 1;
-                    //         end else begin
-                    //             check_y = active_y + 1;
-                    //             if (!col_check) begin
-                    //                 next_active_rot = active_rot + 1;
-                    //             end else begin
-                    //                 check_y = active_y + 2;
-                    //                 if (!col_check)
-                    //                     next_active_rot = active_rot + 1;
-                    //             end
-                    //         end
-                    //     end
-                    // end
-                    srs_rotated_block = rotated_block_cw;
-                    // srs_is_ccw = 0;
-                    if (!srs_fail) begin
-                        next_active_rot = active_rot + 1;
-                        next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
-                        next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
-                    end
-                    // check_block = rotated_block_cw;
-                    // if (!col_check)
-                    //     next_active_rot = active_rot + 1;
                 end
-                // end else if (keys[3]) begin // TODO: SRS ccw
-                //     srs_rotated_block = rotated_block_ccw;
-                //     srs_is_ccw = 1;
-                //     if (!srs_fail) begin
-                //         next_active_rot = active_rot - 1;
-                //         next_active_x = srs_x_neg? active_x + srs_offset_x :active_x - srs_offset_x;
-                //         next_active_y = srs_y_neg? active_y + srs_offset_y :active_y - srs_offset_y;
-                //     end
-                // end
             end
             S_Landed: begin
-                // for (i = 0; i < 4; i = i + 1)
-                //     for (j = 0; j < 4; j = j + 1)
-                //         if (rotated_block[4*i + j] && active_x + i >= 2 && active_y + j >= 2)
-                //             next_block_states[(40*(active_x + i - 2) + 4*(active_y + j - 2)) +: 4] = active_type;
                 if (rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3) begin
                     addra = 10*(active_x + op_x - 3) + (active_y + op_y - 3);
                     dina = active_type;
                     wea = 1;
                 end
-                // if (active_x + op_x >= 3 && active_y + op_y >= 3) begin
-                //     addra = 10*(active_x + op_x - 3) + (active_y + op_y - 3);
-                //     dina = active_type;
-                //     wea = 1;
-                // end
-
                 next_op_y = op_y + 1;
                 next_op_x = op_y == 3? op_x + 1: op_x;
                 
