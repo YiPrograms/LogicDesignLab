@@ -39,24 +39,6 @@ module super_rotating_system(
         .board(board),
         .collision(col2)
     );
-    reg [4:0] t3_x;
-    reg [3:0] t3_y;
-    collision_check cc_3(
-        .bx(t3_x),
-        .by(t3_y),
-        .block(rotated_block),
-        .board(board),
-        .collision(col3)
-    );
-    reg [4:0] t4_x;
-    reg [3:0] t4_y;
-    collision_check cc_4(
-        .bx(t4_x),
-        .by(t4_y),
-        .block(rotated_block),
-        .board(board),
-        .collision(col4)
-    );
 
     always @* begin
         ox = 0;
@@ -70,40 +52,24 @@ module super_rotating_system(
                 0: begin
                     t1_x = ax + 0; t1_y = ay + -1; 
                     t2_x = ax + 1; t2_y = ay + -1; 
-                    t3_x = ax + -2; t3_y = ay + 0; 
-                    t4_x = ax + -2; t4_y = ay + -1;
-                    if (!col4) begin ox = 2; oy = 1; ox_neg = 1; oy_neg = 1; fail = 0; end
-                    if (!col3) begin ox = 2; oy = 0; ox_neg = 1; oy_neg = 0; fail = 0; end
                     if (!col2) begin ox = 1; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
                     if (!col1) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
                 end
                 1: begin
                     t1_x = ax + 0; t1_y = ay + 1; 
                     t2_x = ax + -1; t2_y = ay + 1; 
-                    t3_x = ax + 2; t3_y = ay + 0; 
-                    t4_x = ax + 2; t4_y = ay + 1;
-                    if (!col4) begin ox = 2; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end
-                    if (!col3) begin ox = 2; oy = 0; ox_neg = 0; oy_neg = 0; fail = 0; end
                     if (!col2) begin ox = 1; oy = 1; ox_neg = 1; oy_neg = 0; fail = 0; end
                     if (!col1) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end
                 end
                 2: begin
                     t1_x = ax + 0; t1_y = ay + 1; 
                     t2_x = ax + 1; t2_y = ay + 1; 
-                    t3_x = ax + -2; t3_y = ay + 0; 
-                    t4_x = ax + -2; t4_y = ay + 1;
-                    if (!col4) begin ox = 2; oy = 1; ox_neg = 1; oy_neg = 0; fail = 0; end
-                    if (!col3) begin ox = 2; oy = 0; ox_neg = 1; oy_neg = 0; fail = 0; end
                     if (!col2) begin ox = 1; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end
                     if (!col1) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end
                 end
                 3: begin
                     t1_x = ax + 0; t1_y = ay + -1; 
                     t2_x = ax + -1; t2_y = ay + -1; 
-                    t3_x = ax + 2; t3_y = ay + 0; 
-                    t4_x = ax + 2; t4_y = ay + -1;
-                    if (!col4) begin ox = 2; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
-                    if (!col3) begin ox = 2; oy = 0; ox_neg = 0; oy_neg = 0; fail = 0; end
                     if (!col2) begin ox = 1; oy = 1; ox_neg = 1; oy_neg = 1; fail = 0; end
                     if (!col1) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
                 end
@@ -113,40 +79,24 @@ module super_rotating_system(
                 0: begin
                     t1_x = ax + 0; t1_y = ay + -2; 
                     t2_x = ax + 0; t2_y = ay + 1; 
-                    t3_x = ax + -1; t3_y = ay + -2; 
-                    t4_x = ax + 2; t4_y = ay + 1; 
-                    if (!col4) begin ox = 2; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end
-                    if (!col3) begin ox = 1; oy = 2; ox_neg = 1; oy_neg = 1; fail = 0; end
                     if (!col2) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end
                     if (!col1) begin ox = 0; oy = 2; ox_neg = 0; oy_neg = 1; fail = 0; end
                 end
                 1: begin
                     t1_x = ax + 0; t1_y = ay + -1; 
                     t2_x = ax + 0; t2_y = ay + 2; 
-                    t3_x = ax + 2; t3_y = ay + -1; 
-                    t4_x = ax + -1; t4_y = ay + 2;
-                    if (!col4) begin ox = 1; oy = 2; ox_neg = 1; oy_neg = 0; fail = 0; end
-                    if (!col3) begin ox = 2; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
                     if (!col2) begin ox = 0; oy = 2; ox_neg = 0; oy_neg = 0; fail = 0; end
                     if (!col1) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
                 end
                 2: begin
                     t1_x = ax + 0; t1_y = ay + 2; 
                     t2_x = ax + 0; t2_y = ay + -1; 
-                    t3_x = ax + 1; t3_y = ay + 2; 
-                    t4_x = ax + -2; t4_y = ay + -1; 
-                    if (!col4) begin ox = 2; oy = 1; ox_neg = 1; oy_neg = 1; fail = 0; end
-                    if (!col3) begin ox = 1; oy = 2; ox_neg = 0; oy_neg = 0; fail = 0; end
                     if (!col2) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 1; fail = 0; end
                     if (!col1) begin ox = 0; oy = 2; ox_neg = 0; oy_neg = 0; fail = 0; end
                 end
                 3: begin
                     t1_x = ax + 0; t1_y = ay + 1; 
                     t2_x = ax + 0; t2_y = ay + -2; 
-                    t3_x = ax + -2; t3_y = ay + 1; 
-                    t4_x = ax + 1; t4_y = ay + -2; 
-                    if (!col4) begin ox = 1; oy = 2; ox_neg = 0; oy_neg = 1; fail = 0; end
-                    if (!col3) begin ox = 2; oy = 1; ox_neg = 1; oy_neg = 0; fail = 0; end
                     if (!col2) begin ox = 0; oy = 2; ox_neg = 0; oy_neg = 1; fail = 0; end
                     if (!col1) begin ox = 0; oy = 1; ox_neg = 0; oy_neg = 0; fail = 0; end 
                 end
