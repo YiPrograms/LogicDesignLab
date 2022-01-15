@@ -165,27 +165,21 @@ module tetris_controller(
             end
             S_Falling, S_Landing: begin
                 if (clk_fall_1p || keys[4]) begin // Fall
-                    if (state == S_Landing) begin // Land
-                        next_state = S_Landed;
-                    end else begin // Fall
+                    check_x = active_x - 1;
+                    if (!col_check) begin
                         next_active_x = active_x - 1;
-                        check_x = active_x - 1;
-                        if (col_check_down)
-                            next_state = S_Landing;
+                    end else begin
+                        next_state = S_Landed;
                     end
                 end else if (keys[0]) begin // Left
                     check_y = active_y - 1;
                     if (!col_check) begin
                         next_active_y = active_y - 1;
-                        if (state == S_Landing && !col_check_down)
-                            next_state = S_Falling;
                     end
                 end else if (keys[1]) begin // Right
                     check_y = active_y + 1;
                     if (!col_check) begin
                         next_active_y = active_y + 1;
-                        if (state == S_Landing && !col_check_down)
-                            next_state = S_Falling;
                     end
                 end else if (keys[2]) begin // TODO: SRS cw
                     next_active_rot = active_rot + 1;
@@ -328,7 +322,7 @@ module collision_check(
             for (j = 0; j < 4; j = j + 1) begin
                 if (block[4*i+j]) begin
                     if (bx+i <= 2 || by+j <= 2 || by+j >= 13 ||
-                        board[(bx+i-3)*40 + (by+i-3)*4 +: 4] != 0)
+                        board[(bx+i-3)*40 + (by+j-3)*4 +: 4] != 0)
                     collision = 1;
                 end
             end
