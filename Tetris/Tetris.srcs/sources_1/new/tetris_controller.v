@@ -45,12 +45,15 @@ module tetris_controller(
         .doutb(doutb)
     );
 
+    wire [199:0] block_bits;
+
     block_reader br(
         .clk(clk),
         .rst(rst),
         .addrb(addrb),
         .doutb(doutb),
-        .block_states(block_states)
+        .block_states(block_states),
+        .block_bits(block_bits)
         // .xx(xx),
         // .yy(yy)
     );
@@ -59,23 +62,26 @@ module tetris_controller(
     parameter S_Menu = 4'd0;
     parameter S_GenBlock = 4'd1;
     parameter S_Falling = 4'd2;
-    parameter S_Dropping = 4'd3;
-    parameter S_Landed = 4'd4;
-    parameter S_ClearLines = 4'd5;
-    parameter S_Waiting = 4'd6;
-    parameter S_GameOver = 4'd7;
+    parameter S_Landing = 4'd3;
+    parameter S_Dropping = 4'd4;
+    parameter S_Landed = 4'd5;
+    parameter S_WaitUpdate = 4'd6;
+    parameter S_ClearLines = 4'd7;
+    parameter S_Waiting = 4'd8;
+    parameter S_GameOver = 4'd9;
 
     // reg [3:0] state;
     reg [3:0] active_type;
     reg [4:0] active_x;
     reg [3:0] active_y;
     reg [1:0] active_rot;
-    reg [27:0] fall_counter;
+    reg [27:0] counter;
     reg [1:0] op_x;
     reg [1:0] op_y;
+    reg [4:0] clearing_x;
 
-    assign xx = active_x + op_x - 3;
-    assign yy = active_y + op_y - 3;
+
+    
 
 
     reg [3:0] next_state;
@@ -83,9 +89,11 @@ module tetris_controller(
     reg [4:0] next_active_x;
     reg [3:0] next_active_y;
     reg [1:0] next_active_rot;
-    reg [27:0] next_fall_counter;
+    reg [27:0] next_counter;
     reg [1:0] next_op_x;
     reg [1:0] next_op_y;
+    reg [4:0] next_clearing_x;
+
 
     wire [15:0] rotated_block;
     rotation_translation rot(
@@ -120,7 +128,7 @@ module tetris_controller(
         .bx(check_x),
         .by(check_y),
         .block(check_block),
-        .board(block_states),
+        .board(block_bits),
         .collision(col_check)
     );
 
@@ -137,7 +145,7 @@ module tetris_controller(
         // .ccw(srs_is_ccw),
         .i_block(active_type == 1),
         .rotated_block(srs_rotated_block),
-        .board(block_states),
+        .board(block_bits),
         .ax(active_x),
         .ay(active_y),
         .ox(srs_offset_x),
@@ -145,6 +153,12 @@ module tetris_controller(
         .ox_neg(srs_x_neg),
         .oy_neg(srs_y_neg),
         .fail(srs_fail)
+    );
+
+    wire [4:0] whole_line_x;
+    whole_line(
+        .board(block_bits),
+        .line_x(whole_line_x)
     );
 
     always @* begin
@@ -155,6 +169,8 @@ module tetris_controller(
         next_active_rot = active_rot;
         next_op_x = 0;
         next_op_y = 0;
+        next_counter = 0;
+        next_clearing_x = 20;
 
         check_x = active_x;
         check_y = active_y;
@@ -214,7 +230,7 @@ module tetris_controller(
                 end
             end
             S_Landed: begin
-                if (rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3) begin
+                if (rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3 && active_x + op_x <= 22) begin
                     addra = 10*(active_x + op_x - 3) + (active_y + op_y - 3);
                     dina = active_type;
                     wea = 1;
@@ -228,11 +244,34 @@ module tetris_controller(
                     next_active_y = 0;
                     next_active_rot = 0;
 
-                    next_state = S_ClearLines;
+                    if (col_check)
+                        next_state = S_GameOver;
+                    else
+                        next_state = S_WaitUpdate;
                 end
             end
+            S_WaitUpdate: begin
+                next_counter = counter + 1;
+                if (counter == 300)
+                    next_state = S_ClearLines;
+            end
             S_ClearLines: begin
-                next_state = S_Waiting;
+                if (clearing_x == 20)
+                    if (whole_line_x == 20)
+                        next_state = S_Waiting;
+                    else
+                        next_clearing_x = whole_line_x;
+                else begin
+                    next_clearing_x = clearing_x;
+
+                    addra = 10*clearing_x + op_y;
+                    dina = clearing_x == 19? 0: block_states[40*(clearing_x + 1) + 4*op_y +: 4];
+                    wea = 1;
+
+                    next_op_y = op_y + 1;
+                    if (op_y == 9)
+                        next_state = S_WaitUpdate;
+                end
             end
             S_Waiting: begin
                 next_state = S_GenBlock;
@@ -252,6 +291,8 @@ module tetris_controller(
             active_rot <= 0;
             op_x <= 0;
             op_y <= 0;
+            clearing_x <= 20;
+            counter <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -260,10 +301,15 @@ module tetris_controller(
             active_rot <= next_active_rot;
             op_x <= next_op_x;
             op_y <= next_op_y;
+            clearing_x <= next_clearing_x;
+            counter <= next_counter;
         end
     end
     
     assign active_block = {rotated_block, active_y, active_x, active_type};
+
+    assign xx = clearing_x;
+    assign yy = op_y;
 
 endmodule
 
@@ -327,22 +373,21 @@ module collision_check(
     input [4:0] bx,
     input [3:0] by,
     input [15:0] block,
-    input [799:0] board,
+    input [199:0] board,
     output reg collision
 );
     integer i, j;
 
+    reg [15:0] backboard;
+
     always @* begin
-        collision = 0;
         for (i = 0; i < 4; i = i + 1) begin
             for (j = 0; j < 4; j = j + 1) begin
-                if (block[4*i+j]) begin
-                    if (bx+i <= 2 || by+j <= 2 || by+j >= 13 ||
-                        board[(bx+i-3)*40 + (by+j-3)*4 +: 4] != 0)
-                    collision = 1;
-                end
+                backboard[4*i+j] = (bx+i <= 2 || by+j <= 2 || by+j >= 13)? 1: board[(bx+i-3)*10 + (by+j-3)];
             end
         end
+
+        collision = (backboard & block) != 0;
     end
 endmodule
 
@@ -351,17 +396,21 @@ module block_reader(
     input rst,
     output reg [7:0] addrb,
     input [3:0] doutb,
-    output reg [799:0] block_states
+    output reg [799:0] block_states,
+    output reg [199:0] block_bits
 );
 
     reg [799:0] next_block_states;
+    reg [199:0] next_block_bits;
     reg [7:0] next_addrb;
     reg [7:0] last_addrb;
     reg [7:0] last_last_addrb;
 
     always @* begin
         next_block_states = block_states;
+        next_block_bits = block_bits;
         next_block_states[last_last_addrb*4 +: 4] = doutb;
+        next_block_bits[last_last_addrb] = doutb? 1: 0;
 
         next_addrb = addrb == 199? 0: addrb + 1;
     end
@@ -369,14 +418,32 @@ module block_reader(
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             block_states <= 0;
+            block_bits <= 0;
             addrb <= 0;
             last_addrb <= 0;
             last_last_addrb <= 0;
         end else begin
             block_states <= next_block_states;
+            block_bits <= next_block_bits;
             last_last_addrb <= last_addrb;
             last_addrb <= addrb;
             addrb <= next_addrb;
         end
     end
+endmodule
+
+module whole_line(
+    input [199:0] board,
+    output reg [4:0] line_x
+);
+
+    integer i;
+    always @* begin
+        line_x = 20;
+        for (i = 19; i >= 0; i = i - 1) begin
+            if (board[10*i +: 10] == 10'b1111111111)
+                line_x = i;
+        end
+    end
+    
 endmodule

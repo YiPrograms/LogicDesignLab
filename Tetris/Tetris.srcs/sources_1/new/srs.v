@@ -3,7 +3,7 @@ module super_rotating_system(
     input [1:0] rotation,
     input i_block,
     input [15:0] rotated_block,
-    input [799:0] board,
+    input [199:0] board,
     input [4:0] ax,
     input [3:0] ay,
     output reg [1:0] ox,
