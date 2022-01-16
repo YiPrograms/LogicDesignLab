@@ -156,19 +156,19 @@ module tetris_controller(
         .collision(col_check)
     );
 
-    reg [4:0] check2_x;
-    reg [3:0] check2_y;
-    reg [15:0] check2_block;
-    reg up_col2;
+    // reg [4:0] check2_x;
+    // reg [3:0] check2_y;
+    // reg [15:0] check2_block;
+    // reg up_col2;
 
-    collision_check cc_check2(
-        .bx(check2_x),
-        .by(check2_y),
-        .block(check_block),
-        .board(block_bits),
-        .up_col(up_col2),
-        .collision(col_check2)
-    );
+    // collision_check cc_check2(
+    //     .bx(check2_x),
+    //     .by(check2_y),
+    //     .block(check_block),
+    //     .board(block_bits),
+    //     .up_col(up_col2),
+    //     .collision(col_check2)
+    // );
 
 
 
@@ -228,6 +228,11 @@ module tetris_controller(
         check_block = rotated_block;
         up_col = 0;
 
+        // check2_x = active_x;
+        // check2_y = active_y;
+        // check2_block = rotated_block;
+        // up_col2 = 0;
+
         addra = 0;
         dina = 0;
         wea = 0;
@@ -283,18 +288,23 @@ module tetris_controller(
                     if (!col_check) begin
                         next_active_x = active_x - 1;
                     end else begin
-                        next_state = S_Landed;
+                        if (state == S_Falling)
+                            next_state = S_Landing;
+                        else
+                            next_state = S_Landed;
                     end
-                end else if (state == S_Falling) begin
+                end else if (state == S_Falling || state == S_Landing) begin
                     if (keys[0]) begin // Left
                         check_y = active_y - 1;
                         if (!col_check) begin
                             next_active_y = active_y - 1;
+                            next_state = S_Falling;
                         end
                     end else if (keys[1]) begin // Right
                         check_y = active_y + 1;
                         if (!col_check) begin
                             next_active_y = active_y + 1;
+                            next_state = S_Falling;
                         end
                     end else if (keys[2]) begin // SRS cw
                         // srs_rotated_block = rotated_block_cw;
@@ -302,6 +312,7 @@ module tetris_controller(
                             next_active_rot = active_rot + 1;
                             next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
                             next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
+                            next_state = S_Falling;
                         end
                     end else if (keys[5]) begin // Space: Hard drop
                         next_state = S_Dropping;
