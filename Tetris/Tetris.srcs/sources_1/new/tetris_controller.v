@@ -9,6 +9,8 @@ module tetris_controller(
     output [199:0] block_bits,
     output [33:0] active_block,
     output reg [3:0] state,
+    output reg [3:0] hold_tile,
+    output reg [11:0] next_tiles,
     output [4:0] xx,
     output [3:0] yy,
     output [3:0] dat,
@@ -99,8 +101,8 @@ module tetris_controller(
     reg [3:0] spawn_type;
     reg break_landing;
     reg [4:0] ghost_x;
-    reg [3:0] hold_tile;
-    reg [11:0] next_tiles;
+    // reg [3:0] hold_tile;
+    // reg [11:0] next_tiles;
 
 
     reg [3:0] next_state;
@@ -231,6 +233,8 @@ module tetris_controller(
         next_spawn_type = 0;
         next_break_landing = 0;
         next_ghost_x = ghost_x;
+        next_hold_tile = hold_tile;
+        next_next_tiles = next_tiles;
 
         check_x = active_x;
         check_y = active_y;
@@ -273,7 +277,9 @@ module tetris_controller(
                 next_spawn_offset = spawn_offset;
                 if (spawn_type == 0) begin
                     if (random <= 7 && random != 0) begin // Random OK
-                        next_spawn_type = random;
+                        next_spawn_type = next_tiles[8 +: 4];
+                        next_next_tiles[4 +: 8] = next_tiles[0 +: 8];
+                        next_next_tiles[0 +: 4] = random;
                     end
                 end else begin
                     next_active_type = spawn_type;

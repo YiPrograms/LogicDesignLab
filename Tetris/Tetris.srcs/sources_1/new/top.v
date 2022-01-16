@@ -44,7 +44,8 @@ module tetris(
     wire [799:0] block_states;
     wire [33:0] active_block;
     wire [199:0] block_bits;
-
+    wire [3:0] hold_tile;
+    wire [11:0] next_tiles;
 
     wire [7:0] keys;
     wire [3:0] state;
@@ -62,6 +63,8 @@ module tetris(
         .block_states(block_states),
         .active_block(active_block),
         .state(state),
+        .hold_tile(hold_tile),
+        .next_tiles(next_tiles),
 
 
         .vgaRed(vgaRed),
@@ -85,6 +88,8 @@ module tetris(
         .active_block(active_block),
         .block_bits(block_bits),
         .state(state),
+        .hold_tile(hold_tile),
+        .next_tiles(next_tiles),
         .xx(xx),
         .yy(yy),
         .dat(dat),
@@ -113,22 +118,5 @@ module tetris(
     );
 
     // assign led[15 -: 7] = key_press;
-
-    collision_check cc1_check(
-        .bx(23),
-        .by(5),
-        .block(16'hFFFF),
-        .board(block_bits),
-        .up_col(0),
-        .collision(led[0])
-    );
-    collision_check cc2_check(
-        .bx(23),
-        .by(5),
-        .block(16'hFFFF),
-        .board(block_bits),
-        .up_col(1),
-        .collision(led[1])
-    );
 
 endmodule

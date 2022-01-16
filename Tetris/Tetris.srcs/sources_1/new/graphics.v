@@ -2,7 +2,7 @@
 `define BLACK 12'h000
 
 `define TILE_BORDER_COLOR 12'h666
-`define GHOST_BORDER_COLOR 12'haaa
+`define GHOST_BORDER_COLOR 12'h333
 `define GIRD_COLOR 12'h333
 `define TABLE_COLOR 12'h444
 `define BORDER_OUTER_COLOR 12'h3dc
@@ -32,6 +32,8 @@ module pixel_gen(
     input [799:0] block_states,
     input [33:0] active_block,
     input [3:0] state,
+    input [3:0] hold_tile,
+    input [11:0] next_tiles,
     output reg [11:0] pixel
 );
     
@@ -45,9 +47,20 @@ module pixel_gen(
         `WHITE, `I_BLOCK_COLOR, `J_BLOCK_COLOR, `L_BLOCK_COLOR, `O_BLOCK_COLOR,
         `T_BLOCK_COLOR, `Z_BLOCK_COLOR, `S_BLOCK_COLOR, `GRAY_BLOCK_COLOR
     };
-    parameter [11:0] ghost_colors [0:8] = {
-        `WHITE, `I_GHOST_COLOR, `J_GHOST_COLOR, `L_GHOST_COLOR, `O_GHOST_COLOR,
-        `T_GHOST_COLOR, `Z_GHOST_COLOR, `S_GHOST_COLOR, `GRAY_GHOST_COLOR
+    // parameter [11:0] ghost_colors [0:8] = {
+    //     `WHITE, `I_GHOST_COLOR, `J_GHOST_COLOR, `L_GHOST_COLOR, `O_GHOST_COLOR,
+    //     `T_GHOST_COLOR, `Z_GHOST_COLOR, `S_GHOST_COLOR, `GRAY_GHOST_COLOR
+    // };
+    parameter [15:0] block_tiles [0:8] = {
+        16'b0000000000000000,
+        16'b0000111100000000,
+        16'b0000000101110000,
+        16'b0000010001110000,
+        16'b0000000000110011,
+        16'b0000001001110000,
+        16'b0000001101100000,
+        16'b0000011000110000,
+        16'b0000000000000000
     };
 
     wire [3:0] active_type;
@@ -63,22 +76,11 @@ module pixel_gen(
         // Background
         pixel = `WHITE;
 
-        begin // Draw background elements
+        begin // Draw background
 
             // Draw table
             if (px > 220 && px < 420 && py > 40 && py < 440)
                 pixel = `TABLE_COLOR;
-
-            // Draw grids
-            if (py > 40 && py < 440)
-                for (i = 1; i <= 9; i = i + 1)
-                    if (px == 220 + i*20)
-                        pixel = `GIRD_COLOR;
-            if (px > 220 && px < 420)
-                for (i = 1; i <= 19; i = i + 1)
-                    if (py == 40 + i*20)
-                        pixel = `GIRD_COLOR;
-            
 
             // Draw border
             if ((px == 220 || px == 420) && py >= 40 && py <= 440 ||
@@ -104,7 +106,31 @@ module pixel_gen(
                 (px == 136 || px == 137) && py >= 39 && py <= 121)
                 pixel = `BORDER_OUTER_COLOR;
         end
-        
+
+        begin // Draw ghost tile
+            if (py < 440 && px > 220 && px < 420) begin
+                if (active_type != 0) begin
+                    if (tile_x+3 >= ghost_x && tile_x+3 < ghost_x + 4 && 
+                        tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin // Ghost tile
+                        if (rotated_block[4*(tile_x+3 - (ghost_x))+(tile_y+3 - (active_y))]) begin
+                            pixel = { tile_colors[active_type][8+:4]>>1, tile_colors[active_type][4+:4]>>1, tile_colors[active_type][0+:4]>>1 };
+                        end
+                    end
+                end
+            end
+        end
+
+        begin // Draw grids
+            if (py > 40 && py < 440)
+                for (i = 1; i <= 9; i = i + 1)
+                    if (px == 220 + i*20)
+                        pixel = `GIRD_COLOR;
+            if (px > 220 && px < 420)
+                for (i = 1; i <= 19; i = i + 1)
+                    if (py == 40 + i*20)
+                        pixel = `GIRD_COLOR;
+        end
+
         begin // Draw tiles
             if (py > 40 && py < 440 && px > 220 && px < 420) begin
                 if(block_states[tile_offset +: 4]) begin
@@ -115,20 +141,10 @@ module pixel_gen(
                 end
             end
         end
-
-        begin // Draw active tile & ghost tile
+        
+        begin // Draw active tile
             if (py < 440 && px > 220 && px < 420) begin
                 if (active_type != 0) begin
-                    if (tile_x+3 >= ghost_x && tile_x+3 < ghost_x + 4 && 
-                        tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin // Ghost tile
-                        if (rotated_block[4*(tile_x+3 - (ghost_x))+(tile_y+3 - (active_y))]) begin
-                            if (is_border)
-                                pixel = `GHOST_BORDER_COLOR;
-                            else
-                                pixel = ghost_colors[active_type];
-                        end
-                    end
-
                     if (tile_x+3 >= active_x && tile_x+3 < active_x + 4 && 
                         tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin // Active tile
                         if (rotated_block[4*(tile_x+3 - (active_x))+(tile_y+3 - (active_y))]) begin
@@ -136,6 +152,36 @@ module pixel_gen(
                                 pixel = `TILE_BORDER_COLOR;
                             else
                                 pixel = tile_colors[active_type];
+                        end
+                    end
+                end
+            end
+        end
+
+        begin // Draw next blocks
+            if (py > 80 && py < 320 && px > 422 && px < 538) begin
+                if (tile_x >= 22 && tile_x <= 25) begin
+                    pixel = `I_BLOCK_COLOR;
+                    if (tile_y >= 15 && tile_y <= 19) begin // Next 1
+                        if (block_tiles[next_tiles[0 +: 4]][4*(tile_x - 22)+(tile_y - 15)]) begin
+                            if (is_border)
+                                pixel = `TILE_BORDER_COLOR;
+                            else
+                                pixel = tile_colors[next_tiles[0 +: 4]];
+                        end
+                    end else if (tile_y >= 11 && tile_y <= 14) begin // Next 2
+                        if (block_tiles[next_tiles[4 +: 4]][4*(tile_x - 22)+(tile_y - 11)]) begin
+                            if (is_border)
+                                pixel = `TILE_BORDER_COLOR;
+                            else
+                                pixel = tile_colors[next_tiles[4 +: 4]];
+                        end
+                    end else if (tile_y >= 7 && tile_y <= 10) begin // Next 3
+                        if (block_tiles[next_tiles[8 +: 4]][4*(tile_x - 22)+(tile_y - 7)]) begin
+                            if (is_border)
+                                pixel = `TILE_BORDER_COLOR;
+                            else
+                                pixel = tile_colors[next_tiles[8 +: 4]];
                         end
                     end
                 end

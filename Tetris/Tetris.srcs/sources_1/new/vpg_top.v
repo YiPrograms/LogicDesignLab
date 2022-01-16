@@ -5,6 +5,8 @@ module vga_top(
     input [799:0] block_states,
     input [33:0] active_block,
     input [3:0] state,
+    input [3:0] hold_tile,
+    input [11:0] next_tiles,
     output [3:0] vgaRed,
     output [3:0] vgaGreen,
     output [3:0] vgaBlue,
@@ -28,6 +30,8 @@ module vga_top(
         .block_states(block_states),
         .active_block(active_block),
         .state(state),
+        .hold_tile(hold_tile),
+        .next_tiles(next_tiles),
         .pixel(pixel)
     );
 
