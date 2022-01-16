@@ -56,7 +56,7 @@ module pixel_gen(
         16'b0000111100000000,
         16'b0000000101110000,
         16'b0000010001110000,
-        16'b0000001100110000, // O block shifts up by 1
+        16'b0000011001100000, // O block is at middle
         16'b0000001001110000,
         16'b0000001101100000,
         16'b0000011000110000,
@@ -83,8 +83,8 @@ module pixel_gen(
                 pixel = `TABLE_COLOR;
             if (px > 422 && px < 528 && py > 40 && py < 278)
                 pixel = `TABLE_COLOR;
-            // if (px > 220 && px < 420 && py > 40 && py < 440)
-            //     pixel = `TABLE_COLOR;
+            if (px > 102 && px < 218 && py > 40 && py < 123)
+                pixel = `TABLE_COLOR;
 
             // Draw border
             if ((px == 220 || px == 420) && py >= 40 && py <= 440 ||
@@ -103,16 +103,16 @@ module pixel_gen(
                 pixel = `BORDER_OUTER_COLOR;
 
             // Hold border
-            if ((px == 138 || px == 218) && py >= 40 && py <= 120 ||
-                (py == 40 || py == 120) && px >= 138 && px <= 218)
+            if ((px == 102 || px == 218) && py >= 40 && py <= 123 ||
+                (py == 40 || py == 123) && px >= 102 && px <= 218)
                 pixel = `BORDER_INNER_COLOR;
-            if ((py == 38 || py == 39 || py == 122 || py == 121) && px >= 137 && px <= 219 ||
-                (px == 136 || px == 137) && py >= 39 && py <= 121)
+            if ((py == 38 || py == 39 || py == 124 || py == 125) && px >= 101 && px <= 219 ||
+                (px == 100 || px == 101) && py >= 39 && py <= 124)
                 pixel = `BORDER_OUTER_COLOR;
         end
 
         begin // Draw ghost tile
-            if (py < 440 && px > 220 && px < 420) begin
+            if (py > 40 && py < 440 && px > 220 && px < 420) begin
                 if (active_type != 0) begin
                     if (tile_x+3 >= ghost_x && tile_x+3 < ghost_x + 4 && 
                         tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin // Ghost tile
@@ -193,23 +193,24 @@ module pixel_gen(
 
         begin // Draw hold block
             if (py > 40 && py < 123 && px > 102 && px < 218) begin
-                if (tile_y + 5 >= 0 && tile_y + 5 <= 3 &&
-                    tile_x >= 16 && tile_x <= 19) begin // Next 1
-                    if (block_tiles[hold_tile][4*(tile_x - 16)+(tile_y + 5)]) begin
-                        if (is_border)
-                            pixel = `TILE_BORDER_COLOR;
-                        else
-                            pixel = tile_colors[hold_tile];
+                if (tile_x >= 16 && tile_x <= 19) begin
+                    if (px/20 >= 6 && px/20 <= 9) begin
+                        if (block_tiles[hold_tile][4*(tile_x - 16)+(px/20 - 6)]) begin
+                            if (is_border)
+                                pixel = `TILE_BORDER_COLOR;
+                            else
+                                pixel = tile_colors[hold_tile];
+                        end
                     end
                 end
             end
         end
 
-        
-
         begin // Gameover mask
             if (state == 11) begin
-                if (py > 40 && py < 440 && px > 220 && px < 420) begin
+                if (py > 40 && py < 440 && px > 220 && px < 420 ||
+                    px > 422 && px < 528 && py > 40 && py < 278 ||
+                    px > 102 && px < 218 && py > 40 && py < 123) begin
                     pixel = { pixel[8+:4]>>2, pixel[4+:4]>>2, pixel[0+:4]>>2 };
                 end
             end

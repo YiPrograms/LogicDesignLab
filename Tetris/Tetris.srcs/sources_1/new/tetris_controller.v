@@ -38,7 +38,7 @@ module tetris_controller(
         .op(clk_fall_1p)
     );
 
-    wire [3:0] random;
+    wire [2:0] random;
     LFSR lfsr_inst(
         .clk(clk),
         .rst(rst),
@@ -103,6 +103,7 @@ module tetris_controller(
     reg [4:0] ghost_x;
     // reg [3:0] hold_tile;
     // reg [11:0] next_tiles;
+    reg hold_used;
 
 
     reg [3:0] next_state;
@@ -122,6 +123,7 @@ module tetris_controller(
     reg [4:0] next_ghost_x;
     reg [3:0] next_hold_tile;
     reg [11:0] next_next_tiles;
+    reg next_hold_used;
 
 
 
@@ -235,6 +237,7 @@ module tetris_controller(
         next_ghost_x = ghost_x;
         next_hold_tile = hold_tile;
         next_next_tiles = next_tiles;
+        next_hold_used = hold_used;
 
         check_x = active_x;
         check_y = active_y;
@@ -267,6 +270,9 @@ module tetris_controller(
                     if (clearing_x == 0)
                         next_state = S_Menu;
                 end
+
+                next_hold_tile = 0;
+                next_next_tiles = 0;
             end
             S_Menu: begin
                 if (keys[7]) // Enter
@@ -276,7 +282,7 @@ module tetris_controller(
                 next_spawn_type = spawn_type;
                 next_spawn_offset = spawn_offset;
                 if (spawn_type == 0) begin
-                    if (random <= 7 && random != 0) begin // Random OK
+                    if (random != 0) begin // Random OK
                         next_spawn_type = next_tiles[8 +: 4];
                         next_next_tiles[4 +: 8] = next_tiles[0 +: 8];
                         next_next_tiles[0 +: 4] = random;
@@ -329,6 +335,7 @@ module tetris_controller(
             end
             S_Falling, S_Dropping: begin
                 next_break_landing = break_landing;
+
                 if (state == S_Dropping || clk_fall_1p || keys[4]) begin // Fall
                     check_x = active_x - 1;
                     if (!col_check) begin
@@ -365,6 +372,11 @@ module tetris_controller(
                         end
                     end else if (keys[5]) begin // Space: Hard drop
                         next_state = S_Dropping;
+                    end else if (keys[6] && !hold_used) begin // C: Hold
+                        next_hold_used = 1;
+                        next_hold_tile = active_type;
+                        next_spawn_type = hold_tile;
+                        next_state = S_GenBlock;
                     end
                 end
 
@@ -374,6 +386,7 @@ module tetris_controller(
                 end
             end
             S_Landed: begin
+                next_hold_used = 0;
                 if (rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3 && active_x + op_x <= 22) begin
                     addra = 10*(active_x + op_x - 3) + (active_y + op_y - 3);
                     dina = active_type;
@@ -457,6 +470,7 @@ module tetris_controller(
             ghost_x <= 0;
             hold_tile <= 0;
             next_tiles <= 0;
+            hold_used <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -475,6 +489,7 @@ module tetris_controller(
             ghost_x <= next_ghost_x;
             hold_tile <= next_hold_tile;
             next_tiles <= next_next_tiles;
+            hold_used <= next_hold_used;
         end
     end
     
