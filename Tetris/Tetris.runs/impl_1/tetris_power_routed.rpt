@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Mon Jan 17 03:57:31 2022
+| Date             : Mon Jan 17 05:20:45 2022
 | Host             : YNB running 64-bit Arch Linux
 | Command          : report_power -file tetris_power_routed.rpt -pb tetris_power_summary_routed.pb -rpx tetris_power_routed.rpx
 | Design           : tetris
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.246        |
+| Total On-Chip Power (W)  | 0.233        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.174        |
+| Dynamic (W)              | 0.161        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 83.8         |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.003 |        3 |       --- |             --- |
-| Slice Logic    |     0.063 |    21890 |       --- |             --- |
-|   LUT as Logic |     0.055 |    13042 |     20800 |           62.70 |
-|   CARRY4       |     0.005 |      797 |      8150 |            9.78 |
-|   F7/F8 Muxes  |     0.003 |     5438 |     32600 |           16.68 |
-|   Register     |    <0.001 |     1791 |     41600 |            4.31 |
-|   BUFG         |    <0.001 |        1 |        32 |            3.13 |
+| Slice Logic    |     0.057 |    22059 |       --- |             --- |
+|   LUT as Logic |     0.050 |    13126 |     20800 |           63.11 |
+|   CARRY4       |     0.005 |      817 |      8150 |           10.02 |
+|   F7/F8 Muxes  |     0.003 |     5463 |     32600 |           16.76 |
+|   Register     |    <0.001 |     1828 |     41600 |            4.39 |
+|   BUFG         |    <0.001 |        2 |        32 |            6.25 |
 |   Others       |     0.000 |       69 |       --- |             --- |
-| Signals        |     0.071 |     9891 |       --- |             --- |
+| Signals        |     0.065 |     9989 |       --- |             --- |
 | Block RAM      |    <0.001 |      0.5 |        50 |            1.00 |
-| I/O            |     0.036 |       51 |       106 |           48.11 |
+| I/O            |     0.035 |       51 |       106 |           48.11 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.246 |          |           |                 |
+| Total          |     0.233 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.148 |       0.138 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.136 |       0.126 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.014 |       0.001 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.011 |       0.010 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -143,23 +143,23 @@ Table of Contents
 +----------------------------+-----------+
 | Name                       | Power (W) |
 +----------------------------+-----------+
-| tetris                     |     0.174 |
+| tetris                     |     0.161 |
 |   keypress_controller_inst |     0.003 |
 |     key_de                 |     0.002 |
-|   music_inst               |     0.045 |
+|   music_inst               |     0.044 |
 |     playerCtrl_00          |     0.003 |
-|   tetris_controller_inst   |     0.083 |
-|     SRS                    |     0.022 |
-|       cc_0                 |     0.001 |
-|       cc_1                 |     0.004 |
-|       cc_2                 |     0.006 |
+|   tetris_controller_inst   |     0.072 |
+|     SRS                    |     0.019 |
+|       cc_0                 |     0.002 |
+|       cc_1                 |     0.003 |
+|       cc_2                 |     0.005 |
 |       cc_3                 |     0.004 |
-|       cc_4                 |     0.007 |
-|     br                     |     0.049 |
+|       cc_4                 |     0.005 |
+|     br                     |     0.044 |
 |     cc_check               |     0.002 |
-|     ghost_check            |     0.002 |
+|     ghost_check            |     0.001 |
 |   vga_top_inst             |     0.005 |
-|     pixel_gen_inst         |     0.004 |
+|     pixel_gen_inst         |     0.003 |
 |     vga_inst               |     0.002 |
 +----------------------------+-----------+
 

@@ -105,6 +105,8 @@ module tetris_controller(
     // reg [3:0] hold_tile;
     // reg [11:0] next_tiles;
     reg hold_used;
+    reg [27:0] fall_counter_target;
+    reg [2:0] land_break_times;
 
 
     reg [3:0] next_state;
@@ -125,6 +127,8 @@ module tetris_controller(
     reg [3:0] next_hold_tile;
     reg [11:0] next_next_tiles;
     reg next_hold_used;
+    reg [27:0] next_fall_counter_target;
+    reg [2:0] next_land_break_times;
 
 
 
@@ -240,6 +244,8 @@ module tetris_controller(
         next_hold_tile = hold_tile;
         next_next_tiles = next_tiles;
         next_hold_used = hold_used;
+        next_fall_counter_target = fall_counter_target;
+        next_land_break_times = 0;
 
         check_x = active_x;
         check_y = active_y;
@@ -275,6 +281,7 @@ module tetris_controller(
 
                 next_hold_tile = 0;
                 next_next_tiles = 0;
+                next_fall_counter_target = 100000000/8;
             end
             S_Menu: begin
                 if (keys[7]) // Enter
@@ -337,16 +344,22 @@ module tetris_controller(
             end
             S_Falling, S_Dropping: begin
                 next_break_landing = break_landing;
-
-                if (state == S_Dropping || clk_fall_1p || keys[4]) begin // Fall
+                next_land_break_times = land_break_times;
+                next_counter = counter + 1;
+                if (state == S_Dropping || counter == fall_counter_target || keys[4]) begin // Fall
                     check_x = active_x - 1;
+                    next_counter = 0;
                     if (!col_check) begin
                         next_active_x = active_x - 1;
+                        next_fall_counter_target = fall_counter_target > 30000000/8? fall_counter_target - 5000: 30000000/8;
                     end else begin
-                        if (break_landing)
+                        if (break_landing && land_break_times <= 4) begin
                             next_break_landing = 0;
-                        else
+                            next_land_break_times = land_break_times + 1;
+                        end else begin
                             next_state = S_Landed;
+                            next_fall_counter_target = fall_counter_target > 30000000/8? fall_counter_target - 50000: 30000000/8;
+                        end
                     end
                 end else if (state == S_Falling) begin
                     if (keys[0]) begin // Left
@@ -475,6 +488,8 @@ module tetris_controller(
             hold_tile <= 0;
             next_tiles <= 0;
             hold_used <= 0;
+            fall_counter_target <= 100000000/8;
+            land_break_times <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -494,6 +509,8 @@ module tetris_controller(
             hold_tile <= next_hold_tile;
             next_tiles <= next_next_tiles;
             hold_used <= next_hold_used;
+            fall_counter_target <= next_fall_counter_target;
+            land_break_times <= next_land_break_times;
         end
     end
     

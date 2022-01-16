@@ -17,6 +17,22 @@
 `define S   32'd50000000 // slience
 `define sil   32'd50000000 // slience
 
+module clock_divider_30ms_onepulse (
+    input clk,
+    output clk_div
+);
+    reg [23: 0] counter = 0;
+
+    wire [24: 0] next_cnt;
+    assign next_cnt = counter == 3000000? 0: counter + 1;
+
+    always @(posedge clk) begin
+        counter <= next_cnt;
+    end
+
+    assign clk_div = counter == 3000000;
+endmodule
+
 module music(
     input clk,
     input clk13,
@@ -36,6 +52,11 @@ module music(
     debounce dpD(.pb_debounced(D_db), .pb(vol_down), .clk(clk13));
     onepulse opU(.signal(U_db), .clk(clk), .op(U_op));
     onepulse opD(.signal(D_db), .clk(clk), .op(D_op));
+
+    clock_divider_30ms_onepulse cd(
+        .clk(clk),
+        .clk_div(clk_music)
+    );
 
     reg [2:0] volume;
     always @(posedge clk, posedge rst) begin
@@ -60,7 +81,7 @@ module music(
     wire [31:0] freqL, freqR;
 
     player_control playerCtrl_00 ( 
-        .clk(clk21),
+        .clk(clk_music),
         .reset(rst),
         ._play(play),
         .ibeat(ibeatNum)

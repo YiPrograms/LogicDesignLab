@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Mon Jan 17 03:57:29 2022
+| Date         : Mon Jan 17 05:20:42 2022
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_methodology -file tetris_methodology_drc_routed.rpt -pb tetris_methodology_drc_routed.pb -rpx tetris_methodology_drc_routed.rpx
 | Design       : tetris
