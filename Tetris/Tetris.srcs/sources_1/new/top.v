@@ -29,6 +29,8 @@ module tetris(
     inout PS2_DATA,
 	inout PS2_CLK,
 
+    input vol_up,
+    input vol_down,
     output audio_mclk,
     output audio_lrck, 
     output audio_sck,
@@ -117,6 +119,22 @@ module tetris(
         .bcds(bcds),
         .DIGIT(DIGIT),
         .DISPLAY(DISPLAY)
+    );
+
+    wire music_play = state != 1 && state != 11;
+    music music_inst(
+        .clk(clk),
+        .clk13(div[12]),
+        .clk22(div[21]),
+        .rst(rst),
+        .play(music_play),
+        .vol_up(vol_up),
+        .vol_down(vol_down),
+        .audio_mclk(audio_mclk),
+        .audio_lrck(audio_lrck), 
+        .audio_sck(audio_sck),
+        .audio_sdin(audio_sdin),
+        .volume_leds(led[4:0])
     );
 
     // assign led[15 -: 7] = key_press;

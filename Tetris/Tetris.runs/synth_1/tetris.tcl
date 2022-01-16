@@ -93,10 +93,12 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/debounce.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/graphics.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/lfsr.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/music.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/onepulse.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/srs.v

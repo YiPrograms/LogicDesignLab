@@ -1,0 +1,15 @@
+`define Gs3 32'd208
+`define C4 32'd262
+`define Gs4 32'd415
+`define G5 32'd784
+`define C5 32'd523
+`define E5 32'd659
+`define F5 32'd698
+`define B3 32'd247
+`define B4 32'd494
+`define D4 32'd294
+`define A3 32'd220
+`define A5 32'd880
+`define E4 32'd330
+`define D5 32'd587
+`define A4 32'd440
