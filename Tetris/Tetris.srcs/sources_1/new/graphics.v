@@ -26,6 +26,9 @@
 `define S_GHOST_COLOR 12'hcff
 `define GRAY_GHOST_COLOR 12'hbbb
 
+`define LINE_CLEAR_COLOR_INNER 12'hff0
+`define LINE_CLEAR_COLOR_OUTER 12'hb90
+
 module pixel_gen(
     input [9:0] px,
     input [9:0] py,
@@ -34,6 +37,7 @@ module pixel_gen(
     input [3:0] state,
     input [3:0] hold_tile,
     input [11:0] next_tiles,
+    input [19:0] whole_lines,
     output reg [11:0] pixel
 );
     
@@ -162,6 +166,8 @@ module pixel_gen(
             end
         end
 
+        
+
         begin // Draw next blocks
             if (py > 40 && py < 320 && px > 422 && px < 538) begin
                 if (tile_y >= 11 && tile_y <= 14) begin
@@ -202,6 +208,17 @@ module pixel_gen(
                                 pixel = tile_colors[hold_tile];
                         end
                     end
+                end
+            end
+        end
+
+        begin // Draw clear line
+            if (py > 40 && py < 440 && px > 205 && px < 425) begin
+                if (whole_lines[tile_x]) begin
+                    if (py%20 >= 5 && py%20 < 15)
+                        pixel = `LINE_CLEAR_COLOR_OUTER;
+                    if (py%20 >= 8 && py%20 < 12)
+                        pixel = `LINE_CLEAR_COLOR_INNER;
                 end
             end
         end

@@ -68,6 +68,7 @@ module tetris(
         .state(state),
         .hold_tile(hold_tile),
         .next_tiles(next_tiles),
+        .whole_lines(whole_lines),
 
 
         .vgaRed(vgaRed),
