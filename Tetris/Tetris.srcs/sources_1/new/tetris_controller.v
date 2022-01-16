@@ -417,7 +417,8 @@ module tetris_controller(
                 next_state = S_GenBlock;
             end
             S_GameOver: begin
-                next_state = S_Menu;
+                if (keys[7]) // Enter
+                    next_state = S_Reset;
             end
         endcase
     end

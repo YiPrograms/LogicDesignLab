@@ -61,6 +61,8 @@ module tetris(
 
         .block_states(block_states),
         .active_block(active_block),
+        .state(state),
+
 
         .vgaRed(vgaRed),
         .vgaGreen(vgaGreen),

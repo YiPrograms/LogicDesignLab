@@ -4,6 +4,7 @@ module vga_top(
     input rst,
     input [799:0] block_states,
     input [28:0] active_block,
+    input [3:0] state,
     output [3:0] vgaRed,
     output [3:0] vgaGreen,
     output [3:0] vgaBlue,
@@ -12,6 +13,9 @@ module vga_top(
 );
 
     wire [11:0] pixel;
+    // wire [11:0] pixel_out = (state == 11)?
+    //                         { pixel[8+:4]>>1, pixel[4+:4]>>1, pixel[0+:4]>>1 }:
+    //                         pixel;
     wire valid;
     wire [9:0] h_cnt; //640
     wire [9:0] v_cnt;  //480
@@ -23,6 +27,7 @@ module vga_top(
         .py(v_cnt),
         .block_states(block_states),
         .active_block(active_block),
+        .state(state),
         .pixel(pixel)
     );
 

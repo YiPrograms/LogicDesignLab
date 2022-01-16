@@ -16,11 +16,12 @@
 `define GRAY_BLOCK_COLOR 12'hbbb
 
 module pixel_gen(
-   input [9:0] px,
-   input [9:0] py,
-   input [799:0] block_states,
-   input [28:0] active_block,
-   output reg [11:0] pixel
+    input [9:0] px,
+    input [9:0] py,
+    input [799:0] block_states,
+    input [28:0] active_block,
+    input [3:0] state,
+    output reg [11:0] pixel
 );
     
     integer i;
@@ -38,6 +39,8 @@ module pixel_gen(
     wire [3:0] active_y;
     wire [15:0] rotated_block;
     assign {rotated_block, active_y, active_x, active_type} = active_block;
+
+    reg [11:0] tile_pixel;
 
     always @* begin
         // Background
@@ -66,12 +69,30 @@ module pixel_gen(
             if ((py == 38 || py == 39 || py == 441 || py == 442) && px >= 219 && px <= 421 ||
                 (px == 218 || px == 219 || px == 421 || px == 422) && py >= 39 && py <= 441)
                 pixel = `BORDER_OUTER_COLOR;
+
+            // Next border
+            if ((px == 422 || px == 538) && py >= 40 && py <= 318 ||
+                (py == 40 || py == 318) && px >= 422 && px <= 538)
+                pixel = `BORDER_INNER_COLOR;
+            if ((py == 38 || py == 39 || py == 319  || py == 320) && px >= 422 && px <= 540 ||
+                (px == 539 || px == 540) && py >= 39 && py <= 319)
+                pixel = `BORDER_OUTER_COLOR;
+
+            // Hold border
+            if ((px == 138 || px == 218) && py >= 40 && py <= 120 ||
+                (py == 40 || py == 120) && px >= 138 && px <= 218)
+                pixel = `BORDER_INNER_COLOR;
+            if ((py == 38 || py == 39 || py == 122 || py == 121) && px >= 137 && px <= 219 ||
+                (px == 136 || px == 137) && py >= 39 && py <= 121)
+                pixel = `BORDER_OUTER_COLOR;
         end
         
         begin // Draw tiles
-            if (py > 40 && py < 440 && px > 220 && px < 420)
-                if(block_states[tile_offset +: 4])
+            if (py > 40 && py < 440 && px > 220 && px < 420) begin
+                if(block_states[tile_offset +: 4]) begin
                     pixel = tile_colors[block_states[tile_offset +: 4]];
+                end
+            end
         end
 
         begin // Draw active tile
@@ -82,6 +103,15 @@ module pixel_gen(
                     // pixel = `GRAY_BLOCK_COLOR;
                     if (rotated_block[4*(tile_x+3 - (active_x))+(tile_y+3 - (active_y))])
                         pixel = tile_colors[active_type];
+                end
+            end
+            
+        end
+
+        begin // Gameover mask
+            if (state == 11) begin
+                if (py > 40 && py < 440 && px > 220 && px < 420) begin
+                    pixel = { pixel[8+:4]/3, pixel[4+:4]/3, pixel[0+:4]/3 };
                 end
             end
         end
