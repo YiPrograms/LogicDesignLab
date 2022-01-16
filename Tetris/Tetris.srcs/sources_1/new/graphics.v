@@ -2,6 +2,7 @@
 `define BLACK 12'h000
 
 `define TILE_BORDER_COLOR 12'h666
+`define GHOST_BORDER_COLOR 12'haaa
 `define GIRD_COLOR 12'h333
 `define TABLE_COLOR 12'h444
 `define BORDER_OUTER_COLOR 12'h3dc
@@ -15,6 +16,15 @@
 `define Z_BLOCK_COLOR 12'hf78
 `define S_BLOCK_COLOR 12'h2ed
 `define GRAY_BLOCK_COLOR 12'hbbb
+
+`define I_GHOST_COLOR 12'hbff
+`define J_GHOST_COLOR 12'hcdf
+`define L_GHOST_COLOR 12'hffc
+`define O_GHOST_COLOR 12'hffe
+`define T_GHOST_COLOR 12'hfdf
+`define Z_GHOST_COLOR 12'hfcc
+`define S_GHOST_COLOR 12'hcff
+`define GRAY_GHOST_COLOR 12'hbbb
 
 module pixel_gen(
     input [9:0] px,
@@ -34,6 +44,10 @@ module pixel_gen(
     parameter [11:0] tile_colors [0:8] = {
         `WHITE, `I_BLOCK_COLOR, `J_BLOCK_COLOR, `L_BLOCK_COLOR, `O_BLOCK_COLOR,
         `T_BLOCK_COLOR, `Z_BLOCK_COLOR, `S_BLOCK_COLOR, `GRAY_BLOCK_COLOR
+    };
+    parameter [11:0] ghost_colors [0:8] = {
+        `WHITE, `I_GHOST_COLOR, `J_GHOST_COLOR, `L_GHOST_COLOR, `O_GHOST_COLOR,
+        `T_GHOST_COLOR, `Z_GHOST_COLOR, `S_GHOST_COLOR, `GRAY_GHOST_COLOR
     };
 
     wire [3:0] active_type;
@@ -109,9 +123,9 @@ module pixel_gen(
                         tile_y+3 >= active_y && tile_y+3 < active_y + 4) begin // Ghost tile
                         if (rotated_block[4*(tile_x+3 - (ghost_x))+(tile_y+3 - (active_y))]) begin
                             if (is_border)
-                                pixel = `TILE_BORDER_COLOR;
+                                pixel = `GHOST_BORDER_COLOR;
                             else
-                                pixel = { tile_colors[active_type][8+:4]>>2, tile_colors[active_type][4+:4]>>2, tile_colors[active_type][0+:4]>>2 };
+                                pixel = ghost_colors[active_type];
                         end
                     end
 

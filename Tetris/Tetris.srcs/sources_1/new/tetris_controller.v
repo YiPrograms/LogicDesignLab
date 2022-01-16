@@ -449,6 +449,8 @@ module tetris_controller(
             spawn_type <= 0;
             break_landing <= 0;
             ghost_x <= 0;
+            hold_tile <= 0;
+            next_tiles <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -465,8 +467,8 @@ module tetris_controller(
             spawn_type <= next_spawn_type;
             break_landing <= next_break_landing;
             ghost_x <= next_ghost_x;
-            hold_tile <=;
-            next_tiles <=;
+            hold_tile <= next_hold_tile;
+            next_tiles <= next_next_tiles;
         end
     end
     
