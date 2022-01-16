@@ -7,7 +7,7 @@ module tetris_controller(
     input [7:0] keys,
     output [799:0] block_states,
     output [199:0] block_bits,
-    output [28:0] active_block,
+    output [33:0] active_block,
     output reg [3:0] state,
     output [4:0] xx,
     output [3:0] yy,
@@ -98,7 +98,7 @@ module tetris_controller(
     reg [1:0] spawn_offset;
     reg [3:0] spawn_type;
     reg break_landing;
-    
+    reg [4:0] ghost_x;
 
 
     reg [3:0] next_state;
@@ -115,6 +115,7 @@ module tetris_controller(
     reg [1:0] next_spawn_offset;
     reg [3:0] next_spawn_type;
     reg next_break_landing;
+    reg [4:0] next_ghost_x;
 
 
 
@@ -162,22 +163,16 @@ module tetris_controller(
     // reg [15:0] check2_block;
     // reg up_col2;
 
-    // collision_check cc_check2(
-    //     .bx(check2_x),
-    //     .by(check2_y),
-    //     .block(check_block),
-    //     .board(block_bits),
-    //     .up_col(up_col2),
-    //     .collision(col_check2)
-    // );
+    // collision_check cc_check2(ghost_y
 
-    collision_check cc_check2(
-        .bx(active_x),
+    wire [4:0] ghost_check_x = ghost_x - 1;
+    collision_check ghost_check(
+        .bx(ghost_check_x),
         .by(active_y),
         .block(rotated_block),
         .board(block_bits),
-        .up_col(1),
-        .collision(led_test[3])
+        .up_col(0),
+        .collision(ghost_col)
     );
 
 
@@ -231,6 +226,7 @@ module tetris_controller(
         next_spawn_offset = 0;
         next_spawn_type = 0;
         next_break_landing = 0;
+        next_ghost_x = ghost_x;
 
         check_x = active_x;
         check_y = active_y;
@@ -303,6 +299,7 @@ module tetris_controller(
                             next_active_x = 20;
                     end
                     next_state = S_Falling;
+                    next_ghost_x = next_active_x;
                     next_break_landing = 1;
 
                     // check_y = spawn_type == 4? 7: 6;
@@ -338,12 +335,14 @@ module tetris_controller(
                         if (!col_check) begin
                             next_active_y = active_y - 1;
                             next_break_landing = 1;
+                            next_ghost_x = active_x;
                         end
                     end else if (keys[1]) begin // Right
                         check_y = active_y + 1;
                         if (!col_check) begin
                             next_active_y = active_y + 1;
                             next_break_landing = 1;
+                            next_ghost_x = active_x;
                         end
                     end else if (keys[2]) begin // SRS cw
                         // srs_rotated_block = rotated_block_cw;
@@ -352,10 +351,16 @@ module tetris_controller(
                             next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
                             next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
                             next_break_landing = 1;
+                            next_ghost_x = active_x;
                         end
                     end else if (keys[5]) begin // Space: Hard drop
                         next_state = S_Dropping;
                     end
+                end
+
+                // Ghost block
+                if (!ghost_col) begin
+                    next_ghost_x = ghost_x - 1;
                 end
             end
             S_Landed: begin
@@ -439,6 +444,7 @@ module tetris_controller(
             spawn_offset <= 0;
             spawn_type <= 0;
             break_landing <= 0;
+            ghost_x <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -454,10 +460,11 @@ module tetris_controller(
             spawn_offset <= next_spawn_offset;
             spawn_type <= next_spawn_type;
             break_landing <= next_break_landing;
+            ghost_x <= next_ghost_x;
         end
     end
     
-    assign active_block = {rotated_block, active_y, active_x, active_type};
+    assign active_block = {rotated_block, ghost_x, active_y, active_x, active_type};
 
     // assign xx = srs_offset_x;
     // assign yy = srs_offset_y;

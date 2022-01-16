@@ -3,7 +3,7 @@ module vga_top(
     input clk_25MHz,
     input rst,
     input [799:0] block_states,
-    input [28:0] active_block,
+    input [33:0] active_block,
     input [3:0] state,
     output [3:0] vgaRed,
     output [3:0] vgaGreen,

@@ -42,7 +42,7 @@ module tetris(
     wire [26:0] div;
 
     wire [799:0] block_states;
-    wire [28:0] active_block;
+    wire [33:0] active_block;
     wire [199:0] block_bits;
 
 
