@@ -99,6 +99,8 @@ module tetris_controller(
     reg [3:0] spawn_type;
     reg break_landing;
     reg [4:0] ghost_x;
+    reg [3:0] hold_tile;
+    reg [11:0] next_tiles;
 
 
     reg [3:0] next_state;
@@ -116,6 +118,8 @@ module tetris_controller(
     reg [3:0] next_spawn_type;
     reg next_break_landing;
     reg [4:0] next_ghost_x;
+    reg [3:0] next_hold_tile;
+    reg [11:0] next_next_tiles;
 
 
 
@@ -351,7 +355,7 @@ module tetris_controller(
                             next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
                             next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
                             next_break_landing = 1;
-                            next_ghost_x = active_x;
+                            next_ghost_x = next_active_x;
                         end
                     end else if (keys[5]) begin // Space: Hard drop
                         next_state = S_Dropping;
@@ -461,6 +465,8 @@ module tetris_controller(
             spawn_type <= next_spawn_type;
             break_landing <= next_break_landing;
             ghost_x <= next_ghost_x;
+            hold_tile <=;
+            next_tiles <=;
         end
     end
     
