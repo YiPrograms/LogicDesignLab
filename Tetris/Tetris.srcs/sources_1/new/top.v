@@ -46,6 +46,7 @@ module tetris(
     wire [199:0] block_bits;
     wire [3:0] hold_tile;
     wire [11:0] next_tiles;
+    wire [19:0] whole_lines;
 
     wire [7:0] keys;
     wire [3:0] state;
@@ -80,7 +81,7 @@ module tetris(
     wire [3:0] led_test;
 
     tetris_controller tetris_controller_inst(
-        .clk(div[10]),
+        .clk(div[2]),
         .clk_fall(div[26]),
         .rst(rst),
         .keys(keys),
@@ -90,6 +91,7 @@ module tetris(
         .state(state),
         .hold_tile(hold_tile),
         .next_tiles(next_tiles),
+        .whole_lines(whole_lines),
         .xx(xx),
         .yy(yy),
         .dat(dat),
@@ -100,7 +102,7 @@ module tetris(
 
     keypress_controller keypress_controller_inst(
         .clk(clk),
-        .clk_op(div[10]),
+        .clk_op(div[2]),
         .rst(rst),
         .PS2_DATA(PS2_DATA),
         .PS2_CLK(PS2_CLK),

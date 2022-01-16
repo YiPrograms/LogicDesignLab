@@ -11,6 +11,7 @@ module tetris_controller(
     output reg [3:0] state,
     output reg [3:0] hold_tile,
     output reg [11:0] next_tiles,
+    output [19:0] whole_lines,
     output [4:0] xx,
     output [3:0] yy,
     output [3:0] dat,
@@ -216,7 +217,8 @@ module tetris_controller(
     wire [4:0] whole_line_x;
     whole_line(
         .board(block_bits),
-        .line_x(whole_line_x)
+        .line_x(whole_line_x),
+        .whole_lines(whole_lines)
     );
 
     always @* begin
@@ -412,7 +414,9 @@ module tetris_controller(
             end
             S_ClearLineAni: begin
                 next_counter = counter + 1;
-                if (counter == 300)
+                if (counter == 300 && whole_line_x == 20)
+                    next_state = S_Waiting;
+                else if (counter == 20000000/8) // 0.2s
                     next_state = S_ClearLines;
             end
             S_WaitUpdate: begin
@@ -624,15 +628,19 @@ endmodule
 
 module whole_line(
     input [199:0] board,
-    output reg [4:0] line_x
+    output reg [4:0] line_x,
+    output reg [19:0] whole_lines
 );
 
     integer i;
     always @* begin
         line_x = 20;
+        whole_lines = 0;
         for (i = 19; i >= 0; i = i - 1) begin
-            if (board[10*i +: 10] == 10'b1111111111)
+            if (board[10*i +: 10] == 10'b1111111111) begin
                 line_x = i;
+                whole_lines[i] = 1;
+            end
         end
     end
     
