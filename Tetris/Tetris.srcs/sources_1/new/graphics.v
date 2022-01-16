@@ -165,7 +165,7 @@ module pixel_gen(
         begin // Draw next blocks
             if (py > 40 && py < 320 && px > 422 && px < 538) begin
                 if (tile_y >= 11 && tile_y <= 14) begin
-                    if (tile_x >= 16 && tile_x <= 20) begin // Next 1
+                    if (tile_x >= 16 && tile_x <= 19) begin // Next 1
                         if (block_tiles[next_tiles[8 +: 4]][4*(tile_x - 16)+(tile_y - 11)]) begin
                             if (is_border)
                                 pixel = `TILE_BORDER_COLOR;
@@ -186,6 +186,20 @@ module pixel_gen(
                             else
                                 pixel = tile_colors[next_tiles[0 +: 4]];
                         end
+                    end
+                end
+            end
+        end
+
+        begin // Draw hold block
+            if (py > 40 && py < 123 && px > 102 && px < 218) begin
+                if (tile_y + 5 >= 0 && tile_y + 5 <= 3 &&
+                    tile_x >= 16 && tile_x <= 19) begin // Next 1
+                    if (block_tiles[hold_tile][4*(tile_x - 16)+(tile_y + 5)]) begin
+                        if (is_border)
+                            pixel = `TILE_BORDER_COLOR;
+                        else
+                            pixel = tile_colors[hold_tile];
                     end
                 end
             end
