@@ -125,7 +125,7 @@ module tetris(
     music music_inst(
         .clk(clk),
         .clk13(div[12]),
-        .clk22(div[21]),
+        .clk21(div[20]),
         .rst(rst),
         .play(music_play),
         .vol_up(vol_up),
