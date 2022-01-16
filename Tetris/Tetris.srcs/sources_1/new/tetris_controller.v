@@ -6,11 +6,13 @@ module tetris_controller(
     input rst,
     input [7:0] keys,
     output [799:0] block_states,
+    output [199:0] block_bits,
     output [28:0] active_block,
     output reg [3:0] state,
     output [4:0] xx,
     output [3:0] yy,
-    output [3:0] dat
+    output [3:0] dat,
+    output [3:0] led_test
 );
 
     integer i, j;
@@ -56,7 +58,7 @@ module tetris_controller(
         .doutb(doutb)
     );
 
-    wire [199:0] block_bits;
+    // wire [199:0] block_bits;
 
     block_reader br(
         .clk(clk),
@@ -121,8 +123,8 @@ module tetris_controller(
         .rotation(active_rot),
         .rotated_block(rotated_block)
     );
-    assign dat = rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3? active_type: 0;
-    // assign dat = doutb;
+    // assign dat = rotated_block[4*op_x + op_y] && active_x + op_x >= 3 && active_y + op_y >= 3? active_type: 0;
+    assign dat = active_rot;
 
     wire [1:0] active_rot_cw = active_rot + 1;
     wire [15:0] rotated_block_cw;
@@ -143,14 +145,31 @@ module tetris_controller(
     reg [4:0] check_x;
     reg [3:0] check_y;
     reg [15:0] check_block;
+    reg up_col;
 
     collision_check cc_check(
         .bx(check_x),
         .by(check_y),
         .block(check_block),
         .board(block_bits),
+        .up_col(up_col),
         .collision(col_check)
     );
+
+    reg [4:0] check2_x;
+    reg [3:0] check2_y;
+    reg [15:0] check2_block;
+    reg up_col2;
+
+    collision_check cc_check2(
+        .bx(check2_x),
+        .by(check2_y),
+        .block(check_block),
+        .board(block_bits),
+        .up_col(up_col2),
+        .collision(col_check2)
+    );
+
 
 
     wire [1:0] srs_offset_x;
@@ -160,11 +179,13 @@ module tetris_controller(
     wire srs_fail;
     reg [15:0] srs_rotated_block;
     // reg srs_is_ccw;
+    wire [4:0] t1_x;
     super_rotating_system SRS(
-        .rotation(active_rotation),
+        .rotation(active_rot),
         // .ccw(srs_is_ccw),
         .i_block(active_type == 1),
-        .rotated_block(srs_rotated_block),
+        .rotated_block(rotated_block_cw),
+        // .rotated_block(srs_rotated_block),
         .board(block_bits),
         .ax(active_x),
         .ay(active_y),
@@ -172,8 +193,13 @@ module tetris_controller(
         .oy(srs_offset_y),
         .ox_neg(srs_x_neg),
         .oy_neg(srs_y_neg),
-        .fail(srs_fail)
+        .fail(srs_fail),
+        .t1_x(t1_x),
+        .t1_y(yy),
+        .col1(led_test[0])
     );
+    assign xx = active_y;
+    assign led_test[3:1] = {srs_fail, srs_x_neg, srs_y_neg};
 
     wire [4:0] whole_line_x;
     whole_line(
@@ -200,6 +226,7 @@ module tetris_controller(
         check_x = active_x;
         check_y = active_y;
         check_block = rotated_block;
+        up_col = 0;
 
         addra = 0;
         dina = 0;
@@ -238,7 +265,7 @@ module tetris_controller(
                     check_y = spawn_type == 4? 7: 6;
                     check_x = 23 + spawn_offset - block_dims[spawn_type];
                     check_block = block_tiles[spawn_type];
-
+                    
                     if (!col_check) begin
                         next_state = S_Falling;
                         next_active_type = spawn_type;
@@ -250,7 +277,7 @@ module tetris_controller(
                     end
                 end
             end
-            S_Falling, S_Dropping: begin
+            S_Falling, S_Dropping, S_Landing: begin
                 if (state == S_Dropping || clk_fall_1p || keys[4]) begin // Fall
                     check_x = active_x - 1;
                     if (!col_check) begin
@@ -270,7 +297,7 @@ module tetris_controller(
                             next_active_y = active_y + 1;
                         end
                     end else if (keys[2]) begin // SRS cw
-                        srs_rotated_block = rotated_block_cw;
+                        // srs_rotated_block = rotated_block_cw;
                         if (!srs_fail) begin
                             next_active_rot = active_rot + 1;
                             next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
@@ -289,6 +316,8 @@ module tetris_controller(
                 end
                 next_op_y = op_y + 1;
                 next_op_x = op_y == 3? op_x + 1: op_x;
+                
+                up_col = 1;
                 next_gameover = (op_x == 0 && op_y == 0)? col_check: gameover;
                 
                 if (op_x == 3 && op_y == 3) begin
@@ -378,8 +407,8 @@ module tetris_controller(
     
     assign active_block = {rotated_block, active_y, active_x, active_type};
 
-    assign xx = clearing_x;
-    assign yy = op_y;
+    // assign xx = srs_offset_x;
+    // assign yy = srs_offset_y;
 
 endmodule
 
@@ -444,6 +473,7 @@ module collision_check(
     input [3:0] by,
     input [15:0] block,
     input [199:0] board,
+    input up_col,
     output reg collision
 );
     integer i, j;
@@ -453,7 +483,7 @@ module collision_check(
     always @* begin
         for (i = 0; i < 4; i = i + 1) begin
             for (j = 0; j < 4; j = j + 1) begin
-                backboard[4*i+j] = (bx+i <= 2 || by+j <= 2 || by+j >= 13)? 1: board[(bx+i-3)*10 + (by+j-3)];
+                backboard[4*i+j] = (bx+i >= 22)? up_col: (bx+i <= 2 || by+j <= 2 || by+j >= 13)? 1: board[(bx+i-3)*10 + (by+j-3)];
             end
         end
 
