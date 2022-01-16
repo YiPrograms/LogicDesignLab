@@ -51,12 +51,12 @@ module pixel_gen(
     //     `WHITE, `I_GHOST_COLOR, `J_GHOST_COLOR, `L_GHOST_COLOR, `O_GHOST_COLOR,
     //     `T_GHOST_COLOR, `Z_GHOST_COLOR, `S_GHOST_COLOR, `GRAY_GHOST_COLOR
     // };
-    parameter [15:0] block_tiles [0:8] = {
+    parameter [15:0] block_tiles [0:8] = { // For next tiles and hold only
         16'b0000000000000000,
         16'b0000111100000000,
         16'b0000000101110000,
         16'b0000010001110000,
-        16'b0000000000110011,
+        16'b0000001100110000, // O block shifts up by 1
         16'b0000001001110000,
         16'b0000001101100000,
         16'b0000011000110000,
@@ -81,6 +81,10 @@ module pixel_gen(
             // Draw table
             if (px > 220 && px < 420 && py > 40 && py < 440)
                 pixel = `TABLE_COLOR;
+            if (px > 422 && px < 528 && py > 40 && py < 278)
+                pixel = `TABLE_COLOR;
+            // if (px > 220 && px < 420 && py > 40 && py < 440)
+            //     pixel = `TABLE_COLOR;
 
             // Draw border
             if ((px == 220 || px == 420) && py >= 40 && py <= 440 ||
@@ -91,11 +95,11 @@ module pixel_gen(
                 pixel = `BORDER_OUTER_COLOR;
 
             // Next border
-            if ((px == 422 || px == 518) && py >= 40 && py <= 318 ||
-                (py == 40 || py == 318) && px >= 422 && px <= 518)
+            if ((px == 422 || px == 528) && py >= 40 && py <= 278 ||
+                (py == 40 || py == 278) && px >= 422 && px <= 528)
                 pixel = `BORDER_INNER_COLOR;
-            if ((py == 38 || py == 39 || py == 319  || py == 320) && px >= 422 && px <= 519 ||
-                (px == 519 || px == 520) && py >= 39 && py <= 319)
+            if ((py == 38 || py == 39 || py == 279  || py == 280) && px >= 422 && px <= 529 ||
+                (px == 529 || px == 530) && py >= 39 && py <= 279)
                 pixel = `BORDER_OUTER_COLOR;
 
             // Hold border
@@ -159,29 +163,28 @@ module pixel_gen(
         end
 
         begin // Draw next blocks
-            if (py > 80 && py < 320 && px > 422 && px < 538) begin
-                if (tile_x >= 22 && tile_x <= 25) begin
-                    pixel = `I_BLOCK_COLOR;
-                    if (tile_y >= 15 && tile_y <= 19) begin // Next 1
-                        if (block_tiles[next_tiles[0 +: 4]][4*(tile_x - 22)+(tile_y - 15)]) begin
+            if (py > 40 && py < 320 && px > 422 && px < 538) begin
+                if (tile_y >= 11 && tile_y <= 14) begin
+                    if (tile_x >= 16 && tile_x <= 20) begin // Next 1
+                        if (block_tiles[next_tiles[8 +: 4]][4*(tile_x - 16)+(tile_y - 11)]) begin
                             if (is_border)
                                 pixel = `TILE_BORDER_COLOR;
                             else
-                                pixel = tile_colors[next_tiles[0 +: 4]];
+                                pixel = tile_colors[next_tiles[8 +: 4]];
                         end
-                    end else if (tile_y >= 11 && tile_y <= 14) begin // Next 2
-                        if (block_tiles[next_tiles[4 +: 4]][4*(tile_x - 22)+(tile_y - 11)]) begin
+                    end else if (tile_x >= 12 && tile_x <= 15) begin // Next 2
+                        if (block_tiles[next_tiles[4 +: 4]][4*(tile_x - 12)+(tile_y - 11)]) begin
                             if (is_border)
                                 pixel = `TILE_BORDER_COLOR;
                             else
                                 pixel = tile_colors[next_tiles[4 +: 4]];
                         end
-                    end else if (tile_y >= 7 && tile_y <= 10) begin // Next 3
-                        if (block_tiles[next_tiles[8 +: 4]][4*(tile_x - 22)+(tile_y - 7)]) begin
+                    end else if (tile_x >= 8 && tile_x <= 11) begin // Next 3
+                        if (block_tiles[next_tiles[0 +: 4]][4*(tile_x - 8)+(tile_y - 11)]) begin
                             if (is_border)
                                 pixel = `TILE_BORDER_COLOR;
                             else
-                                pixel = tile_colors[next_tiles[8 +: 4]];
+                                pixel = tile_colors[next_tiles[0 +: 4]];
                         end
                     end
                 end
