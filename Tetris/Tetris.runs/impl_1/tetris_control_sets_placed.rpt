@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Mon Jan 17 16:39:56 2022
+| Date         : Mon Jan 17 20:24:18 2022
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_control_sets -verbose -file tetris_control_sets_placed.rpt
 | Design       : tetris
@@ -23,8 +23,8 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |   225 |
-|    Minimum number of control sets                        |   225 |
+| Total control sets                                       |   226 |
+|    Minimum number of control sets                        |   226 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
 | Unused register locations in slices containing registers |   889 |
@@ -39,9 +39,9 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |   225 |
+| Total control sets |   226 |
 | >= 0 to < 4        |     1 |
-| >= 4 to < 6        |   204 |
+| >= 4 to < 6        |   205 |
 | >= 6 to < 8        |     2 |
 | >= 8 to < 10       |     4 |
 | >= 10 to < 12      |     4 |
@@ -59,10 +59,10 @@ Table of Contents
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | No           | No                    | No                     |              48 |           22 |
-| No           | No                    | Yes                    |             566 |          186 |
-| No           | Yes                   | No                     |              35 |           12 |
+| No           | No                    | Yes                    |             572 |          189 |
+| No           | Yes                   | No                     |              35 |           13 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |            1180 |          647 |
+| Yes          | No                    | Yes                    |            1182 |          506 |
 | Yes          | Yes                   | No                     |              10 |            3 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -73,231 +73,232 @@ Table of Contents
 +---------------------+----------------------------------------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
 |     Clock Signal    |                                Enable Signal                               |              Set/Reset Signal              | Slice Load Count | Bel Load Count | Bels / Slice |
 +---------------------+----------------------------------------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
-|  divs/O214_BUFG[0]  |                                                                            | rst_IBUF                                   |                2 |              2 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[515]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[463]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[467]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[471]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[475]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[479]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[483]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[487]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[491]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[495]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[499]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[503]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[507]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[511]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[455]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  divs/O219_BUFG[0]  |                                                                            | rst_IBUF                                   |                2 |              2 |         1.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[519]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[523]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[527]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[531]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[535]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[539]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[467]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[471]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[475]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[479]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[483]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[487]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[491]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[495]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[499]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[503]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[507]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[511]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[515]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[459]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[523]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[527]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[531]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[535]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[539]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[543]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[547]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[551]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[555]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[547]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[551]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[555]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[559]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[563]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[407]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[355]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[359]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[363]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[367]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[371]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[375]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[379]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[383]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[387]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[391]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[567]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[411]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[359]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[363]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[367]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[371]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[375]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[379]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[383]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[387]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[391]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[395]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[399]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[403]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[459]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[411]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[415]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[419]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[423]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[427]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[403]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[407]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[463]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[415]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[419]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[423]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[427]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[431]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[435]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[439]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[443]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[447]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[451]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[571]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[731]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[679]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[683]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[435]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[439]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[443]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[447]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[451]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[455]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[575]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[735]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[683]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[687]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[691]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[695]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[699]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[699]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[703]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[707]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[711]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[715]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[719]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[723]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[715]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[719]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[723]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[727]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[675]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[735]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[739]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[743]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[747]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[751]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[755]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[731]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[679]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[739]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[743]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[747]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[751]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[755]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[759]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[763]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[767]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[763]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[767]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[769]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[775]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[779]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[623]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[351]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[575]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[579]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[583]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[587]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[591]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[595]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[599]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[603]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[607]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[611]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[615]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[619]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[567]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[779]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[783]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[627]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[631]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[635]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[639]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[643]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[647]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[651]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[655]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[659]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[663]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[667]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[351]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[579]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[583]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[587]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[591]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[595]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[599]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[603]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[607]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[611]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[615]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[619]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[623]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[571]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[631]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[635]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[639]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[643]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[647]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[651]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[655]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[659]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[663]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[667]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[671]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[115]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[71]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[675]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[119]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[75]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[79]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[79]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[83]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[87]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[91]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[91]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[95]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[99]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[103]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[99]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[103]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[107]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[111]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[67]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[119]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[123]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[127]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[131]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[135]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[139]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[115]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[71]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[123]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[127]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[131]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[135]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[139]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[143]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[147]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[151]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[155]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[159]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[19]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/state_reg[3][0]                                  | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[799]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/bits_count        | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[795]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[791]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[787]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[783]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[3]                                        | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[7]                                        | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[11]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[15]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[347]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[147]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[151]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[155]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[159]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[163]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[23]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[795]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[791]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[799]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/bits_count        | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[787]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/state_reg[1]_0[0]                                | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[3]                                        | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[7]                                        | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[11]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[15]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[19]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[167]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[27]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[39]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[39]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[31]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[35]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[43]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[47]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[51]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[55]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[59]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[63]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[303]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[259]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[263]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[43]                                       | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[47]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[51]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[55]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[59]                                       | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[63]                                       | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[67]                                       | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[307]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[263]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[267]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[271]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[275]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[279]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[283]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[271]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[275]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[279]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[283]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[287]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[291]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[295]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[291]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[295]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[299]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[167]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[307]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[303]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[259]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[311]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[315]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[319]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[323]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[327]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[331]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[315]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[319]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[323]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[327]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[331]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[335]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[339]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[343]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[207]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[179]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[175]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[183]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[339]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[343]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[347]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[355]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[215]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[171]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[187]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[163]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[255]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[191]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[175]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[179]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[183]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[187]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[191]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[195]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[199]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[199]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[203]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[207]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[211]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[215]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[219]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[223]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[227]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[231]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[235]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[239]                                      | rst_IBUF                                   |                4 |              4 |         1.00 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[243]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[223]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[227]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[231]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[235]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[239]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[243]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
 |  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[247]                                      | rst_IBUF                                   |                3 |              4 |         1.33 |
-|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[251]                                      | rst_IBUF                                   |                2 |              4 |         2.00 |
-|  div_BUFG[2]        | tetris_controller_inst/clearing_x[4]_i_1_n_1                               | rst_IBUF                                   |                2 |              5 |         2.50 |
-|  div_BUFG[2]        | tetris_controller_inst/br/E[0]                                             | rst_IBUF                                   |                3 |              5 |         1.67 |
-|  clk_IBUF_BUFG      |                                                                            |                                            |                4 |              7 |         1.75 |
-|  div_BUFG[2]        | tetris_controller_inst/br/op_reg[0]                                        | rst_IBUF                                   |                5 |              7 |         1.40 |
-|  div_BUFG[2]        |                                                                            |                                            |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF                                   |                4 |              8 |         2.00 |
-|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF                                   |                5 |              8 |         1.60 |
-|  div_BUFG[2]        | tetris_controller_inst/lfsr_inst/E[0]                                      | rst_IBUF                                   |                4 |              9 |         2.25 |
-|  divs/O214_BUFG[0]  | vga_top_inst/vga_inst/line_cnt                                             | vga_top_inst/vga_inst/line_cnt[9]_i_1_n_1  |                3 |             10 |         3.33 |
-|  divs/O214_BUFG[0]  |                                                                            | vga_top_inst/vga_inst/pixel_cnt[9]_i_1_n_1 |                4 |             10 |         2.50 |
-|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/frame[10]_i_1_n_0 | rst_IBUF                                   |                3 |             11 |         3.67 |
-|  divs/O214_BUFG[0]  |                                                                            |                                            |                7 |             11 |         1.57 |
-|  n_0_19586_BUFG     |                                                                            | rst_IBUF                                   |                5 |             12 |         2.40 |
-|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/key                                        | rst_IBUF                                   |                6 |             13 |         2.17 |
-|  music_inst/sc/Q[1] |                                                                            | rst_IBUF                                   |                6 |             20 |         3.33 |
-|  divs/O214_BUFG[2]  |                                                                            |                                            |                8 |             22 |         2.75 |
-|  div_BUFG[2]        | tetris_controller_inst/br/next_active_y                                    | rst_IBUF                                   |               13 |             23 |         1.77 |
-|  clk_IBUF_BUFG      |                                                                            | n_0_19586_BUFG                             |                6 |             23 |         3.83 |
-|  div_BUFG[2]        | tetris_controller_inst/br/state_reg[0]_0[0]                                | rst_IBUF                                   |                9 |             26 |         2.89 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[251]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/br/p_0_in[255]                                      | rst_IBUF                                   |                1 |              4 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/clearing_x[4]_i_1_n_1                               | rst_IBUF                                   |                5 |              5 |         1.00 |
+|  div_BUFG[2]        | mc/send_buffer[4]_i_1_n_1                                                  | rst_IBUF                                   |                2 |              5 |         2.50 |
+|  div_BUFG[2]        | tetris_controller_inst/br/E[0]                                             | rst_IBUF                                   |                2 |              5 |         2.50 |
+|  div_BUFG[2]        | tetris_controller_inst/br/state_reg[1][0]                                  | rst_IBUF                                   |                4 |              7 |         1.75 |
+|  clk_IBUF_BUFG      |                                                                            |                                            |                3 |              7 |         2.33 |
+|  div_BUFG[2]        |                                                                            |                                            |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/rx_finish         | rst_IBUF                                   |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/rx_valid          | rst_IBUF                                   |                2 |              8 |         4.00 |
+|  div_BUFG[2]        | tetris_controller_inst/lfsr_inst/E[0]                                      | rst_IBUF                                   |                2 |              9 |         4.50 |
+|  divs/O219_BUFG[0]  | vga_top_inst/vga_inst/line_cnt                                             | vga_top_inst/vga_inst/line_cnt[9]_i_1_n_1  |                3 |             10 |         3.33 |
+|  divs/O219_BUFG[0]  |                                                                            | vga_top_inst/vga_inst/pixel_cnt[9]_i_1_n_1 |                5 |             10 |         2.00 |
+|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/inst/inst/Ps2Interface_i/frame[10]_i_1_n_0 | rst_IBUF                                   |                2 |             11 |         5.50 |
+|  divs/O219_BUFG[0]  |                                                                            |                                            |                7 |             11 |         1.57 |
+|  n_0_18669_BUFG     |                                                                            | rst_IBUF                                   |                6 |             12 |         2.00 |
+|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/key                                        | rst_IBUF                                   |                3 |             13 |         4.33 |
+|  div_BUFG[2]        | tetris_controller_inst/br/next_active_y                                    | rst_IBUF                                   |                9 |             20 |         2.22 |
+|  music_inst/sc/Q[1] |                                                                            | rst_IBUF                                   |                5 |             20 |         4.00 |
+|  divs/O219_BUFG[2]  |                                                                            |                                            |                8 |             22 |         2.75 |
+|  clk_IBUF_BUFG      |                                                                            | n_0_18669_BUFG                             |                6 |             23 |         3.83 |
+|  div_BUFG[2]        | tetris_controller_inst/br/state_reg[3][0]                                  | rst_IBUF                                   |                9 |             26 |         2.89 |
 |  clk_IBUF_BUFG      |                                                                            | rst_IBUF                                   |               50 |            148 |         2.96 |
-|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/op/E[0]                                    | rst_IBUF                                   |               76 |            257 |         3.38 |
-|  div_BUFG[2]        |                                                                            | rst_IBUF                                   |              125 |            386 |         3.09 |
+|  clk_IBUF_BUFG      | keypress_controller_inst/key_de/op/E[0]                                    | rst_IBUF                                   |               78 |            257 |         3.29 |
+|  div_BUFG[2]        |                                                                            | rst_IBUF                                   |              128 |            392 |         3.06 |
 +---------------------+----------------------------------------------------------------------------+--------------------------------------------+------------------+----------------+--------------+
 
 

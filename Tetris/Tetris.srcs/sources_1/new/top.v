@@ -36,6 +36,10 @@ module tetris(
     output audio_sck,
     output audio_sdin,
 
+    input btn,
+    input rx,
+    output tx,
+
     output [6:0] DISPLAY,
     output [3:0] DIGIT,
 
@@ -83,6 +87,9 @@ module tetris(
     wire [3:0] dat;
     wire [3:0] led_test;
 
+    wire send_block;
+    wire received_block;
+
     tetris_controller tetris_controller_inst(
         .clk(div[2]),
         .clk_fall(div[26]),
@@ -95,6 +102,8 @@ module tetris(
         .hold_tile(hold_tile),
         .next_tiles(next_tiles),
         .whole_lines(whole_lines),
+        .send_block(send_block),
+        .received_block(received_block),
         .xx(xx),
         .yy(yy),
         .dat(dat),
@@ -113,8 +122,8 @@ module tetris(
     );
 
     // wire [15:0] bcds = {state, active_block[9+:4], active_block[4+:4], active_block[0+:4]};
-    wire [15:0] bcds = {state, dat, xx[3:0], yy};
     // wire [15:0] bcds = {4'b0, lc[8], lc[4+:4], lc[0+:4]};
+    wire [15:0] bcds;
     seven_seg_controller seven_seg_controller_inst(
         .clk_display(div[12]),
         .bcds(bcds),
@@ -137,6 +146,22 @@ module tetris(
         .audio_sdin(audio_sdin),
         .volume_leds(led[4:0])
     );
+
+    debounce dpS(.pb_debounced(btn_db), .pb(btn), .clk(div[12]));
+    onepulse opS(.signal(btn_db), .clk(div[2]), .op(btn_op));
+
+
+    wire [4:0] receive_buffer;
+    multi_controller mc(
+        .clk(div[2]),
+        .rst(rst),
+        .send_block(send_block),
+        .received_block(received_block),
+        .receive_buffer(receive_buffer),
+        .rx(rx),
+        .tx(tx)
+    );
+    assign bcds = {state, dat, xx[3:0], receive_buffer[3:0]};
 
     // assign led[15 -: 7] = key_press;
 

@@ -12,6 +12,9 @@ module tetris_controller(
     output reg [3:0] hold_tile,
     output reg [11:0] next_tiles,
     output [19:0] whole_lines,
+    output reg send_block,
+    input received_block,
+
     output [4:0] xx,
     output [3:0] yy,
     output [3:0] dat,
@@ -261,6 +264,8 @@ module tetris_controller(
         dina = 0;
         wea = 0;
 
+        send_block = 0;
+
         srs_rotated_block = 0;
         // srs_is_ccw = 0;
 
@@ -441,8 +446,10 @@ module tetris_controller(
                 if (clearing_x == 20)
                     if (whole_line_x == 20)
                         next_state = S_Waiting;
-                    else
+                    else begin
                         next_clearing_x = whole_line_x;
+                        send_block = 1;
+                    end
                 else begin
                     next_clearing_x = clearing_x;
 

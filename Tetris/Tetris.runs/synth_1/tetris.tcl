@@ -99,6 +99,7 @@ read_verilog -library xil_defaultlib {
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/keyboard_controller.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/keyboard_decoder.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/lfsr.v
+  /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/multiplayer.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/music.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/onepulse.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/seven_seg_controller.v
