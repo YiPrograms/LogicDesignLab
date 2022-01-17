@@ -20,15 +20,20 @@ module multi_controller (
     reg next_rx_state;
     reg next_tx;
 
+    reg [4:0] send_counter;
+    reg [4:0] next_send_counter;
+
     always @* begin
         next_tx = tx;
         next_send_buffer = send_buffer;
+        next_send_counter = send_counter + 1; // Send at slower rate
         if (send_block) begin
             next_send_buffer = send_buffer + 1;
         end else begin
-            if (send_buffer) begin
+            if (send_buffer && send_counter >= 10) begin
                 next_tx = ~tx;
                 next_send_buffer = send_buffer - 1;
+                next_send_counter = 0;
             end
         end
     end
@@ -51,11 +56,13 @@ module multi_controller (
             receive_buffer <= 0;
             tx <= 0;
             rx_state <= 0;
+            send_counter <= 0;
         end else begin
             send_buffer <= next_send_buffer;
             receive_buffer <= next_receive_buffer;
             tx <= next_tx;
             rx_state <= next_rx_state;
+            send_counter <= next_send_counter;
         end
     end
 
