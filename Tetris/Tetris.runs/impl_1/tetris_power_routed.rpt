@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Mon Jan 17 05:20:45 2022
+| Date             : Mon Jan 17 11:47:27 2022
 | Host             : YNB running 64-bit Arch Linux
 | Command          : report_power -file tetris_power_routed.rpt -pb tetris_power_summary_routed.pb -rpx tetris_power_routed.rpx
 | Design           : tetris
@@ -30,11 +30,11 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.233        |
+| Total On-Chip Power (W)  | 0.238        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.161        |
-| Device Static (W)        | 0.072        |
+| Dynamic (W)              | 0.165        |
+| Device Static (W)        | 0.073        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 83.8         |
 | Junction Temperature (C) | 26.2         |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.003 |        3 |       --- |             --- |
-| Slice Logic    |     0.057 |    22059 |       --- |             --- |
-|   LUT as Logic |     0.050 |    13126 |     20800 |           63.11 |
-|   CARRY4       |     0.005 |      817 |      8150 |           10.02 |
-|   F7/F8 Muxes  |     0.003 |     5463 |     32600 |           16.76 |
-|   Register     |    <0.001 |     1828 |     41600 |            4.39 |
-|   BUFG         |    <0.001 |        2 |        32 |            6.25 |
-|   Others       |     0.000 |       69 |       --- |             --- |
-| Signals        |     0.065 |     9989 |       --- |             --- |
-| Block RAM      |    <0.001 |      0.5 |        50 |            1.00 |
-| I/O            |     0.035 |       51 |       106 |           48.11 |
-| Static Power   |     0.072 |          |           |                 |
-| Total          |     0.233 |          |           |                 |
+| Slice Logic    |     0.058 |    22303 |       --- |             --- |
+|   LUT as Logic |     0.051 |    13250 |     20800 |           63.70 |
+|   CARRY4       |     0.005 |      823 |      8150 |           10.10 |
+|   F7/F8 Muxes  |     0.003 |     5481 |     32600 |           16.81 |
+|   Register     |    <0.001 |     1839 |     41600 |            4.42 |
+|   BUFG         |    <0.001 |        3 |        32 |            9.38 |
+|   Others       |     0.000 |      121 |       --- |             --- |
+| Signals        |     0.065 |    10334 |       --- |             --- |
+| Block RAM      |     0.002 |       27 |        50 |           54.00 |
+| I/O            |     0.037 |       51 |       106 |           48.11 |
+| Static Power   |     0.073 |          |           |                 |
+| Total          |     0.238 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,16 +74,16 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.136 |       0.126 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.138 |       0.128 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.014 |       0.001 |      0.013 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.011 |       0.010 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.012 |       0.011 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
@@ -143,22 +143,24 @@ Table of Contents
 +----------------------------+-----------+
 | Name                       | Power (W) |
 +----------------------------+-----------+
-| tetris                     |     0.161 |
+| tetris                     |     0.165 |
 |   keypress_controller_inst |     0.003 |
 |     key_de                 |     0.002 |
-|   music_inst               |     0.044 |
+|   music_inst               |     0.043 |
 |     playerCtrl_00          |     0.003 |
-|   tetris_controller_inst   |     0.072 |
-|     SRS                    |     0.019 |
+|   tetris_controller_inst   |     0.074 |
+|     SRS                    |     0.018 |
 |       cc_0                 |     0.002 |
 |       cc_1                 |     0.003 |
 |       cc_2                 |     0.005 |
 |       cc_3                 |     0.004 |
 |       cc_4                 |     0.005 |
-|     br                     |     0.044 |
+|     br                     |     0.045 |
 |     cc_check               |     0.002 |
-|     ghost_check            |     0.001 |
-|   vga_top_inst             |     0.005 |
+|     ghost_check            |     0.002 |
+|   vga_top_inst             |     0.007 |
+|     blk_mem_gen_1_inst     |     0.002 |
+|       U0                   |     0.002 |
 |     pixel_gen_inst         |     0.003 |
 |     vga_inst               |     0.002 |
 +----------------------------+-----------+

@@ -144,6 +144,7 @@ OPTRACE "add files" START { }
   add_files -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.runs/synth_1/tetris.dcp
   read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci
   read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/KeyboardCtrl_0/KeyboardCtrl_0.xci
+  read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1.xci
 OPTRACE "read constraints: implementation" START { }
   read_xdc /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/constrs_1/new/tetris.xdc
 OPTRACE "read constraints: implementation" END { }

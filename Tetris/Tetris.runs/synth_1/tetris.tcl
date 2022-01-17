@@ -92,6 +92,7 @@ set_property ip_output_repo /home/yi/Workspace/Vivado/Tetris/Tetris.cache/ip [cu
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
+add_files /home/yi/Workspace/Vivado/Tetris/assets/background.coe
 read_verilog -library xil_defaultlib {
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/imports/lab8_template/debounce.v
   /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/new/graphics.v
@@ -111,6 +112,9 @@ read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/blk_mem
 set_property used_in_implementation false [get_files -all /home/yi/Workspace/Vivado/Tetris/Tetris.gen/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_ooc.xdc]
 
 read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/KeyboardCtrl_0/KeyboardCtrl_0.xci
+
+read_ip -quiet /home/yi/Workspace/Vivado/Tetris/Tetris.srcs/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1.xci
+set_property used_in_implementation false [get_files -all /home/yi/Workspace/Vivado/Tetris/Tetris.gen/sources_1/ip/blk_mem_gen_1/blk_mem_gen_1_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being

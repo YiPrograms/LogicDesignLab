@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Mon Jan 17 05:20:42 2022
+| Date         : Mon Jan 17 11:47:25 2022
 | Host         : YNB running 64-bit Arch Linux
 | Command      : report_methodology -file tetris_methodology_drc_routed.rpt -pb tetris_methodology_drc_routed.pb -rpx tetris_methodology_drc_routed.rpx
 | Design       : tetris
@@ -970,17 +970,17 @@ Related violations: <none>
 
 TIMING-17#188 Critical Warning
 Non-clocked sequential cell  
-The clock pin tetris_controller_inst/active_y_reg[1]_rep__0/C is not reached by a timing clock
+The clock pin tetris_controller_inst/active_y_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#189 Critical Warning
 Non-clocked sequential cell  
-The clock pin tetris_controller_inst/active_y_reg[2]/C is not reached by a timing clock
+The clock pin tetris_controller_inst/active_y_reg[2]_rep/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#190 Critical Warning
 Non-clocked sequential cell  
-The clock pin tetris_controller_inst/active_y_reg[2]_rep/C is not reached by a timing clock
+The clock pin tetris_controller_inst/active_y_reg[2]_rep__0/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#191 Critical Warning

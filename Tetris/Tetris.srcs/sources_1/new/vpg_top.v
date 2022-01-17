@@ -23,11 +23,15 @@ module vga_top(
     wire [9:0] h_cnt; //640
     wire [9:0] v_cnt;  //480
 
+    wire [11:0] bg_pixel;
+    wire [16:0] pixel_addr = 320*(v_cnt>>1) + (h_cnt>>1);
+
     assign {vgaRed, vgaGreen, vgaBlue} = (valid==1'b0) ? 12'h0: pixel;
 
     pixel_gen pixel_gen_inst(
         .px(h_cnt),
         .py(v_cnt),
+        .bg_pixel(bg_pixel),
         .block_states(block_states),
         .active_block(active_block),
         .state(state),
@@ -45,6 +49,12 @@ module vga_top(
         .valid(valid),
         .h_cnt(h_cnt),
         .v_cnt(v_cnt)
+    );
+
+    blk_mem_gen_1 blk_mem_gen_1_inst(
+        .clka(clk_25MHz),
+        .addra(pixel_addr),
+        .douta(bg_pixel)
     );
 
 endmodule

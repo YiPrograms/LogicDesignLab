@@ -1,5 +1,6 @@
 `define WHITE 12'hfff
 `define BLACK 12'h000
+`define BACKGROUND 12'h005
 
 `define TILE_BORDER_COLOR 12'h666
 `define GHOST_BORDER_COLOR 12'h333
@@ -32,6 +33,7 @@
 module pixel_gen(
     input [9:0] px,
     input [9:0] py,
+    input [11:0] bg_pixel,
     input [799:0] block_states,
     input [33:0] active_block,
     input [3:0] state,
@@ -78,7 +80,7 @@ module pixel_gen(
 
     always @* begin
         // Background
-        pixel = `WHITE;
+        pixel = bg_pixel;
 
         begin // Draw background
 
