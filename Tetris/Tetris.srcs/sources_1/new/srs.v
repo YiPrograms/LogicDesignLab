@@ -86,7 +86,7 @@ module super_rotating_system(
         .collision(col4)
     );
 
-    wire [1:0] rot_check = rotation + ccw;
+    wire [1:0] rot_check = rotation - ccw;
 
     always @* begin
         ox = 0;
