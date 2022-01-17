@@ -15,7 +15,7 @@
 `define O_BLOCK_COLOR 12'hfd7
 `define T_BLOCK_COLOR 12'hc9e
 `define Z_BLOCK_COLOR 12'hf78
-`define S_BLOCK_COLOR 12'h2ed
+`define S_BLOCK_COLOR 12'h4b4
 `define GRAY_BLOCK_COLOR 12'hbbb
 
 `define I_GHOST_COLOR 12'hbff
