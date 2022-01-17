@@ -311,7 +311,7 @@ module tetris_controller(
 
                 next_hold_tile = 0;
                 next_next_tiles = 0;
-                next_fall_counter_target = 100000000/8;
+                next_fall_counter_target = 100000000/512;
                 next_garbage_blocks_buffer = 0;
             end
             S_Menu: begin
@@ -386,18 +386,18 @@ module tetris_controller(
                     next_counter = 0;
                     if (!col_check) begin
                         next_active_x = active_x - 1;
-                        next_fall_counter_target = fall_counter_target > 30000000/8? fall_counter_target - 5000: 30000000/8;
+                        next_fall_counter_target = fall_counter_target > 30000000/512? fall_counter_target - 5000/64: 30000000/512;
                     end else begin
                         if (break_landing && land_break_times <= 7) begin
                             next_break_landing = 0;
                             next_land_break_times = land_break_times + 1;
                         end else begin
                             next_state = S_Landed;
-                            next_fall_counter_target = fall_counter_target > 30000000/8? fall_counter_target - 50000: 30000000/8;
+                            next_fall_counter_target = fall_counter_target > 30000000/512? fall_counter_target - 50000/64: 30000000/512;
                         end
                     end
                 end else if (garbage_blocks_buffer != 0) begin
-                    check_x = active_x - garbage_blocks_buffer;
+                    check_x = active_x - 1;
                     if (check_x >= 0 && !col_check) begin
                         next_ghost_x = next_active_x;
                         next_counter = 0;
@@ -444,7 +444,7 @@ module tetris_controller(
             S_GarbageBlocks: begin
                 if (clearing_x == 20)
                     if (garbage_blocks_buffer == 0)
-                        next_state = S_Falling;
+                        next_state = S_GarbageUpdate;
                     else begin
                         if (garbage_blocks_hole == 10) begin
                             if (random4b <= 9) begin
@@ -504,7 +504,7 @@ module tetris_controller(
                 next_counter = counter + 1;
                 if (counter == 300 && whole_line_x == 20)
                     next_state = S_Waiting;
-                else if (counter == 20000000/8) // 0.2s
+                else if (counter == 20000000/512) // 0.2s
                     next_state = S_ClearLines;
             end
             S_WaitUpdate: begin
@@ -515,7 +515,10 @@ module tetris_controller(
             S_GarbageUpdate: begin
                 next_counter = counter + 1;
                 if (counter == 300)
-                    next_state = S_GarbageBlocks;
+                    if (garbage_blocks_buffer == 0)
+                        next_state = S_Falling;
+                    else
+                        next_state = S_GarbageBlocks;
             end
             S_ClearLines: begin
                 if (clearing_x == 20)
@@ -571,7 +574,7 @@ module tetris_controller(
             hold_tile <= 0;
             next_tiles <= 0;
             hold_used <= 0;
-            fall_counter_target <= 100000000/8;
+            fall_counter_target <= 100000000/512;
             land_break_times <= 0;
             garbage_blocks_buffer <= 0;
             garbage_blocks_hole <= 10;

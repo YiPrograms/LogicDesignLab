@@ -91,7 +91,7 @@ module tetris(
     wire received_block;
 
     tetris_controller tetris_controller_inst(
-        .clk(div[2]),
+        .clk(div[8]),
         .clk_fall(div[26]),
         .rst(rst),
         .keys(keys),
@@ -114,7 +114,7 @@ module tetris(
 
     keypress_controller keypress_controller_inst(
         .clk(clk),
-        .clk_op(div[2]),
+        .clk_op(div[8]),
         .rst(rst),
         .PS2_DATA(PS2_DATA),
         .PS2_CLK(PS2_CLK),
@@ -148,12 +148,12 @@ module tetris(
     );
 
     debounce dpS(.pb_debounced(btn_db), .pb(btn), .clk(div[12]));
-    onepulse opS(.signal(btn_db), .clk(div[2]), .op(btn_op));
+    onepulse opS(.signal(btn_db), .clk(div[8]), .op(btn_op));
 
 
     wire [4:0] receive_buffer;
     multi_controller mc(
-        .clk(div[2]),
+        .clk(div[8]),
         .rst(rst),
         .send_block(send_block),
         .received_block(received_block),
