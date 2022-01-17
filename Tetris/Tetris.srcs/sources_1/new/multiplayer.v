@@ -13,8 +13,6 @@ module multi_controller (
     reg [4:0] send_buffer;
     // reg [4:0] receive_buffer;
 
-    reg next_received_block;
-
     reg [4:0] next_send_buffer;
     reg [4:0] next_receive_buffer;
 
@@ -38,15 +36,12 @@ module multi_controller (
     always @* begin
         next_rx_state = rx_state;
         next_receive_buffer = receive_buffer;
-        next_received_block = 0;
+        received_block = 0;
+        
         if (rx != rx_state) begin
+            received_block = 1;
             next_receive_buffer = receive_buffer + 1;
             next_rx_state = rx;
-        end else begin
-            // if (receive_buffer) begin
-            //     next_received_block = 1;
-            //     next_receive_buffer = receive_buffer - 1;
-            // end
         end
     end
 
@@ -54,13 +49,11 @@ module multi_controller (
         if (rst) begin
             send_buffer <= 0;
             receive_buffer <= 0;
-            received_block <= 0;
             tx <= 0;
             rx_state <= 0;
         end else begin
             send_buffer <= next_send_buffer;
             receive_buffer <= next_receive_buffer;
-            received_block <= next_received_block;
             tx <= next_tx;
             rx_state <= next_rx_state;
         end
