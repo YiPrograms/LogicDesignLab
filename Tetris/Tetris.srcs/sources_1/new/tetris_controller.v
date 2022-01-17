@@ -169,13 +169,13 @@ module tetris_controller(
         .rotated_block(rotated_block_cw)
     );
 
-    // wire [1:0] active_rot_ccw = active_rot - 1;
-    // wire [15:0] rotated_block_ccw;
-    // rotation_translation rot_ccw(
-    //     .block_type(active_type),
-    //     .rotation(active_rot_ccw),
-    //     .rotated_block(rotated_block_ccw)
-    // );
+    wire [1:0] active_rot_ccw = active_rot - 1;
+    wire [15:0] rotated_block_ccw;
+    rotation_translation rot_ccw(
+        .block_type(active_type),
+        .rotation(active_rot_ccw),
+        .rotated_block(rotated_block_ccw)
+    );
 
     reg [4:0] check_x;
     reg [3:0] check_y;
@@ -215,14 +215,12 @@ module tetris_controller(
     wire srs_y_neg;
     wire srs_fail;
     reg [15:0] srs_rotated_block;
-    // reg srs_is_ccw;
-    wire [4:0] t1_x;
+    reg srs_is_ccw;
     super_rotating_system SRS(
         .rotation(active_rot),
-        // .ccw(srs_is_ccw),
+        .ccw(srs_is_ccw),
         .i_block(active_type == 1),
-        .rotated_block(rotated_block_cw),
-        // .rotated_block(srs_rotated_block),
+        .rotated_block(srs_rotated_block),
         .board(block_bits),
         .ax(active_x),
         .ay(active_y),
@@ -230,10 +228,7 @@ module tetris_controller(
         .oy(srs_offset_y),
         .ox_neg(srs_x_neg),
         .oy_neg(srs_y_neg),
-        .fail(srs_fail),
-        .t1_x(t1_x),
-        .t1_y(yy),
-        .col1(led_test[0])
+        .fail(srs_fail)
     );
     assign xx = active_y;
     assign led_test[2:1] = {srs_x_neg, srs_y_neg};
@@ -285,7 +280,7 @@ module tetris_controller(
         send_block = 0;
 
         srs_rotated_block = 0;
-        // srs_is_ccw = 0;
+        srs_is_ccw = 0;
 
         next_garbage_rows_cnt = garbage_rows_cnt;
         next_garbage_group_counter = garbage_group_counter + 1;
@@ -415,9 +410,19 @@ module tetris_controller(
                             next_ghost_x = active_x;
                         end
                     end else if (keys[2]) begin // SRS cw
-                        // srs_rotated_block = rotated_block_cw;
+                        srs_rotated_block = rotated_block_cw;
                         if (!srs_fail) begin
                             next_active_rot = active_rot + 1;
+                            next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
+                            next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
+                            next_break_landing = 1;
+                            next_ghost_x = next_active_x;
+                        end
+                    end else if (keys[3]) begin // SRS cxw
+                        srs_rotated_block = rotated_block_ccw;
+                        srs_is_ccw = 1;
+                        if (!srs_fail) begin
+                            next_active_rot = active_rot - 1;
                             next_active_x = srs_x_neg? active_x - srs_offset_x :active_x + srs_offset_x;
                             next_active_y = srs_y_neg? active_y - srs_offset_y :active_y + srs_offset_y;
                             next_break_landing = 1;
