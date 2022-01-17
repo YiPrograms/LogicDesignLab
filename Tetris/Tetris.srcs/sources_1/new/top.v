@@ -55,6 +55,7 @@ module tetris(
     wire [3:0] hold_tile;
     wire [11:0] next_tiles;
     wire [19:0] whole_lines;
+    wire [13:0] score;
 
     wire [7:0] keys;
     wire [3:0] state;
@@ -106,6 +107,8 @@ module tetris(
         .whole_lines(whole_lines),
         .send_block(send_block),
         .received_block(received_block),
+        .score(score),
+
         .xx(xx),
         .yy(yy),
         .dat(dat),
@@ -126,6 +129,11 @@ module tetris(
     // wire [15:0] bcds = {state, active_block[9+:4], active_block[4+:4], active_block[0+:4]};
     // wire [15:0] bcds = {4'b0, lc[8], lc[4+:4], lc[0+:4]};
     wire [15:0] bcds;
+    assign bcds[0 +: 4] = score % 10;
+    assign bcds[4 +: 4] = score / 10 % 10;
+    assign bcds[8 +: 4] = score / 100 % 10;
+    assign bcds[12 +: 4] = score / 100;
+
     seven_seg_controller seven_seg_controller_inst(
         .clk_display(div[12]),
         .bcds(bcds),
@@ -165,7 +173,7 @@ module tetris(
         .tx(tx),
         .tx_ack(tx_ack)
     );
-    assign bcds = {state, dat, xx[3:0], receive_buffer[3:0]};
+    // assign bcds = {state, dat, xx[3:0], receive_buffer[3:0]};
 
     // assign led[15 -: 7] = key_press;
 

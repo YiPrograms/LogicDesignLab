@@ -14,6 +14,7 @@ module tetris_controller(
     output [19:0] whole_lines,
     output reg send_block,
     input received_block,
+    output reg [13:0] score,
 
     output [4:0] xx,
     output [3:0] yy,
@@ -123,6 +124,7 @@ module tetris_controller(
     reg [3:0] garbage_blocks_hole;
     reg [27:0] garbage_group_counter;
     reg [2:0] garbage_rows_cnt;
+    // reg [13:0] score;
 
 
     reg [3:0] next_state;
@@ -149,7 +151,7 @@ module tetris_controller(
     reg [3:0] next_garbage_blocks_hole;
     reg [27:0] next_garbage_group_counter;
     reg [2:0] next_garbage_rows_cnt;
-
+    reg [13:0] next_score;
 
 
     wire [15:0] rotated_block;
@@ -234,10 +236,12 @@ module tetris_controller(
     assign led_test[2:1] = {srs_x_neg, srs_y_neg};
 
     wire [4:0] whole_line_x;
-    whole_line(
+    wire [2:0] line_count;
+    whole_line wl(
         .board(block_bits),
         .line_x(whole_line_x),
-        .whole_lines(whole_lines)
+        .whole_lines(whole_lines),
+        .line_count(line_count)
     );
 
     always @* begin
@@ -263,6 +267,8 @@ module tetris_controller(
         next_land_break_times = 0;
         next_garbage_blocks_hole = garbage_blocks_hole;
         next_garbage_blocks_buffer = garbage_blocks_buffer + (state != S_Menu && received_block);
+        next_score = score;
+
         check_x = active_x;
         check_y = active_y;
         check_block = rotated_block;
@@ -391,6 +397,7 @@ module tetris_controller(
                             next_land_break_times = land_break_times + 1;
                         end else begin
                             next_state = S_Landed;
+                            next_score = score + 1;
                             next_fall_counter_target = fall_counter_target > 30000000/512? fall_counter_target - 50000/64: 30000000/512;
                         end
                     end
@@ -430,6 +437,7 @@ module tetris_controller(
                         end
                     end else if (keys[5]) begin // Space: Hard drop
                         next_state = S_Dropping;
+                        next_score = score + 2;
                     end else if (keys[6] && !hold_used) begin // C: Hold
                         next_hold_used = 1;
                         next_hold_tile = active_type;
@@ -508,8 +516,16 @@ module tetris_controller(
             end
             S_ClearLineAni: begin
                 next_counter = counter + 1;
-                if (counter == 300 && whole_line_x == 20)
-                    next_state = S_Waiting;
+                
+                if (counter == 300) begin
+                    if (whole_line_x == 20)
+                        next_state = S_Waiting;
+                    else
+                        next_score = score + (line_count == 1? 10:
+                                              line_count == 2? 30:
+                                              line_count == 3? 50:
+                                                               80);
+                end
                 else if (counter == 20000000/512) // 0.2s
                     next_state = S_ClearLines;
             end
@@ -583,6 +599,7 @@ module tetris_controller(
             garbage_blocks_hole <= 10;
             garbage_group_counter <= 0;
             garbage_rows_cnt <= 0;
+            score <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -608,6 +625,7 @@ module tetris_controller(
             garbage_blocks_hole <= next_garbage_blocks_hole;
             garbage_group_counter <= next_garbage_group_counter;
             garbage_rows_cnt <= next_garbage_rows_cnt;
+            score <= next_score;
         end
     end
     
@@ -743,17 +761,20 @@ endmodule
 module whole_line(
     input [199:0] board,
     output reg [4:0] line_x,
-    output reg [19:0] whole_lines
+    output reg [19:0] whole_lines,
+    output reg [2:0] line_count
 );
 
     integer i;
     always @* begin
         line_x = 20;
         whole_lines = 0;
+        line_count = 0;
         for (i = 19; i >= 0; i = i - 1) begin
             if (board[10*i +: 10] == 10'b1111111111) begin
                 line_x = i;
                 whole_lines[i] = 1;
+                line_count = line_count + 1;
             end
         end
     end
