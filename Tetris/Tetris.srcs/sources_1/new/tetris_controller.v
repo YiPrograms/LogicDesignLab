@@ -121,6 +121,7 @@ module tetris_controller(
     reg [2:0] land_break_times;
     reg [2:0] garbage_blocks_buffer;
     reg [3:0] garbage_blocks_hole;
+    reg [27:0] garbage_group_counter;
 
 
     reg [3:0] next_state;
@@ -145,6 +146,7 @@ module tetris_controller(
     reg [2:0] next_land_break_times;
     reg [2:0] next_garbage_blocks_buffer;
     reg [3:0] next_garbage_blocks_hole;
+    reg [27:0] next_garbage_group_counter;
 
 
 
@@ -263,7 +265,7 @@ module tetris_controller(
         next_fall_counter_target = fall_counter_target;
         next_land_break_times = 0;
         next_garbage_blocks_buffer = garbage_blocks_buffer + received_block;
-        next_garbage_blocks_hole = 10;
+        next_garbage_blocks_hole = garbage_blocks_hole;
 
         check_x = active_x;
         check_y = active_y;
@@ -283,6 +285,14 @@ module tetris_controller(
 
         srs_rotated_block = 0;
         // srs_is_ccw = 0;
+
+        
+        next_garbage_group_counter = garbage_group_counter + 1;
+        if (garbage_group_counter == 2000) begin
+            next_garbage_blocks_hole = 10;
+            next_garbage_group_counter = 0;
+        end
+
 
         case (state)
             S_Reset: begin
@@ -383,8 +393,8 @@ module tetris_controller(
                         end
                     end
                 end else if (garbage_blocks_buffer != 0) begin
-                    check_x = active_x - 1;
-                    if (!col_check) begin
+                    check_x = active_x - garbage_blocks_buffer;
+                    if (check_x >= 0 && !col_check) begin
                         next_ghost_x = next_active_x;
                         next_counter = 0;
                         next_state = S_GarbageUpdate;
@@ -428,8 +438,6 @@ module tetris_controller(
                 end
             end
             S_GarbageBlocks: begin
-                next_garbage_blocks_hole = garbage_blocks_hole;
-
                 if (clearing_x == 20)
                     if (garbage_blocks_buffer == 0)
                         next_state = S_Falling;
@@ -441,6 +449,7 @@ module tetris_controller(
                         end else begin
                             next_clearing_x = 1;
                             next_garbage_blocks_buffer = garbage_blocks_buffer - 1;
+                            next_garbage_group_counter = 0;
                         end
                     end
                 else begin
@@ -562,6 +571,7 @@ module tetris_controller(
             land_break_times <= 0;
             garbage_blocks_buffer <= 0;
             garbage_blocks_hole <= 10;
+            garbage_group_counter <= 0;
         end else begin
             state <= next_state;
             active_type <= next_active_type;
@@ -585,6 +595,7 @@ module tetris_controller(
             land_break_times <= next_land_break_times;
             garbage_blocks_buffer <= next_garbage_blocks_buffer;
             garbage_blocks_hole <= next_garbage_blocks_hole;
+            garbage_group_counter <= next_garbage_group_counter;
         end
     end
     
