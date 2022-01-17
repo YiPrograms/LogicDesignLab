@@ -38,7 +38,9 @@ module tetris(
 
     input btn,
     input rx,
+    output rx_ack,
     output tx,
+    input tx_ack,
 
     output [6:0] DISPLAY,
     output [3:0] DIGIT,
@@ -159,7 +161,9 @@ module tetris(
         .received_block(received_block),
         .receive_buffer(receive_buffer),
         .rx(rx),
-        .tx(tx)
+        .rx_ack(rx_ack),
+        .tx(tx),
+        .tx_ack(tx_ack)
     );
     assign bcds = {state, dat, xx[3:0], receive_buffer[3:0]};
 
