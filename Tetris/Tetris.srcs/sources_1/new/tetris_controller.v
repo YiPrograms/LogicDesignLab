@@ -400,7 +400,7 @@ module tetris_controller(
                         end
                     end
                 end else if (garbage_blocks_buffer != 0) begin
-                    check_x = active_x - 1;
+                    check_x = active_x - garbage_blocks_buffer;
                     if (check_x >= 0 && !col_check) begin
                         next_ghost_x = next_active_x;
                         next_counter = 0;
@@ -445,22 +445,21 @@ module tetris_controller(
                 end
             end
             S_GarbageBlocks: begin
-                if (clearing_x == 20)
-                    if (garbage_blocks_buffer == 0 || garbage_rows_cnt > 4)
-                        next_state = S_GarbageUpdate;
+                if (clearing_x == 20) begin
+                    if (garbage_blocks_buffer == 0)
+                        next_state = S_Falling;
                     else begin
                         if (garbage_blocks_hole == 10) begin
                             if (random4b <= 9) begin
                                 next_garbage_blocks_hole = random4b;
                             end
                         end else begin
-                            next_clearing_x = 1;
+                            next_clearing_x = 19;
                             next_garbage_blocks_buffer = garbage_blocks_buffer - 1;
                             next_garbage_group_counter = 0;
-                            next_garbage_rows_cnt = garbage_rows_cnt + 1;
                         end
                     end
-                else begin
+                end else begin
                     next_clearing_x = clearing_x;
 
                     addra = 10*clearing_x + clearing_y;
@@ -470,11 +469,9 @@ module tetris_controller(
 
                     next_clearing_y = clearing_y + 1;
                     if (clearing_y == 9) begin
-                        next_clearing_x = clearing_x + 1;
+                        next_clearing_x = clearing_x - 1;
                         next_clearing_y = 0;
-                        if (clearing_x == 19)
-                            next_clearing_x = 0;
-                        else if (clearing_x == 0)
+                        if (clearing_x == 0)
                             next_state = S_GarbageUpdate;
                     end
                 end
@@ -519,10 +516,7 @@ module tetris_controller(
             S_GarbageUpdate: begin
                 next_counter = counter + 1;
                 if (counter == 300)
-                    if (garbage_blocks_buffer == 0 || garbage_rows_cnt > 4)
-                        next_state = S_Falling;
-                    else
-                        next_state = S_GarbageBlocks;
+                    next_state = S_GarbageBlocks;
             end
             S_ClearLines: begin
                 if (clearing_x == 20)
