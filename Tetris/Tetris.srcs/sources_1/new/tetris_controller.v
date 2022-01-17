@@ -399,13 +399,6 @@ module tetris_controller(
                             next_fall_counter_target = fall_counter_target > 30000000/512? fall_counter_target - 50000/64: 30000000/512;
                         end
                     end
-                end else if (garbage_blocks_buffer != 0) begin
-                    check_x = active_x - garbage_blocks_buffer;
-                    if (check_x >= 0 && !col_check) begin
-                        next_ghost_x = next_active_x;
-                        next_counter = 0;
-                        next_state = S_GarbageUpdate;
-                    end
                 end else if (state == S_Falling) begin
                     if (keys[0]) begin // Left
                         check_y = active_y - 1;
@@ -437,6 +430,13 @@ module tetris_controller(
                         next_hold_tile = active_type;
                         next_spawn_type = hold_tile;
                         next_state = S_GenBlock;
+                    end else if (garbage_blocks_buffer != 0) begin
+                        check_x = active_x - garbage_blocks_buffer;
+                        if (check_x >= 0 && !col_check) begin
+                            next_ghost_x = next_active_x;
+                            next_counter = 0;
+                            next_state = S_GarbageUpdate;
+                        end
                     end
                 end
                 
