@@ -287,7 +287,7 @@ module tetris_controller(
         srs_rotated_block = 0;
         // srs_is_ccw = 0;
 
-        
+        next_garbage_rows_cnt = garbage_rows_cnt;
         next_garbage_group_counter = garbage_group_counter + 1;
         if (garbage_group_counter == 2000) begin
             next_garbage_blocks_hole = 10;
