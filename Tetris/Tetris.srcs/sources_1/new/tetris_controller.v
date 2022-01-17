@@ -264,9 +264,8 @@ module tetris_controller(
         next_hold_used = hold_used;
         next_fall_counter_target = fall_counter_target;
         next_land_break_times = 0;
-        next_garbage_blocks_buffer = garbage_blocks_buffer + received_block;
         next_garbage_blocks_hole = garbage_blocks_hole;
-
+        next_garbage_blocks_buffer = garbage_blocks_buffer + (state != S_Menu && received_block);
         check_x = active_x;
         check_y = active_y;
         check_block = rotated_block;
@@ -292,6 +291,7 @@ module tetris_controller(
             next_garbage_blocks_hole = 10;
             next_garbage_group_counter = 0;
         end
+        
 
 
         case (state)
@@ -315,8 +315,12 @@ module tetris_controller(
                 next_garbage_blocks_buffer = 0;
             end
             S_Menu: begin
-                if (keys[7]) // Enter
+                if (keys[7]) begin // Enter
                     next_state = S_GenBlock;
+                    send_block = 1; // Notify opponent to start
+                end else if (received_block) begin // Opponent started
+                    next_state = S_GenBlock;
+                end
             end
             S_GenBlock: begin
                 next_spawn_type = spawn_type;
