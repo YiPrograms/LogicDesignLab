@@ -115,8 +115,6 @@ module tetris(
         .led_test(led_test)
     );
 
-    assign led[15:12] = led_test;
-
     keypress_controller keypress_controller_inst(
         .clk(clk),
         .clk_op(div[8]),
@@ -176,5 +174,14 @@ module tetris(
     // assign bcds = {state, dat, xx[3:0], receive_buffer[3:0]};
 
     // assign led[15 -: 7] = key_press;
+
+
+    led_controller led_control(
+        .state(state),
+        .clk(div[25]),
+        .rst(rst),
+        .leds(led[15:6])
+
+    );
 
 endmodule
